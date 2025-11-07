@@ -208,7 +208,6 @@ p{
     background: #333;
     border-radius: 3px;
 }
-
 /* ───── Mobile only: Show hamburger, hide default links ───── */
 @media screen and (max-width: 768px) {
   /* Show the hamburger */
