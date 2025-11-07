@@ -1,0 +1,205 @@
+/* ENROLL SECTION */
+/* Fullscreen background & centering */
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #4ECDC4, #1A535C);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Card Styling */
+.enroll-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 340px;
+    padding: 30px 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.enroll-card h2 {
+    color: #1A535C;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #333;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #1A535C;
+}
+
+.required {
+    color: red;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #4ECDC4;
+}
+
+/* Button */
+.submit-btn {
+    background-color: #4ECDC4;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #1A535C;
+}
+
+/* Info Message */
+.info-message {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .enroll-card {
+        width: 90%;
+        padding: 25px 20px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #24c6dc, #514a9d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 15px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: #0c3d3d;
+    margin-bottom: 8px;
+}
+
+p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+span {
+    color: red;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    background-color: #0c3d3d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #106d6d;
+}
+
+.note {
+    font-size: 13px;
+    margin-top: 10px;
+    color: #777;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Success message styling */
+#successMessage {
+    text-align: center;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    border: 5px solid #ddd;
+    border-top: 5px solid #0c3d3d;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.success-text {
+    color: #0c3d3d;
+    font-size: 16px;
+    margin-top: 10px;
+}
