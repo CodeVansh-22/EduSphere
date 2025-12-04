@@ -467,3 +467,98 @@ summary.faq-title:hover { color: var(--primary); }
         margin-bottom: 5px;
     }
 }
+/* =========================================
+   FIX 1: GLOBALLY HIDE THE CHECKBOX
+   (Add this near the top of your CSS or check line ~65)
+   ========================================= */
+#nav-toggle { 
+    display: none !important; /* Force hide the white square */
+}
+
+/* =========================================
+   FIX 2: UPDATED MOBILE MEDIA QUERY
+   (Replace the bottom section of your CSS with this)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Navbar Container Layout */
+    #navbar {
+        flex-direction: column;      /* Stack elements vertically */
+        align-items: flex-start;     /* Align content to the left */
+        position: relative;          /* needed to position the toggle button */
+        padding: 15px 20px;
+    }
+
+    /* 2. Logo Area */
+    .nav-left {
+        width: 100%;                 /* Full width to push toggle to right */
+        margin-bottom: 5px;
+    }
+    
+    .nav-left h1 {
+        font-size: 1.5rem;           /* Slightly smaller font for mobile */
+    }
+
+    /* 3. The Hamburger Button (Three Lines) */
+    .nav-toggle-label {
+        display: block;              /* Make it visible on mobile */
+        position: absolute;          /* Float it */
+        top: 25px;                   /* Distance from top */
+        right: 20px;                 /* Distance from right */
+        cursor: pointer;
+        padding: 5px;                /* Make click area bigger */
+    }
+
+    .nav-toggle-label span {
+        display: block;
+        height: 3px;
+        width: 28px;
+        background-color: var(--primary); /* Use the Theme Blue Color */
+        margin-bottom: 6px;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    /* 4. The Menu Links (Hidden by default) */
+    .nav-right {
+        display: none;               /* HIDE links initially */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--bg-card); /* Dark background for menu */
+        border-radius: 8px;
+        margin-top: 15px;
+        border: 1px solid #233554;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+
+    /* 5. SHOW Menu when Checkbox is Checked */
+    #nav-toggle:checked ~ .nav-right {
+        display: flex;               /* Show links when toggled */
+    }
+
+    /* 6. Style the Links inside the dropdown */
+    .nav-right .opt {
+        text-align: center;
+        padding: 15px;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-right .opt:last-child {
+        border-bottom: none;
+    }
+
+    .nav-right .opt:hover {
+        background-color: var(--bg-body);
+        color: var(--primary);
+    }
+    
+    /* 7. Hero Section Adjustment for Mobile */
+    #hero {
+        padding-top: 40px;
+    }
+    
+    .msg {
+        font-size: 1.8rem; /* Smaller text for mobile screens */
+    }
+}
