@@ -2,63 +2,50 @@
    1. VARIABLES & THEME CONFIGURATION
    ========================================= */
 :root {
+    /* --- NEW COLOR PALETTE: LIGHT BLUE & DARK --- */
+    
     /* Backgrounds */
-    --bg-body: #0f172a;       /* Deep Dark Blue/Slate */
-    --bg-card: #1e293b;       /* Lighter Slate for elements */
-    --bg-nav: rgba(15, 23, 42, 0.95); /* Semi-transparent header */
+    --bg-body: #0a192f;       /* Very Dark Navy Blue */
+    --bg-card: #112240;       /* Lighter Navy for cards */
+    --bg-nav: rgba(10, 25, 47, 0.95); /* Semi-transparent header */
 
     /* Text Colors */
-    --text-main: #f1f5f9;     /* White-ish */
-    --text-muted: #94a3b8;    /* Soft Gray */
-    --text-highlight: #38bdf8; /* Light Blue for highlights */
+    --text-main: #e6f1ff;     /* Pale Blue-White (Easy on eyes) */
+    --text-muted: #8892b0;    /* Muted Blue-Gray */
+    --text-highlight: #64ffda; /* Minty Cyan for special text */
 
-    /* Brand Colors */
-    --primary: #6366f1;       /* Indigo (Main Buttons/Links) */
-    --primary-hover: #4f46e5;
-    --accent: #f43f5e;        /* Rose (Call to Actions) */
+    /* Brand/Action Colors */
+    --primary: #38bdf8;       /* Electric Sky Blue (Main Buttons) */
+    --primary-hover: #0284c7; /* Darker Blue for hover */
+    --accent: #7dd3fc;        /* Light Blue for outlines */
     
-    /* "COMPLETED" Status Colors (Requested) */
-    --completed-bg: rgba(16, 185, 129, 0.15);
-    --completed-text: #34d399; /* Emerald Green */
-    --completed-border: #059669;
+    /* "COMPLETED" STATUS COLORS */
+    /* Changed to a Glowing Teal to match the blue theme */
+    --success-bg: rgba(56, 189, 248, 0.15); 
+    --success-text: #38bdf8;  
+    --success-border: #0ea5e9;
 }
 
 /* =========================================
-   2. GLOBAL RESET & TYPOGRAPHY
+   2. GLOBAL RESET
    ========================================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
-    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    display: block;
-}
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
 
 /* =========================================
-   3. NAVIGATION BAR
+   3. NAVBAR
    ========================================= */
-nav {
+#navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,295 +54,416 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid #233554; /* Subtle dark blue border */
     backdrop-filter: blur(10px);
 }
 
-nav ul {
-    display: flex;
-    gap: 20px;
+.nav-left h1 {
+    font-family: 'Adamina', serif;
+    color: var(--text-main); /* White text for logo */
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); /* Blue Glow */
+    font-size: 1.8rem;
 }
 
-nav a {
+.nav-left p { font-size: 0.85rem; color: var(--primary); }
+
+.nav-right { display: flex; gap: 20px; }
+
+.nav-right .opt {
     color: var(--text-muted);
     font-weight: 500;
-    font-size: 1rem;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-nav a:hover, nav a.active {
-    color: var(--text-main);
-    background-color: #334155;
-}
-
-/* =========================================
-   4. BUTTONS & UI ELEMENTS
-   ========================================= */
-.btn, button {
-    display: inline-block;
-    padding: 10px 24px;
+    padding: 8px 16px;
     border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-right .opt:hover {
+    color: var(--primary); /* Turns Light Blue on hover */
+    background-color: rgba(56, 189, 248, 0.1);
+}
+
+/* Mobile Toggle */
+#nav-toggle { display: none; }
+.nav-toggle-label { display: none; cursor: pointer; }
+
+/* =========================================
+   4. HERO SECTION
+   ========================================= */
+#hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    padding: 80px 20px;
+    /* New Gradient: Dark Navy to slightly lighter Navy */
+    background: radial-gradient(circle at center, #172a45 0%, var(--bg-body) 70%);
 }
 
-/* Primary Button (Login, Enroll) */
-.btn-primary {
-    background-color: var(--primary);
-    color: white;
-    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+.hero-content { max-width: 800px; }
+
+.HeroImage {
+    margin: 0 auto 20px;
+    width: 150px;
+    /* Blue drop shadow */
+    filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); 
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.23);
-}
-
-/* Secondary/Accent Button */
-.btn-accent {
-    background-color: var(--accent);
-    color: white;
-}
-
-/* =========================================
-   5. "COMPLETED" STYLES (Requested Change)
-   ========================================= */
-/* Use this class for badges, e.g. <span class="status-badge completed">Completed</span> */
-.status-badge.completed {
-    display: inline-block;
-    background-color: var(--completed-bg);
-    color: var(--completed-text);
-    border: 1px solid var(--completed-border);
-    padding: 4px 12px;
-    border-radius: 50px; /* Pill shape */
-    font-size: 0.85rem;
+.msg {
+    font-size: 2.5rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); /* Green Glow */
+    margin-bottom: 30px;
+    color: var(--text-main);
 }
 
-/* Use this to style a whole card as completed */
-.card.completed-card {
-    border: 1px solid var(--completed-border);
-    position: relative;
+.hero-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background-color: transparent; /* Outline style looks cleaner in this theme */
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.card.completed-card::after {
-    content: "✓ COMPLETED";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--completed-border);
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 4px;
+.hero-btn:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    transform: translateY(-3px);
+}
+
+.icons { margin-top: 30px; }
+.icons i {
+    font-size: 1.5rem;
+    margin: 0 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.icons i:hover { 
+    color: var(--primary); 
+    transform: scale(1.2);
 }
 
 /* =========================================
-   6. HERO SECTION
+   5. SECTIONS (About, Vision, Mission)
    ========================================= */
-.hero {
+.about-section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    padding: 60px 5%;
-    min-height: 80vh;
-    background: radial-gradient(circle at top right, #1e1b4b, var(--bg-body));
+    gap: 40px;
+    padding: 60px 10%;
+    border-bottom: 1px solid #233554;
 }
 
-.hero-text {
-    flex: 1;
-    min-width: 300px;
-    padding-right: 20px;
+.about-left { flex: 1; min-width: 300px; }
+.about-left img {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
+    border: 1px solid #233554;
+    /* Slight blue filter on images to blend them in */
+    filter: sepia(20%) hue-rotate(180deg) saturate(90%); 
 }
+.about-left img:hover { filter: none; } /* Show real color on hover */
 
-.hero h1 {
-    font-size: 3rem;
+.about-right { flex: 1; min-width: 300px; }
+
+.about-right h2, .section-title {
+    font-size: 2.2rem;
+    color: var(--text-main);
     margin-bottom: 20px;
-    line-height: 1.2;
-    color: white;
+    font-family: 'Oswald', sans-serif;
+    border-left: 4px solid var(--primary); /* Blue accent line */
+    padding-left: 15px;
 }
 
-.hero h1 span {
-    color: var(--primary); /* Highlight color for EduSphere text */
-}
-
-.hero p {
+.about-right p, #about-preview p {
     color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.8;
 }
 
-.hero-image {
-    flex: 1;
-    min-width: 300px;
-    display: flex;
-    justify-content: center;
+/* About Preview on Home */
+#about-preview {
+    text-align: center;
+    padding: 60px 10%;
+    background-color: var(--bg-card);
 }
-
-.hero-image img {
-    border-radius: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
-    border: 1px solid #334155;
-    max-height: 400px;
+#about-preview h1 { margin-bottom: 20px; color: var(--text-main); }
+.read-more-btn {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--primary);
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary);
 }
 
 /* =========================================
-   7. SECTIONS (About, Vision, Courses)
+   6. COURSE CARDS
    ========================================= */
-section {
-    padding: 60px 5%;
-}
-
-h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    text-align: center;
-    color: var(--text-main);
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-/* Decorative underline for headings */
-h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background-color: var(--accent);
-    margin: 10px auto 0;
-    border-radius: 2px;
-}
-
-/* Course Cards Container */
 .course-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    padding-top: 20px;
+    padding: 60px 5%;
 }
 
-/* Individual Card */
-.card {
+.course-card {
     background-color: var(--bg-card);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #334155;
+    border: 1px solid #233554; /* Dark blue border */
+    transition: transform 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+.course-card:hover {
+    transform: translateY(-10px);
     border-color: var(--primary);
+    box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
 }
 
-.card img {
+.course-card img {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
-    border-bottom: 1px solid #334155;
+    opacity: 0.9;
 }
+.course-card:hover img { opacity: 1; }
 
-.card-content {
-    padding: 20px;
+.course-card h3 {
+    padding: 20px 20px 10px;
+    color: var(--text-main);
+    transition: 0.3s;
 }
+.course-card:hover h3 { color: var(--primary); }
 
-.card h3 {
-    margin-bottom: 10px;
-    color: var(--text-highlight);
-}
-
-.card p {
+.course-card p {
+    padding: 0 20px 20px;
     color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 15px;
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+
+.course-card button {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid #233554;
+    color: var(--primary);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 1px;
+}
+
+.course-card button:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: #fff;
+}
+
+/* --- COMPLETED STATUS STYLES (UPDATED COLOR) --- */
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--bg-body); /* Dark bg for contrast */
+    color: var(--primary); /* Light Blue Text */
+    border: 1px solid var(--primary);
+    padding: 5px 12px;
+    border-radius: 4px; /* Sharper corners for tech look */
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Blue Glow */
 }
 
 /* =========================================
-   8. FORMS (Login, Contact)
+   7. CONTACT & FORMS
    ========================================= */
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 60px 10%;
+    gap: 40px;
+}
+
+#contact-form { flex: 1; min-width: 300px; }
+
 form {
-    max-width: 500px;
-    margin: 40px auto;
     background-color: var(--bg-card);
     padding: 30px;
     border-radius: 12px;
-    border: 1px solid #334155;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    border: 1px solid #233554;
 }
 
-form label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-muted);
-}
+label { display: block; margin-bottom: 8px; color: var(--primary); font-size: 0.9rem; }
 
-form input, form textarea, form select {
+input, select, textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    background-color: #0f172a; /* Dark input bg */
-    border: 1px solid #475569;
+    background-color: #0a192f; /* Darkest Navy */
+    border: 1px solid #233554;
     border-radius: 6px;
-    color: white;
-    font-size: 1rem;
+    color: var(--text-main);
 }
 
-form input:focus {
+input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 0 1px var(--primary);
 }
+
+button[type="submit"] {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+}
+
+.contact-info p {
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.contact-info i { color: var(--primary); }
+
+/* FAQ Section */
+.faq-section {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 10%;
+}
+.faq-section h2 { text-align: center; margin-bottom: 30px; color: var(--text-main); }
+
+details.faq {
+    background-color: var(--bg-card);
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #233554;
+}
+
+summary.faq-title {
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-main);
+    list-style: none;
+}
+summary.faq-title:hover { color: var(--primary); }
+
+.faq-content {
+    padding: 15px;
+    border-top: 1px solid #233554;
+    color: var(--text-muted);
+}
+
+/* =========================================
+   8. ENROLL SPECIFIC STYLES
+   ========================================= */
+.enroll-card {
+    max-width: 500px;
+    margin: 50px auto;
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    border: 1px solid #233554;
+    text-align: center;
+}
+
+.enroll-card h2 { color: var(--text-main); margin-bottom: 10px; }
+.subtitle { color: var(--primary); margin-bottom: 30px; }
+
+.required { color: var(--primary); }
+
+.info-message {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Success Message Styling */
+#successMessage {
+    text-align: center;
+    padding: 40px;
+}
+
+.hidden { display: none; }
+
+.success-text {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.loader {
+    border: 4px solid rgba(56, 189, 248, 0.1);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* =========================================
    9. FOOTER
    ========================================= */
-footer {
-    background-color: #020617; /* Darkest black/blue */
-    color: var(--text-muted);
-    text-align: center;
+#footer {
+    background-color: #020c1b; /* Almost Black Blue */
     padding: 40px 20px;
-    margin-top: auto;
-    border-top: 1px solid #1e293b;
-}
-
-footer p {
-    margin: 5px 0;
+    text-align: center;
+    border-top: 1px solid #233554;
+    margin-top: 60px;
+    color: var(--text-muted);
 }
 
 /* =========================================
-   10. RESPONSIVE DESIGN (Mobile)
+   10. MEDIA QUERIES (Mobile)
    ========================================= */
 @media (max-width: 768px) {
-    .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding-top: 30px;
-    }
-
-    .hero-text {
-        padding-right: 0;
-        margin-top: 30px;
-    }
-
-    nav {
+    #navbar { flex-direction: column; }
+    .nav-right {
+        display: none;
         flex-direction: column;
-        padding: 1rem;
+        width: 100%;
+        margin-top: 20px;
     }
-
-    nav ul {
-        margin-top: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
+    
+    #nav-toggle:checked ~ .nav-right { display: flex; }
+    
+    .nav-toggle-label {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    .nav-toggle-label span {
+        display: block;
+        height: 3px;
+        width: 25px;
+        background: var(--primary);
+        margin-bottom: 5px;
     }
 }
