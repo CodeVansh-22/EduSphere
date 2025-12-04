@@ -13,7 +13,7 @@ app.use(bodyParser.json()); // Parse JSON data from frontend
 
 // --- DATABASE CONNECTION (Will add URL later) ---
 // Replace '<password>' with your real password later
-const MONGO_URI = "mongodb+srv://vanshchauhan_db_user:vansh%402206@cluster0.amelidd.mongodb.net/?appName=Cluster0";
+const MONGO_URI = "mongodb+srv://vanshchauhan_db_user:vansh2206@cluster0.amelidd.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(MONGO_URI)
 .then(() => console.log("MongoDB Connected Successfully"))
