@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | EduSphere</title>
+    <title>Register | EduSphere</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* INTERNAL CSS SPECIFIC FOR LOGIN PAGE */
+        /* INTERNAL CSS FOR REGISTER PAGE ONLY */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #0a192f; /* Deep Navy Background */
+            background-color: #0a192f; /* Deep Navy */
             color: #e6f1ff;
         }
 
-        .login-box {
+        .register-box {
             background: #112240; /* Card Background */
             padding: 40px;
-            width: 350px;
+            width: 380px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border: 1px solid #233554;
@@ -29,23 +29,22 @@
 
         h2 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: #e6f1ff;
-            font-weight: 600;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #38bdf8; /* Electric Blue Text */
+            margin-bottom: 6px;
+            color: #38bdf8; /* Electric Blue */
             font-size: 0.9rem;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            background: #0a192f; /* Dark Input Background */
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #0a192f;
             border: 1px solid #233554;
             border-radius: 6px;
             color: white;
@@ -62,13 +61,14 @@
             width: 100%;
             padding: 12px;
             border: none;
-            background: #38bdf8; /* Electric Blue Button */
-            color: #0a192f; /* Dark Text on Button */
+            background: #38bdf8;
+            color: #0a192f;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             border-radius: 6px;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -76,23 +76,23 @@
             color: white;
         }
 
-        .register-link {
+        .login-link {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9rem;
             color: #8892b0;
         }
 
-        .register-link a {
+        .login-link a {
             color: #38bdf8;
             text-decoration: none;
             font-weight: 500;
         }
 
-        .register-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
-        
+
         .back-home {
             display: block;
             text-align: center;
@@ -106,21 +106,28 @@
 </head>
 <body>
 
-    <div class="login-box">
-        <h2>Login</h2>
-        <form action="index.html"> <label>Email</label>
+    <div class="register-box">
+        <h2>Register</h2>
+        <form action="login.html"> <label>Full Name</label>
+            <input type="text" placeholder="Enter your full name" required>
+
+            <label>Email</label>
             <input type="email" placeholder="Enter your email" required>
 
             <label>Password</label>
-            <input type="password" placeholder="Enter your password" required>
+            <input type="password" placeholder="Create a password" required>
 
-            <button type="submit">Login</button>
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm your password" required>
+
+            <button type="submit">Register</button>
         </form>
 
-        <div class="register-link">
-            <p>New User? <a href="register.html">Register Here</a></p>
+        <div class="login-link">
+            <p>Already have an account? <a href="login.html">Login Here</a></p>
             <a href="index.html" class="back-home">&larr; Back To Home</a>
         </div>
+
     </div>
 
 </body>
