@@ -3,91 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Register | EduSphere</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins', sans-serif;
+        /* INTERNAL CSS FOR REGISTER PAGE ONLY */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0a192f; /* Deep Navy */
+            color: #e6f1ff;
         }
-        body{
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-            background:#f2f2f2;
+
+        .register-box {
+            background: #112240; /* Card Background */
+            padding: 40px;
+            width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #233554;
         }
-        .login-box{
-            background:#fff;
-            padding:30px;
-            width:350px;
-            border-radius:10px;
-            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #e6f1ff;
         }
-        h2{
-            text-align:center;
-            margin-bottom:20px;
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #38bdf8; /* Electric Blue */
+            font-size: 0.9rem;
         }
-        label{
-            font-weight:500;
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #0a192f;
+            border: 1px solid #233554;
+            border-radius: 6px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
         }
-        input{
-            width:100%;
-            padding:10px;
-            margin:8px 0 15px 0;
-            border:1px solid #999;
-            border-radius:5px;
-            outline:none;
+
+        input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px #38bdf8;
         }
-        button{
-            width:100%;
-            padding:10px;
-            border:none;
-            background:#4CAF50;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-            border-radius:5px;
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #38bdf8;
+            color: #0a192f;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+            margin-top: 10px;
         }
-        button:hover{
-            background:#43a047;
+
+        button:hover {
+            background: #0284c7;
+            color: white;
         }
-        .register-link{
-            text-align:center;
-            margin-top:15px;
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #8892b0;
         }
-        .register-link a{
-            color:#1a73e8;
-            text-decoration:none;
-            font-weight:500;
+
+        .login-link a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 500;
         }
-        .register-link a:hover{
-            text-decoration:underline;
+
+        .login-link a:hover {
+            text-decoration: underline;
         }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #8892b0;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .back-home:hover { color: #e6f1ff; }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <h2>Login</h2>
-        <form action="#" method="POST">
+    <div class="register-box">
+        <h2>Register</h2>
+        <form action="login.html"> <label>Full Name</label>
+            <input type="text" placeholder="Enter your full name" required>
+
             <label>Email</label>
             <input type="email" placeholder="Enter your email" required>
 
             <label>Password</label>
-            <input type="password" placeholder="Enter your password" required>
+            <input type="password" placeholder="Create a password" required>
 
-            <button type="submit">Login</button>
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm your password" required>
+
+            <button type="submit">Register</button>
         </form>
 
-        <div class="register-link">
-            <p>New User? <a href="register.html">Register Here</a></p>
-            <a href="index.html">Back To Home &larr;</a>
+        <div class="login-link">
+            <p>Already have an account? <a href="login.html">Login Here</a></p>
+            <a href="index.html" class="back-home">&larr; Back To Home</a>
         </div>
+
     </div>
 
 </body>
