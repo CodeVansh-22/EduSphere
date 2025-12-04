@@ -1,9 +1,14 @@
-# _config.yml (in the root folder of your repository)
+# _config.yml
 
-# This list excludes files and folders from the Jekyll build process.
+theme: jekyll-theme-primer
+
+# Very important: exclude backend and node_modules from build
 exclude:
   - Backend/
-  - Backend/node_modules/
   - node_modules/
-  - package.json
+  - vendor/
   - package-lock.json
+  - package.json
+  - yarn.lock
+  - README.md
+  - .gitignore
