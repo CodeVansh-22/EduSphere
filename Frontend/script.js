@@ -12,51 +12,76 @@ const courseData = {
     "ms-office": { title: "MS-Office", price: "₹999", duration: "1 Month", desc: "Excel, Word, PowerPoint." }
 };
 
+// Add this line at the top of your script.js if it's not already there
+const API_URL = "http://localhost:5000/api";
+
 /* =========================================
-   2. USER REGISTRATION LOGIC
+   2. USER REGISTRATION LOGIC (Backend Integrated)
    ========================================= */
-function handleRegister(event) {
+async function handleRegister(event) {
     event.preventDefault(); 
+
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
 
-    const user = { name: name, email: email, pass: pass };
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    if (users.some(u => u.email === email)) {
-        alert("Email already registered! Please Login.");
-        return;
+    try {
+        // Send registration data to the backend API
+        const response = await fetch(`${API_URL}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, email: email, password: pass }) // Sending JSON to the server
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Registration Successful! Redirecting to Login...");
+            window.location.href = 'login.html';
+        } else {
+            // Handle errors (like email already exists) sent from the server
+            alert(data.error);
+        }
+    } catch (error) {
+        // Handle network errors (if the server is not running)
+        alert("Server connection failed. Please ensure the backend server is running.");
     }
-
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    alert("Registration Successful! Redirecting to Login...");
-    window.location.href = 'login.html';
 }
 
 /* =========================================
-   3. USER LOGIN LOGIC
+   3. USER LOGIN LOGIC (Backend Integrated)
    ========================================= */
-function handleLogin(event) {
+async function handleLogin(event) {
     event.preventDefault();
+
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-pass').value;
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const validUser = users.find(u => u.email === email && u.pass === pass);
+    try {
+        // Send login credentials to the backend API
+        const response = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: pass })
+        });
 
-    if (validUser) {
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('currentUserName', validUser.name); 
-        alert("Login Successful! Welcome " + validUser.name);
-        window.location.href = 'index.html'; // Redirect to Home after login
-    } else {
-        alert("Invalid Email or Password. Please try again.");
+        const data = await response.json();
+
+        if (response.ok) {
+            // Login Success: Store status and name in localStorage for frontend UI only
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUserName', data.name); 
+            
+            alert("Login Successful! Welcome " + data.name);
+            window.location.href = 'index.html'; // Redirect to Home after login
+        } else {
+            // Handle login failure message from the server
+            alert(data.error);
+        }
+    } catch (error) {
+        alert("Server connection failed. Please ensure the backend server is running.");
     }
 }
-
 /* =========================================
    4. ENROLL LOGIC
    ========================================= */
