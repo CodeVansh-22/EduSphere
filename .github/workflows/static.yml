@@ -1,17 +1,22 @@
-name: Deploy static site to Pages
+name: Deploy Frontend to GitHub Pages
 
 on:
   push:
     branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Upload Frontend folder as artifact
+      - name: Upload Frontend folder
         uses: actions/upload-pages-artifact@v3
         with:
           path: Frontend
