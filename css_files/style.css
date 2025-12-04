@@ -1,580 +1,361 @@
-*{
+/* =========================================
+   1. VARIABLES & THEME CONFIGURATION
+   ========================================= */
+:root {
+    /* Backgrounds */
+    --bg-body: #0f172a;       /* Deep Dark Blue/Slate */
+    --bg-card: #1e293b;       /* Lighter Slate for elements */
+    --bg-nav: rgba(15, 23, 42, 0.95); /* Semi-transparent header */
+
+    /* Text Colors */
+    --text-main: #f1f5f9;     /* White-ish */
+    --text-muted: #94a3b8;    /* Soft Gray */
+    --text-highlight: #38bdf8; /* Light Blue for highlights */
+
+    /* Brand Colors */
+    --primary: #6366f1;       /* Indigo (Main Buttons/Links) */
+    --primary-hover: #4f46e5;
+    --accent: #f43f5e;        /* Rose (Call to Actions) */
+    
+    /* "COMPLETED" Status Colors (Requested) */
+    --completed-bg: rgba(16, 185, 129, 0.15);
+    --completed-text: #34d399; /* Emerald Green */
+    --completed-border: #059669;
+}
+
+/* =========================================
+   2. GLOBAL RESET & TYPOGRAPHY
+   ========================================= */
+* {
     margin: 0;
     padding: 0;
-    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
 }
-/* Navbar Section Styling */
-/* Home Page Styling */
-/* .logo{
-    height: 150px;
-    width: 150px;
-    position: absolute;
-    left: 0px;
-    bottom: 50px;
-    top: -50px;
-} */
-#navbar {
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* =========================================
+   3. NAVIGATION BAR
+   ========================================= */
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(78, 205, 196, 0.4);
-    padding: 10px 40px;
+    padding: 1rem 5%;
+    background-color: var(--bg-nav);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #334155;
+    backdrop-filter: blur(10px);
 }
-.logo {
-    height: 100px;    
-    width: 100px;     
-    object-fit: contain;
+
+nav ul {
+    display: flex;
+    gap: 20px;
 }
-.nav-right .opt {
-    margin-left: 30px;
-    font-size: 18px;
-    text-decoration: none;
-    border: 1px solid #1BFC29;
-    color: black;
+
+nav a {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 1rem;
     padding: 5px 10px;
     border-radius: 5px;
-    transition: 0.3s;
 }
 
-.nav-right .opt:hover {
-    background-color: #A3BEAF;
+nav a:hover, nav a.active {
+    color: var(--text-main);
+    background-color: #334155;
 }
 
-/* Hero Section */
-/* HERO SECTION (compact & centered) */
-#hero {
-    background-color: rgba(186, 78, 11, 0.4);
-    padding: 40px 20px;
+/* =========================================
+   4. BUTTONS & UI ELEMENTS
+   ========================================= */
+.btn, button {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+/* Primary Button (Login, Enroll) */
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
 }
 
-.HeroImage {
-    height: 200px;
-    width: 200px;
-    object-fit: contain;
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.23);
 }
 
-.msg {
-    font-size: 22px;
-    color: #fff;
-}
-
-.hero-btn {
-    background-color: #1BFC29;
-    font-size: 16px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #000;
-    transition: background-color 0.3s ease;
-}
-
-.hero-btn:hover {
-    background-color: #17c622;
+/* Secondary/Accent Button */
+.btn-accent {
+    background-color: var(--accent);
     color: white;
 }
 
-/* ICONS HORIZONTAL & CENTERED */
-.icons {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    margin-top: 15px;
-    flex-wrap: wrap;
+/* =========================================
+   5. "COMPLETED" STYLES (Requested Change)
+   ========================================= */
+/* Use this class for badges, e.g. <span class="status-badge completed">Completed</span> */
+.status-badge.completed {
+    display: inline-block;
+    background-color: var(--completed-bg);
+    color: var(--completed-text);
+    border: 1px solid var(--completed-border);
+    padding: 4px 12px;
+    border-radius: 50px; /* Pill shape */
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); /* Green Glow */
 }
 
-.icons .fa {
-    font-size: 1.6rem;
-    color: #ff69b4;
-    transition: transform 0.2s ease;
+/* Use this to style a whole card as completed */
+.card.completed-card {
+    border: 1px solid var(--completed-border);
+    position: relative;
 }
 
-.icons .fa:hover {
-    transform: scale(1.2);
-    color: #1BFC29;
-}
-
-/* Why Choose Us Section */
-h1{
-    font-family: "Libertinus Math", system-ui;
-    text-align: center;
-}
-p{
-    font-size: 18px;
-}
-#info{
-    background-color: rgb(78, 205, 196,0.4);
-}
-.gallery{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 15px;
-    max-width: 1000px;
-    margin:auto;
-}
-#footer .fa{
-    color: #ff69b4;
-    font-size: 1.7rem;
-    margin-right: 20px;
-}
-#footer{
-    height: 100%;
-    background-color: #1A535C;
+.card.completed-card::after {
+    content: "✓ COMPLETED";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--completed-border);
     color: white;
-    text-align: center;
-}
-/* Media Queries For Responsive Screen */
-@media screen and (max-width: 768px){
-#navbar {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    padding: 10px;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
 }
 
-.logo {
-    position: static;
-    margin-bottom: 10px;
-}
-
-.opt {
-    display: block;
-    margin: 10px 0;
-    border: none;
-    font-size: 16px;
-}
-#hero {
-    height: auto;
-    text-align: center;
-    padding: 20px;
-}
-
-.HeroImage {
-    position: static;
-    margin: 10px auto;
-    display: block;
-}
-
-.msg {
-    position: static;
-    margin: 10px auto;
-}
-
-.icons {
-    position: static;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.gallery {
-    flex-direction: column;
-    align-items: center;
-}
-
-#footer {
-    font-size: 12px;
-    padding: 10px;
-    height: auto;
-}
-}
-/* Mobile Sidebar */
-/* ───── Hide the checkbox ───── */
-#nav-toggle {
-    display: none;
-}
-
-/* ───── Hamburger icon ───── */
-.nav-toggle-label {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
-}
-.nav-toggle-label span {
-    display: block;
-    height: 3px;
-    background: #333;
-    border-radius: 3px;
-}
-
-/* ───── Mobile only: Show hamburger, hide default links ───── */
-@media screen and (max-width: 768px) {
-  /* Show the hamburger */
-.nav-toggle-label {
+/* =========================================
+   6. HERO SECTION
+   ========================================= */
+.hero {
     display: flex;
-    margin-left: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 5%;
+    min-height: 80vh;
+    background: radial-gradient(circle at top right, #1e1b4b, var(--bg-body));
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 300px;
     padding-right: 20px;
 }
 
-  /* Hide the nav-right by default (off-canvas to the right) */
-.nav-right {
-    position: fixed;
-    top: 0;
-    right: -250px;           /* hide off-screen */
-    width: 250px;
-    height: 100%;
-    background: rgba(78,205,196,0.95);
-    flex-direction: column;
-    align-items: center;
-    padding-top: 80px;
-    transition: right 0.3s ease;
-    z-index: 100;
-}
-
-  /* Slide it in when checked */
-#nav-toggle:checked ~ .nav-right {
-    right: 0;
-}
-
-  /* Style the links in sidebar */
-.nav-right .opt {
-    display: block;
-    margin: 15px 0;
-    font-size: 18px;
-    border: none;
-}
-}
-
-/* Course Page */
-.course-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.course-card {
-    background-color: white;
-    border-radius: 10px;
-    width: 300px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-}   
-.course-card:hover {
-    transform: scale(1.03);
-}
-.course-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-.course-card h3 {
-    font-size: 20px;
-    color: #1A535C;
-    margin-bottom: 10px;
-}
-
-.course-card p {
-    font-size: 15px;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.course-card button {
-    background-color: #1BFC29;
-    border: none;
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
     color: white;
-    font-size: 15px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.course-card button:hover {
-    background-color: #17c622;
 }
 
-/* Responsive for tablets and mobile */
-@media screen and (max-width: 768px) {
-    .course-container {
-    flex-direction: column;
-    align-items: center;
-    }
-}
-/* About Us Page */
-/* #about-us {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 20px;
-    margin: 10px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #98D2EB;
-} */
-.about-section {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
-    background-color: #98D2EB;
-    border: 2px solid #000;
-    border-radius: 10px;
-    padding: 20px;
-}
-.about-left {
-    border: 2px solid black;
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    margin: 20px;
-    overflow: hidden;
-    flex-shrink: 0;
+.hero h1 span {
+    color: var(--primary); /* Highlight color for EduSphere text */
 }
 
-.about-left img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+.hero p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
 }
 
-.about-right {
+.hero-image {
     flex: 1;
     min-width: 300px;
-    max-width: 700px;
-    margin: 20px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: #E1F2FE;
-    text-align: center;
-    padding: 20px;
-}
-/* Responsive Media Queries */
-@media screen and (max-width: 768px) {
-.about-section {
-    flex-direction: column;
-    }
-.about-left {
-        width: 200px;
-        height: 200px;
-}
-.about-right {
-        width: 90%;
-        margin: 10px auto;
-    }
-}
-@media screen and (max-width: 480px) {
-    .about-left {
-        width: 150px;
-        height: 150px;
-    }
-    .about-right {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-}
-/* Contact Page Styling */
-#contact-form {
-    background-color: #f9f9f9;
-    padding: 40px 20px;
     display: flex;
     justify-content: center;
 }
-.form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-}
-.form form {
-    display: flex;
-    flex-direction: column;
-}
-.form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-.form input,
-.form textarea {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-    resize: vertical;
-}
-.form textarea {
-    min-height: 100px;
-}
-.form button {
-    padding: 12px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.form button:hover {
-    background-color: #004c99;
-}
-/* Our Contact Info Styling */
-.contact-info {
-    background-color: #f0f4ff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 40px auto;
-    font-family: 'Segoe UI', sans-serif;
+
+.hero-image img {
+    border-radius: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    border: 1px solid #334155;
+    max-height: 400px;
 }
 
-.contact-info h2 {
-    margin-bottom: 20px;
-    color: #003366;
-    font-size: 24px;
-    text-align: center;
+/* =========================================
+   7. SECTIONS (About, Vision, Courses)
+   ========================================= */
+section {
+    padding: 60px 5%;
 }
 
-.contact-info p {
-    margin: 12px 0;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
-    display: flex;
-    align-items: center;
-}
-
-.contact-info i {
-    margin-right: 10px;
-    color: #0066cc;
-    font-size: 18px;
-    min-width: 24px;
-    text-align: center;
-}
-/* FAQ section styling */
-.faq-section {
-    max-width: 700px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f5f9ff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', sans-serif;
-}
-
-.faq-section h2 {
-    text-align: center;
-    font-size: 28px;
+h2 {
+    font-size: 2rem;
     margin-bottom: 30px;
-    color: #003366;
+    text-align: center;
+    color: var(--text-main);
+    position: relative;
+    display: inline-block;
+    width: 100%;
 }
 
-.faq {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+/* Decorative underline for headings */
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Course Cards Container */
+.course-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding-top: 20px;
+}
+
+/* Individual Card */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
     overflow: hidden;
-    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #334155;
 }
 
-.faq summary {
-    font-weight: bold;
-    cursor: pointer;
-    padding: 15px 20px;
-    background-color: #e7f0ff;
-    color: #003366;
-    list-style: none;
-    transition: background-color 0.3s;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    border-color: var(--primary);
 }
 
-.faq[open] summary {
-    background-color: #d0e5ff;
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #334155;
 }
 
-.faq-content {
-    padding: 0 20px 15px;
-    background-color: #ffffff;
-}
-
-.faq-content p {
-    margin: 10px 0;
-}
-
-/* Media queries to make responsive  */
-/* Responsive Design */
-@media (max-width: 768px) {
-    #contact-form,.contact-info,.faq-section {
+.card-content {
     padding: 20px;
-    margin: 20px auto;
-}
-.form,.contact-info {
-    max-width: 100%;
-    box-shadow: none;
-    border-radius: 0;
 }
 
-.faq-section {
-    padding: 15px;
-    box-shadow: none;
-    border-radius: 0;
+.card h3 {
+    margin-bottom: 10px;
+    color: var(--text-highlight);
 }
 
-.faq-title {
-    font-size: 16px;
-    padding: 12px 15px;
+.card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 15px;
 }
 
-.faq-content {
-    padding: 12px 15px;
+/* =========================================
+   8. FORMS (Login, Contact)
+   ========================================= */
+form {
+    max-width: 500px;
+    margin: 40px auto;
+    background-color: var(--bg-card);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
-.form input,.form textarea {
-    font-size: 14px;
-    padding: 8px;
+form label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-muted);
 }
 
-.form button {
-    padding: 10px;
-    font-size: 15px;
+form input, form textarea, form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    background-color: #0f172a; /* Dark input bg */
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
 }
 
-.contact-info p {
-    font-size: 15px;
-    flex-direction: row;
-    align-items: flex-start;
+form input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
-.contact-info i {
-    font-size: 16px;
-    min-width: 20px;
-}
-}
-
-@media (max-width: 480px) {
-.faq-section h2,.contact-info h2 {
-    font-size: 20px;
-}
-
-.form label {
-    font-size: 13px;
+/* =========================================
+   9. FOOTER
+   ========================================= */
+footer {
+    background-color: #020617; /* Darkest black/blue */
+    color: var(--text-muted);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: auto;
+    border-top: 1px solid #1e293b;
 }
 
-.form button {
-    font-size: 14px;
-}
+footer p {
+    margin: 5px 0;
 }
 
+/* =========================================
+   10. RESPONSIVE DESIGN (Mobile)
+   ========================================= */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .hero-text {
+        padding-right: 0;
+        margin-top: 30px;
+    }
+
+    nav {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
