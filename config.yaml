@@ -1,0 +1,9 @@
+# _config.yml (in the root folder of your repository)
+
+# This list excludes files and folders from the Jekyll build process.
+exclude:
+  - Backend/
+  - Backend/node_modules/
+  - node_modules/
+  - package.json
+  - package-lock.json
