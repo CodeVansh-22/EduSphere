@@ -2,17 +2,17 @@
    1. VARIABLES & THEME CONFIGURATION
    ========================================= */
 :root {
-    /* --- NEW COLOR PALETTE: LIGHT BLUE & DARK --- */
+    /* --- COLOR PALETTE: LIGHT BLUE & DEEP NAVY --- */
     
     /* Backgrounds */
-    --bg-body: #0a192f;       /* Very Dark Navy Blue */
+    --bg-body: #0a192f;       /* Deep Navy Blue */
     --bg-card: #112240;       /* Lighter Navy for cards */
     --bg-nav: rgba(10, 25, 47, 0.95); /* Semi-transparent header */
 
     /* Text Colors */
-    --text-main: #e6f1ff;     /* Pale Blue-White (Easy on eyes) */
+    --text-main: #e6f1ff;     /* Pale Blue-White */
     --text-muted: #8892b0;    /* Muted Blue-Gray */
-    --text-highlight: #64ffda; /* Minty Cyan for special text */
+    --text-highlight: #64ffda; /* Minty Cyan */
 
     /* Brand/Action Colors */
     --primary: #38bdf8;       /* Electric Sky Blue (Main Buttons) */
@@ -20,7 +20,6 @@
     --accent: #7dd3fc;        /* Light Blue for outlines */
     
     /* "COMPLETED" STATUS COLORS */
-    /* Changed to a Glowing Teal to match the blue theme */
     --success-bg: rgba(56, 189, 248, 0.15); 
     --success-text: #38bdf8;  
     --success-border: #0ea5e9;
@@ -36,6 +35,7 @@ body {
     background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -54,13 +54,13 @@ img { max-width: 100%; display: block; }
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #233554; /* Subtle dark blue border */
+    border-bottom: 1px solid #233554;
     backdrop-filter: blur(10px);
 }
 
 .nav-left h1 {
     font-family: 'Adamina', serif;
-    color: var(--text-main); /* White text for logo */
+    color: var(--text-main);
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); /* Blue Glow */
     font-size: 1.8rem;
 }
@@ -77,12 +77,12 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-right .opt:hover {
-    color: var(--primary); /* Turns Light Blue on hover */
+    color: var(--primary);
     background-color: rgba(56, 189, 248, 0.1);
 }
 
-/* Mobile Toggle */
-#nav-toggle { display: none; }
+/* CRITICAL FIX: Hide the checkbox square globally */
+#nav-toggle { display: none !important; }
 .nav-toggle-label { display: none; cursor: pointer; }
 
 /* =========================================
@@ -94,7 +94,6 @@ img { max-width: 100%; display: block; }
     align-items: center;
     text-align: center;
     padding: 80px 20px;
-    /* New Gradient: Dark Navy to slightly lighter Navy */
     background: radial-gradient(circle at center, #172a45 0%, var(--bg-body) 70%);
 }
 
@@ -103,7 +102,6 @@ img { max-width: 100%; display: block; }
 .HeroImage {
     margin: 0 auto 20px;
     width: 150px;
-    /* Blue drop shadow */
     filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); 
 }
 
@@ -117,7 +115,7 @@ img { max-width: 100%; display: block; }
 .hero-btn {
     padding: 12px 30px;
     font-size: 1.1rem;
-    background-color: transparent; /* Outline style looks cleaner in this theme */
+    background-color: transparent;
     border: 2px solid var(--primary);
     color: var(--primary);
     border-radius: 50px;
@@ -162,10 +160,9 @@ img { max-width: 100%; display: block; }
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
     border: 1px solid #233554;
-    /* Slight blue filter on images to blend them in */
     filter: sepia(20%) hue-rotate(180deg) saturate(90%); 
 }
-.about-left img:hover { filter: none; } /* Show real color on hover */
+.about-left img:hover { filter: none; }
 
 .about-right { flex: 1; min-width: 300px; }
 
@@ -174,7 +171,7 @@ img { max-width: 100%; display: block; }
     color: var(--text-main);
     margin-bottom: 20px;
     font-family: 'Oswald', sans-serif;
-    border-left: 4px solid var(--primary); /* Blue accent line */
+    border-left: 4px solid var(--primary);
     padding-left: 15px;
 }
 
@@ -213,7 +210,7 @@ img { max-width: 100%; display: block; }
     background-color: var(--bg-card);
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid #233554; /* Dark blue border */
+    border: 1px solid #233554;
     transition: transform 0.3s;
     position: relative;
     display: flex;
@@ -266,20 +263,20 @@ img { max-width: 100%; display: block; }
     color: #fff;
 }
 
-/* --- COMPLETED STATUS STYLES (UPDATED COLOR) --- */
+/* --- COMPLETED STATUS BADGE --- */
 .status-badge {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-color: var(--bg-body); /* Dark bg for contrast */
-    color: var(--primary); /* Light Blue Text */
+    background-color: var(--bg-body);
+    color: var(--primary);
     border: 1px solid var(--primary);
     padding: 5px 12px;
-    border-radius: 4px; /* Sharper corners for tech look */
+    border-radius: 4px;
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Blue Glow */
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
 /* =========================================
@@ -307,7 +304,7 @@ input, select, textarea {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    background-color: #0a192f; /* Darkest Navy */
+    background-color: #0a192f;
     border: 1px solid #233554;
     border-radius: 6px;
     color: var(--text-main);
@@ -400,12 +397,8 @@ summary.faq-title:hover { color: var(--primary); }
     color: var(--text-muted);
 }
 
-/* Success Message Styling */
-#successMessage {
-    text-align: center;
-    padding: 40px;
-}
-
+/* Success Message */
+#successMessage { text-align: center; padding: 40px; }
 .hidden { display: none; }
 
 .success-text {
@@ -431,7 +424,7 @@ summary.faq-title:hover { color: var(--primary); }
    9. FOOTER
    ========================================= */
 #footer {
-    background-color: #020c1b; /* Almost Black Blue */
+    background-color: #020c1b;
     padding: 40px 20px;
     text-align: center;
     border-top: 1px solid #233554;
@@ -440,79 +433,40 @@ summary.faq-title:hover { color: var(--primary); }
 }
 
 /* =========================================
-   10. MEDIA QUERIES (Mobile)
-   ========================================= */
-@media (max-width: 768px) {
-    #navbar { flex-direction: column; }
-    .nav-right {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        margin-top: 20px;
-    }
-    
-    #nav-toggle:checked ~ .nav-right { display: flex; }
-    
-    .nav-toggle-label {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-    .nav-toggle-label span {
-        display: block;
-        height: 3px;
-        width: 25px;
-        background: var(--primary);
-        margin-bottom: 5px;
-    }
-}
-/* =========================================
-   FIX 1: GLOBALLY HIDE THE CHECKBOX
-   (Add this near the top of your CSS or check line ~65)
-   ========================================= */
-#nav-toggle { 
-    display: none !important; /* Force hide the white square */
-}
-
-/* =========================================
-   FIX 2: UPDATED MOBILE MEDIA QUERY
-   (Replace the bottom section of your CSS with this)
+   10. MOBILE & RESPONSIVE DESIGN (FIXED)
    ========================================= */
 @media (max-width: 768px) {
     /* 1. Navbar Container Layout */
     #navbar {
-        flex-direction: column;      /* Stack elements vertically */
-        align-items: flex-start;     /* Align content to the left */
-        position: relative;          /* needed to position the toggle button */
+        flex-direction: column;      /* Stack elements */
+        align-items: flex-start;     /* Align left */
+        position: relative;          /* For absolute positioning of toggle */
         padding: 15px 20px;
     }
 
     /* 2. Logo Area */
     .nav-left {
-        width: 100%;                 /* Full width to push toggle to right */
+        width: 100%;
         margin-bottom: 5px;
     }
     
-    .nav-left h1 {
-        font-size: 1.5rem;           /* Slightly smaller font for mobile */
-    }
+    .nav-left h1 { font-size: 1.5rem; }
 
     /* 3. The Hamburger Button (Three Lines) */
     .nav-toggle-label {
-        display: block;              /* Make it visible on mobile */
-        position: absolute;          /* Float it */
-        top: 25px;                   /* Distance from top */
-        right: 20px;                 /* Distance from right */
+        display: block;              /* Visible on mobile */
+        position: absolute;
+        top: 25px;
+        right: 20px;
         cursor: pointer;
-        padding: 5px;                /* Make click area bigger */
+        padding: 5px;
     }
 
     .nav-toggle-label span {
         display: block;
         height: 3px;
         width: 28px;
-        background-color: var(--primary); /* Use the Theme Blue Color */
+        background-color: var(--primary);
         margin-bottom: 6px;
         border-radius: 3px;
         transition: all 0.3s ease;
@@ -520,10 +474,10 @@ summary.faq-title:hover { color: var(--primary); }
 
     /* 4. The Menu Links (Hidden by default) */
     .nav-right {
-        display: none;               /* HIDE links initially */
+        display: none;               /* HIDE initially */
         flex-direction: column;
         width: 100%;
-        background-color: var(--bg-card); /* Dark background for menu */
+        background-color: var(--bg-card);
         border-radius: 8px;
         margin-top: 15px;
         border: 1px solid #233554;
@@ -532,10 +486,10 @@ summary.faq-title:hover { color: var(--primary); }
 
     /* 5. SHOW Menu when Checkbox is Checked */
     #nav-toggle:checked ~ .nav-right {
-        display: flex;               /* Show links when toggled */
+        display: flex;
     }
 
-    /* 6. Style the Links inside the dropdown */
+    /* 6. Style the Links */
     .nav-right .opt {
         text-align: center;
         padding: 15px;
@@ -543,22 +497,14 @@ summary.faq-title:hover { color: var(--primary); }
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-
-    .nav-right .opt:last-child {
-        border-bottom: none;
-    }
+    .nav-right .opt:last-child { border-bottom: none; }
 
     .nav-right .opt:hover {
         background-color: var(--bg-body);
         color: var(--primary);
     }
     
-    /* 7. Hero Section Adjustment for Mobile */
-    #hero {
-        padding-top: 40px;
-    }
-    
-    .msg {
-        font-size: 1.8rem; /* Smaller text for mobile screens */
-    }
+    /* 7. Hero Adjustments */
+    #hero { padding-top: 40px; }
+    .msg { font-size: 1.8rem; }
 }
