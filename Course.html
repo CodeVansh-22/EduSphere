@@ -32,63 +32,68 @@
     <div class="course-container">
         
         <div class="course-card">
-            <span class="status-badge">Completed</span> <img src="images/Course Card1.jpg" alt="Web Dev">
+            <img src="images/Course Card1.jpg" alt="Web Dev">
             <h3>Fundamentals Of Web Development</h3>
             <p>Learn HTML, CSS and Javascript to build stunning websites from scratch.</p>
-            <a href="enroll.html"><button>Enroll Again</button></a>
+            <button onclick="handleEnroll('web-dev')">Enroll Now</button>
         </div>
 
         <div class="course-card">
             <img src="images/Course Card2.jpg" alt="Data Science">
             <h3>Data Science</h3>
             <p>Master data analysis, Python, and machine learning fundamentals.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <button onclick="handleEnroll('data-science')">Enroll Now</button>
         </div>
 
         <div class="course-card">
             <img src="images/Course Card3.jpg" alt="Graphics">
             <h3>Graphics Design</h3>
             <p>Design stunning visuals using Canva, Photoshop, and design principles.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <button onclick="handleEnroll('graphic-design')">Enroll Now</button>
         </div>
 
         <div class="course-card">
             <img src="images/Course Card4.jpg" alt="App Dev">
             <h3>App Development</h3>
             <p>Create mobile apps using Flutter and publish on Play Store & App Store.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <button onclick="handleEnroll('app-dev')">Enroll Now</button>
         </div>
 
         <div class="course-card">
             <img src="images/Course Card5.jpg" alt="Marketing">
             <h3>Digital Marketing</h3>
             <p>Learn SEO, email marketing, Google Ads & social media strategy.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <button onclick="handleEnroll('digital-marketing')">Enroll Now</button>
         </div>
 
         <div class="course-card">
             <img src="images/Course Card6.jpg" alt="Soft Skills">
             <h3>Soft Skills</h3>
             <p>Improve communication, confidence, and presentation skills professionally.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <button onclick="handleEnroll('soft-skills')">Enroll Now</button>
         </div>
+
         <div class="course-card">
             <img src="images/Course Card7.jpg" alt="Gen Ai">
             <h3>Generative AI</h3>
-            <p>Understanding core concepts and distinguishing generative from discriminative AI..</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <p>Understanding core concepts and distinguishing generative from discriminative AI.</p>
+            <button onclick="handleEnroll('gen-ai')">Enroll Now</button>
         </div>
+
         <div class="course-card">
-            <img src="images/Course Card8.jpg" alt="Soft Skills">
+            <img src="images/Course Card8.jpg" alt="MS Office">
             <h3>MS-Office</h3>
-            <p>Unleash your potential with our free online Microsoft courses, offering lessons in Word, Excel, PowerPoint, Access, and more.</p>
-            <a href="enroll.html"><button>Enroll Now</button></a>
+            <p>Unleash your potential with lessons in Word, Excel, PowerPoint, and Access.</p>
+            <button onclick="handleEnroll('ms-office')">Enroll Now</button>
         </div>
+
     </div>
 
     <div id="footer">
         <p>&copy; 2025 EduSphere</p>
     </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>

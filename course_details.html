@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details | EduSphere</title>
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css_files/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <!-- 1. Navigation Bar -->
+    <div id="navbar">
+        <div class="nav-left">
+            <h1>EduSphere</h1>
+        </div>
+        <div class="nav-right">
+            <a class="opt" href="Course.html">Back to Courses</a>
+            <a class="opt" href="index.html">Home</a>
+        </div>
+    </div>
+
+    <!-- 2. Dynamic Course Details Card -->
+    <!-- The text inside here will change based on what user clicked -->
+    <div class="enroll-card">
+        
+        <!-- Course Title -->
+        <h2 id="c-title" style="font-family: 'Oswald', sans-serif; font-size: 2rem; color: #e6f1ff;">Loading Course...</h2>
+        
+        <!-- Course Description -->
+        <p class="subtitle" id="c-desc" style="color: #8892b0; margin-bottom: 20px;">
+            Please wait while we fetch details...
+        </p>
+        
+        <!-- Fee and Duration Box -->
+        <div style="background: #112240; padding: 20px; border: 1px solid #233554; border-radius: 8px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: left;">
+                <p style="color: #8892b0; font-size: 0.9rem;">Course Fee</p>
+                <h1 id="c-price" style="color: #38bdf8; margin: 0;">--</h1>
+            </div>
+            <div style="text-align: right;">
+                <p style="color: #8892b0; font-size: 0.9rem;">Duration</p>
+                <h3 id="c-duration" style="color: #e6f1ff; margin: 0;">--</h3>
+            </div>
+        </div>
+
+        <!-- 3. User Details Form -->
+        <form id="detailsForm" onsubmit="goToPayment(event)">
+            <p style="color: #64ffda; margin-bottom: 15px; font-size: 0.9rem; text-align: left;">
+                <i class="fa fa-lock"></i> Secure Enrollment
+            </p>
+
+            <label>Full Name <span class="required">*</span></label>
+            <input type="text" id="userName" placeholder="Enter your full name" required>
+            
+            <label>Phone Number <span class="required">*</span></label>
+            <input type="tel" id="userPhone" placeholder="Enter mobile number" pattern="[0-9]{10}" title="Ten digit mobile number" required>
+            
+            <label>Email Address <span class="required">*</span></label>
+            <input type="email" id="userEmail" placeholder="Enter email address" required>
+            
+            <button type="submit">Proceed to Payment UI</button>
+            
+            <p class="info-message">You will not be charged yet.</p>
+        </form>
+    </div>
+
+    <div id="footer">
+        <p>&copy; 2025 EduSphere</p>
+    </div>
+
+    <!-- IMPORTANT: Link your script.js here so we can access courseData -->
+    <script src="script.js"></script>
+
+    <!-- Page Specific Logic -->
+    <script>
+        // 1. Get the ID stored in the browser (e.g., "gen-ai" or "ms-office")
+        const selectedId = localStorage.getItem('selectedCourse');
+        
+        // 2. Pre-fill logic: If user is logged in, try to fill their name
+        const currentUserName = localStorage.getItem('currentUserName');
+        if (currentUserName) {
+            document.getElementById('userName').value = currentUserName;
+        }
+
+        // 3. Logic to fill the HTML with data
+        if(selectedId && courseData[selectedId]) {
+            // Found the course! Update the HTML elements.
+            const course = courseData[selectedId];
+
+            document.getElementById('c-title').innerText = course.title;
+            document.getElementById('c-desc').innerText = course.desc;
+            document.getElementById('c-price').innerText = course.price;
+            document.getElementById('c-duration').innerText = course.duration;
+        } else {
+            // Error: No course selected, or ID is wrong. Send them back.
+            // alert("No course selected. Redirecting to Course page.");
+            // window.location.href = 'Course.html';
+            document.getElementById('c-title').innerText = "Course Not Found";
+            document.getElementById('c-desc').innerText = "Please go back and select a course.";
+        }
+
+        // 4. Handle Form Submit
+        function goToPayment(e) {
+            e.preventDefault(); // Stop page reload
+            // Redirect to Payment
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+</html>

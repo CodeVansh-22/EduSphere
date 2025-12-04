@@ -108,11 +108,17 @@
 
     <div class="login-box">
         <h2>Login</h2>
-        <form action="index.html"> <label>Email</label>
-            <input type="email" placeholder="Enter your email" required>
+        
+        <!-- UPDATED FORM: Triggers JS Logic -->
+        <form onsubmit="handleLogin(event)"> 
+            
+            <label>Email</label>
+            <!-- Added ID for Script -->
+            <input type="email" id="login-email" placeholder="Enter your email" required>
 
             <label>Password</label>
-            <input type="password" placeholder="Enter your password" required>
+            <!-- Added ID for Script -->
+            <input type="password" id="login-pass" placeholder="Enter your password" required>
 
             <button type="submit">Login</button>
         </form>
@@ -122,6 +128,9 @@
             <a href="index.html" class="back-home">&larr; Back To Home</a>
         </div>
     </div>
+
+    <!-- LINK TO SCRIPT -->
+    <script src="script.js"></script>
 
 </body>
 </html>
