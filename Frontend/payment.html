@@ -4,172 +4,446 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment | EduSphere</title>
-    <link rel="stylesheet" href="css/payment.css">
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES (MATCHING YOUR THEME) --- */
+        :root {
+            --bg-body: #0a192f;      /* Deep Navy */
+            --bg-card: #112240;      /* Lighter Navy */
+            --primary: #38bdf8;      /* Electric Blue */
+            --text-main: #e6f1ff;    /* White-ish */
+            --text-muted: #8892b0;   /* Grey-ish */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- MAIN CONTAINER (SPLIT VIEW) --- */
+        .payment-container {
+            display: flex;
+            width: 900px;
+            max-width: 100%;
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid #233554;
+        }
+
+        /* --- LEFT SIDEBAR (PRICE SUMMARY) --- */
+        .summary-sidebar {
+            width: 35%;
+            background: linear-gradient(135deg, #112240 0%, #0d1b33 100%);
+            padding: 40px;
+            border-right: 1px solid #233554;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .summary-sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--primary);
+        }
+
+        .app-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .price-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .price-label { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; }
+        .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--primary); }
+        .course-name { margin-top: 10px; font-size: 1rem; color: var(--text-main); line-height: 1.4; }
+
+        .user-info {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #233554;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .user-info i { margin-right: 8px; color: var(--primary); }
+
+        /* --- RIGHT SIDE (PAYMENT FORM) --- */
+        .payment-content {
+            width: 65%;
+            padding: 40px;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header-row h2 { font-size: 1.5rem; }
+        .header-row i { font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+
+        /* Payment Methods Tabs */
+        .methods-grid {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .method-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            border: 1px solid #233554;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 80px;
+            transition: 0.3s;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .method-item:hover, .method-item.active {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+        }
+
+        .method-item i { font-size: 1.5rem; }
+
+        /* Form Inputs */
+        .form-group { margin-bottom: 20px; }
+        
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--bg-body);
+            border: 1px solid #233554;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        select { cursor: pointer; }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.1);
+        }
+
+        .input-row { display: flex; gap: 20px; }
+        .input-row .form-group { flex: 1; }
+
+        .card-icons {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        .card-icons i { font-size: 1.5rem; margin-left: 10px; color: var(--text-muted); }
+
+        /* Pay Button */
+        .pay-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: #0a192f;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .pay-btn:hover {
+            background-color: #0284c7;
+            color: white;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .checkbox-group input { width: auto; }
+
+        /* Helpers */
+        .hidden { display: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .payment-container { flex-direction: column; }
+            .summary-sidebar, .payment-content { width: 100%; }
+            .summary-sidebar { padding: 30px; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- MAIN CONTAINER -->
     <div class="payment-container">
+        
+        <!-- LEFT SIDE: Summary -->
+        <div class="summary-sidebar">
+            <div class="app-brand">EduSphere</div>
+            
+            <div class="price-box">
+                <div class="price-label">Total Payable</div>
+                <div class="price-amount" id="disp-price">₹0</div>
+                <div class="course-name" id="disp-title">Select a Course</div>
+            </div>
 
-        <!-- LEFT SECTION -->
-        <div class="payment-details">
-            <h1>EduSphere</h1>
-            <p class="price-title">Total Payable</p>
-            <h2 id="disp-price">₹0</h2>
-            <p id="disp-title">Course Name</p>
-
-            <div class="transaction-info">
-                <p><b id="disp-user">Guest User</b></p>
-                <p>Transaction ID: #EDU-88392</p>
+            <div class="user-info">
+                <p><i class="fa fa-user-circle"></i> <span id="disp-user">Guest User</span></p>
+                <p style="margin-top:5px; font-size:0.75rem;">Transaction ID: #EDU-88392</p>
             </div>
         </div>
 
-        <!-- RIGHT SECTION -->
-        <div class="payment-options">
-            <h2>Payment Options</h2>
-
-            <div class="tabs">
-                <button id="tab-card" onclick="switchTab('card')" class="active">Card</button>
-                <button id="tab-netbank" onclick="switchTab('netbank')">NetBank</button>
-                <button id="tab-upi" onclick="switchTab('upi')">UPI</button>
+        <!-- RIGHT SIDE: Payment Form -->
+        <div class="payment-content">
+            <div class="header-row">
+                <h2>Payment Options</h2>
+                <i class="fa fa-times" onclick="window.location.href='Course.html'"></i>
             </div>
 
-            <!-- CARD SECTION -->
+            <!-- INTERACTIVE Methods Tabs -->
+            <!-- Note: added onclick events to switch tabs -->
+            <div class="methods-grid">
+                <div class="method-item active" id="tab-card" onclick="switchTab('card')">
+                    <i class="fa fa-credit-card"></i>
+                    <span>Card</span>
+                </div>
+                <div class="method-item" id="tab-netbank" onclick="switchTab('netbank')">
+                    <i class="fa fa-university"></i>
+                    <span>NetBank</span>
+                </div>
+                <div class="method-item" id="tab-upi" onclick="switchTab('upi')">
+                    <i class="fa fa-google-wallet"></i>
+                    <span>UPI</span>
+                </div>
+            </div>
+
+            <!-- === 1. CARD FORM SECTION === -->
             <div id="section-card">
+                <div class="card-icons">
+                    <i class="fa fa-cc-visa" style="color:white;"></i>
+                    <i class="fa fa-cc-mastercard" style="color:white;"></i>
+                </div>
+
                 <form onsubmit="confirmPayment(event)">
-                    <div class="input-box">
+                    <div class="form-group">
                         <label>Card Number</label>
-                        <input type="text" placeholder="0000 0000 0000 0000">
+                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
                     </div>
 
                     <div class="input-row">
-                        <div class="input-box">
+                        <div class="form-group">
                             <label>Expiry (MM/YY)</label>
-                            <input type="text" placeholder="MM / YY">
+                            <input type="text" placeholder="MM / YY" maxlength="5" required>
                         </div>
-                        <div class="input-box">
+                        <div class="form-group">
                             <label>CVV</label>
-                            <input type="text" placeholder="123">
+                            <input type="password" placeholder="123" maxlength="3" required>
                         </div>
                     </div>
 
-                    <div class="input-box">
+                    <div class="form-group">
                         <label>Card Holder Name</label>
-                        <input type="text" placeholder="Name on card">
+                        <input type="text" placeholder="Name on card" required>
                     </div>
 
-                    <button id="pay-btn-card" type="submit" class="pay-btn">Pay</button>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="saveCard">
+                        <label for="saveCard" style="margin:0;">Securely save this card for future</label>
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-card">Pay Now</button>
                 </form>
             </div>
 
-            <!-- NETBANK SECTION -->
+            <!-- === 2. NETBANKING FORM SECTION (Initially Hidden) === -->
             <div id="section-netbank" class="hidden">
                 <form onsubmit="confirmPayment(event)">
-                    <div class="input-box">
+                    <div class="form-group">
                         <label>Select Bank</label>
-                        <input type="text" placeholder="HDFC, SBI, ICICI...">
+                        <select required>
+                            <option value="" disabled selected>Choose your bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra</option>
+                        </select>
                     </div>
-                    <button id="pay-btn-netbank" type="submit" class="pay-btn">Pay</button>
+                    
+                    <div class="info-msg" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
+                        <i class="fa fa-info-circle"></i> You will be redirected to your bank's secure login page.
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-netbank">Pay Now</button>
                 </form>
             </div>
 
-            <!-- UPI SECTION -->
+            <!-- === 3. UPI FORM SECTION (Initially Hidden) === -->
             <div id="section-upi" class="hidden">
                 <form onsubmit="confirmPayment(event)">
-                    <div class="input-box">
-                        <label>Enter UPI ID</label>
-                        <input type="text" placeholder="example@upi">
+                    <div class="form-group">
+                        <label>UPI ID / VPA</label>
+                        <input type="text" placeholder="username@upi" required>
                     </div>
-                    <button id="pay-btn-upi" type="submit" class="pay-btn">Pay</button>
+                    
+                    <div style="text-align:center; margin: 20px 0;">
+                        <p style="margin-bottom: 10px; color: var(--text-muted);">OR Scan QR Code</p>
+                        <!-- QR Code Placeholder -->
+                        <div style="background: white; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EduSpherePayment" alt="QR Code" style="width: 150px; height: 150px;">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-upi">Pay Now</button>
                 </form>
             </div>
+
         </div>
     </div>
-
-    <!-- LOAD script.js FIRST (IMPORTANT) -->
+    
+    <!-- LINK TO SCRIPT (Required to fetch data) -->
     <script src="script.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <!-- LOAD Razorpay Checkout Script -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- Load script.js FIRST -->
+<script src="script.js"></script>
 
-    <!-- CUSTOM LOGIC -->
-    <script>
-        /* ------------ TAB SWITCHING ------------ */
-        function switchTab(name) {
-            document.getElementById("section-card").classList.add("hidden");
-            document.getElementById("section-netbank").classList.add("hidden");
-            document.getElementById("section-upi").classList.add("hidden");
+<!-- Load Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-            document.getElementById("tab-card").classList.remove("active");
-            document.getElementById("tab-netbank").classList.remove("active");
-            document.getElementById("tab-upi").classList.remove("active");
+<script>
+    // --- TAB SWITCHING (unchanged) ---
+    function switchTab(methodName) {
+        document.getElementById('section-card').classList.add('hidden');
+        document.getElementById('section-netbank').classList.add('hidden');
+        document.getElementById('section-upi').classList.add('hidden');
 
-            document.getElementById("section-" + name).classList.remove("hidden");
-            document.getElementById("tab-" + name).classList.add("active");
+        document.getElementById('tab-card').classList.remove('active');
+        document.getElementById('tab-netbank').classList.remove('active');
+        document.getElementById('tab-upi').classList.remove('active');
+
+        document.getElementById('section-' + methodName).classList.remove('hidden');
+        document.getElementById('tab-' + methodName).classList.add('active');
+    }
+
+    // --- LOAD COURSE DETAILS (fixed courseData issue) ---
+    window.onload = function () {
+        const selectedId = localStorage.getItem('selectedCourse');
+        const currentUser = localStorage.getItem('currentUserName') || "Guest User";
+
+        document.getElementById('disp-user').innerText = currentUser;
+
+        // FIX: courseData exists in script.js
+        if (typeof courseData !== "undefined" && selectedId && courseData[selectedId]) {
+            const course = courseData[selectedId];
+
+            document.getElementById('disp-price').innerText = course.price;
+            document.getElementById('disp-title').innerText = course.title;
+
+            const btnText = "Pay " + course.price;
+            document.getElementById('pay-btn-card').innerText = btnText;
+            document.getElementById('pay-btn-netbank').innerText = btnText;
+            document.getElementById('pay-btn-upi').innerText = btnText;
+        }
+    };
+
+    // --- REAL PAYMENT LOGIC (FULLY FIXED) ---
+    async function confirmPayment(e) {
+        e.preventDefault();
+
+        const priceText = document.getElementById('disp-price').innerText;
+        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+        if (!amount) {
+            alert("Invalid Course Price");
+            return;
         }
 
-        /* ------------ LOAD COURSE DETAILS ------------ */
-        window.onload = function () {
-            const courseId = localStorage.getItem("selectedCourse");
-            const username = localStorage.getItem("currentUserName") || "Guest User";
+        // FIXED BACKEND URL
+        const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
 
-            document.getElementById("disp-user").innerText = username;
+        let orderResponse = await fetch(`${API_URL}/create-order`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount })
+        });
 
-            if (courseId && courseData[courseId]) {
-                const c = courseData[courseId];
-                document.getElementById("disp-price").innerText = c.price;
-                document.getElementById("disp-title").innerText = c.title;
+        let orderData = await orderResponse.json();
 
-                document.getElementById("pay-btn-card").innerText = "Pay " + c.price;
-                document.getElementById("pay-btn-netbank").innerText = "Pay " + c.price;
-                document.getElementById("pay-btn-upi").innerText = "Pay " + c.price;
-            }
+        if (!orderData.id) {
+            alert("Order creation failed. Check backend deployment.");
+            return;
+        }
+
+        // --- OPEN RAZORPAY WINDOW ---
+        const options = {
+            key: "rzp_test_RnqzlJgS6MFe2M",
+            amount: orderData.amount,
+            currency: "INR",
+            name: "EduSphere",
+            description: "Course Purchase",
+            order_id: orderData.id,
+
+            handler: function (response) {
+                alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+                window.location.href = "Course.html";
+            },
+
+            theme: { color: "#38bdf8" }
         };
 
-        /* ------------ RAZORPAY PAYMENT LOGIC ------------ */
-        async function confirmPayment(e) {
-            e.preventDefault();
+        const rzp = new Razorpay(options);
 
-            const priceText = document.getElementById("disp-price").innerText;
-            const amount = parseInt(priceText.replace(/[^0-9]/g, ""));
+        rzp.on("payment.failed", function (res) {
+            alert("Payment Failed: " + res.error.description);
+        });
 
-            if (!amount || amount <= 0) {
-                alert("Invalid course amount");
-                return;
-            }
+        rzp.open();
+    }
+</script>
 
-            const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
-
-            const res = await fetch(`${API_URL}/create-order`, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ amount })
-            });
-
-            const order = await res.json();
-
-            const options = {
-                key: "rzp_test_RnqzlJgS6MFe2M",
-                amount: order.amount,
-                currency: "INR",
-                name: "EduSphere",
-                description: "Course Purchase",
-                order_id: order.id,
-
-                handler: function (response) {
-                    alert("Payment Successful! ID: " + response.razorpay_payment_id);
-                    window.location.href = "Course.html";
-                },
-
-                theme: {
-                    color: "#38bdf8"
-                }
-            };
-
-            const rzp = new Razorpay(options);
-            rzp.open();
-        }
-    </script>
 
 </body>
 </html>
