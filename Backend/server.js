@@ -3,23 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const Razorpay = require('razorpay');   // ⭐ Razorpay Imported
+const Razorpay = require('razorpay');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// -------------------- DATABASE CONNECTION --------------------
+// MongoDB connection
 const MONGO_URI = "mongodb+srv://vanshchauhan_db_user:vansh2206@cluster0.amelidd.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch(err => console.log(err));
 
-// ---------------------- MODELS ----------------------
 const UserSchema = new mongoose.Schema({
     name: String,
     email: { type: String, required: true, unique: true },
@@ -27,20 +25,18 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', UserSchema);
 
-// -------------------- RAZORPAY CONFIG --------------------
+// Razorpay config
 const razorpay = new Razorpay({
-    key_id: "rzp_test_RnqzlJgS6MFe2M",        // ⭐ Your Key ID
-    key_secret: "12nYyjrzt1QQ4nYtXUUPE8UY"    // ⭐ Your Key Secret
+    key_id: "rzp_test_RnqzlJgS6MFe2M",
+    key_secret: "12nYyjrzt1QQ4nYtXUUPE8UY"
 });
 
-// -------------------- ROUTES --------------------
-
-// Root Route
+// Health route
 app.get('/', (req, res) => {
     res.send("EduSphere Backend is Running ✔");
 });
 
-// ------------------ REGISTER ROUTE ------------------
+// Auth routes
 app.post('/api/register', async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -52,7 +48,6 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-// ------------------ LOGIN ROUTE ------------------
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -67,27 +62,25 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// ------------------ CREATE ORDER (Razorpay) ------------------
+// Razorpay order route
 app.post('/api/create-order', async (req, res) => {
     try {
         const { amount } = req.body;
 
         const options = {
-            amount: amount * 100, // Convert ₹ → paise
+            amount: amount * 100,
             currency: "INR",
             receipt: "receipt_" + Date.now()
         };
 
         const order = await razorpay.orders.create(options);
         res.json(order);
-
     } catch (error) {
         console.error("Order creation failed:", error);
         res.status(500).json({ error: "Failed to create Razorpay order" });
     }
 });
 
-// -------------------- START SERVER --------------------
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
