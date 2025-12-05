@@ -7,15 +7,15 @@
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
+    <!-- Inline styling (unchanged from your version) -->
     <style>
-        /* --- CSS VARIABLES (MATCHING YOUR THEME) --- */
         :root {
-            --bg-body: #0a192f;      /* Deep Navy */
-            --bg-card: #112240;      /* Lighter Navy */
-            --primary: #38bdf8;      /* Electric Blue */
-            --text-main: #e6f1ff;    /* White-ish */
-            --text-muted: #8892b0;   /* Grey-ish */
+            --bg-body: #0a192f;
+            --bg-card: #112240;
+            --primary: #38bdf8;
+            --text-main: #e6f1ff;
+            --text-muted: #8892b0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -30,7 +30,6 @@
             padding: 20px;
         }
 
-        /* --- MAIN CONTAINER (SPLIT VIEW) --- */
         .payment-container {
             display: flex;
             width: 900px;
@@ -41,8 +40,7 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border: 1px solid #233554;
         }
-        
-        /* --- LEFT SIDEBAR (PRICE SUMMARY) --- */
+
         .summary-sidebar {
             width: 35%;
             background: linear-gradient(135deg, #112240 0%, #0d1b33 100%);
@@ -87,10 +85,8 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-        
         .user-info i { margin-right: 8px; color: var(--primary); }
 
-        /* --- RIGHT SIDE (PAYMENT FORM) --- */
         .payment-content {
             width: 65%;
             padding: 40px;
@@ -105,7 +101,6 @@
         .header-row h2 { font-size: 1.5rem; }
         .header-row i { font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
 
-        /* Payment Methods Tabs */
         .methods-grid {
             display: flex;
             gap: 20px;
@@ -135,14 +130,12 @@
 
         .method-item i { font-size: 1.5rem; }
 
-        /* Form Inputs */
         .form-group { margin-bottom: 20px; }
-        
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 0.9rem; 
-            color: var(--text-muted); 
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
         input, select {
@@ -167,13 +160,9 @@
         .input-row { display: flex; gap: 20px; }
         .input-row .form-group { flex: 1; }
 
-        .card-icons {
-            margin-bottom: 10px;
-            text-align: right;
-        }
+        .card-icons { margin-bottom: 10px; text-align: right; }
         .card-icons i { font-size: 1.5rem; margin-left: 10px; color: var(--text-muted); }
 
-        /* Pay Button */
         .pay-btn {
             width: 100%;
             padding: 15px;
@@ -193,7 +182,6 @@
             color: white;
         }
 
-        /* Checkbox */
         .checkbox-group {
             display: flex;
             align-items: center;
@@ -204,10 +192,8 @@
         }
         .checkbox-group input { width: auto; }
 
-        /* Helpers */
         .hidden { display: none; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .payment-container { flex-direction: column; }
             .summary-sidebar, .payment-content { width: 100%; }
@@ -218,11 +204,10 @@
 <body>
 
     <div class="payment-container">
-        
         <!-- LEFT SIDE: Summary -->
         <div class="summary-sidebar">
             <div class="app-brand">EduSphere</div>
-            
+
             <div class="price-box">
                 <div class="price-label">Total Payable</div>
                 <div class="price-amount" id="disp-price">₹0</div>
@@ -242,8 +227,7 @@
                 <i class="fa fa-times" onclick="window.location.href='Course.html'"></i>
             </div>
 
-            <!-- INTERACTIVE Methods Tabs -->
-            <!-- Note: added onclick events to switch tabs -->
+            <!-- Methods Tabs -->
             <div class="methods-grid">
                 <div class="method-item active" id="tab-card" onclick="switchTab('card')">
                     <i class="fa fa-credit-card"></i>
@@ -259,7 +243,7 @@
                 </div>
             </div>
 
-            <!-- === 1. CARD FORM SECTION === -->
+            <!-- 1. CARD SECTION -->
             <div id="section-card">
                 <div class="card-icons">
                     <i class="fa fa-cc-visa" style="color:white;"></i>
@@ -269,23 +253,23 @@
                 <form onsubmit="confirmPayment(event)">
                     <div class="form-group">
                         <label>Card Number</label>
-                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
                             <label>Expiry (MM/YY)</label>
-                            <input type="text" placeholder="MM / YY" maxlength="5" required>
+                            <input type="text" placeholder="MM / YY" maxlength="5">
                         </div>
                         <div class="form-group">
                             <label>CVV</label>
-                            <input type="password" placeholder="123" maxlength="3" required>
+                            <input type="password" placeholder="123" maxlength="3">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>Card Holder Name</label>
-                        <input type="text" placeholder="Name on card" required>
+                        <input type="text" placeholder="Name on card">
                     </div>
 
                     <div class="checkbox-group">
@@ -297,12 +281,12 @@
                 </form>
             </div>
 
-            <!-- === 2. NETBANKING FORM SECTION (Initially Hidden) === -->
+            <!-- 2. NETBANKING SECTION -->
             <div id="section-netbank" class="hidden">
                 <form onsubmit="confirmPayment(event)">
                     <div class="form-group">
                         <label>Select Bank</label>
-                        <select required>
+                        <select>
                             <option value="" disabled selected>Choose your bank</option>
                             <option value="sbi">State Bank of India</option>
                             <option value="hdfc">HDFC Bank</option>
@@ -311,7 +295,7 @@
                             <option value="kotak">Kotak Mahindra</option>
                         </select>
                     </div>
-                    
+
                     <div class="info-msg" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
                         <i class="fa fa-info-circle"></i> You will be redirected to your bank's secure login page.
                     </div>
@@ -320,17 +304,16 @@
                 </form>
             </div>
 
-            <!-- === 3. UPI FORM SECTION (Initially Hidden) === -->
+            <!-- 3. UPI SECTION -->
             <div id="section-upi" class="hidden">
                 <form onsubmit="confirmPayment(event)">
                     <div class="form-group">
                         <label>UPI ID / VPA</label>
-                        <input type="text" placeholder="username@upi" required>
+                        <input type="text" placeholder="username@upi">
                     </div>
-                    
+
                     <div style="text-align:center; margin: 20px 0;">
                         <p style="margin-bottom: 10px; color: var(--text-muted);">OR Scan QR Code</p>
-                        <!-- QR Code Placeholder -->
                         <div style="background: white; padding: 10px; display: inline-block; border-radius: 8px;">
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EduSpherePayment" alt="QR Code" style="width: 150px; height: 150px;">
                         </div>
@@ -339,108 +322,99 @@
                     <button type="submit" class="pay-btn" id="pay-btn-upi">Pay Now</button>
                 </form>
             </div>
-
         </div>
     </div>
-    
 
-<!-- Load script.js FIRST -->
-<script src="script.js"></script>
+    <!-- Razorpay SDK FIRST -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Your global script (courseData, API_URL, auth, etc.) -->
+    <script src="script.js"></script>
 
-<!-- Load Razorpay SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Page-specific JS -->
+    <script>
+        // Tab switching
+        function switchTab(methodName) {
+            document.getElementById('section-card').classList.add('hidden');
+            document.getElementById('section-netbank').classList.add('hidden');
+            document.getElementById('section-upi').classList.add('hidden');
 
-<script>
-    // --- TAB SWITCHING (unchanged) ---
-    function switchTab(methodName) {
-        document.getElementById('section-card').classList.add('hidden');
-        document.getElementById('section-netbank').classList.add('hidden');
-        document.getElementById('section-upi').classList.add('hidden');
+            document.getElementById('tab-card').classList.remove('active');
+            document.getElementById('tab-netbank').classList.remove('active');
+            document.getElementById('tab-upi').classList.remove('active');
 
-        document.getElementById('tab-card').classList.remove('active');
-        document.getElementById('tab-netbank').classList.remove('active');
-        document.getElementById('tab-upi').classList.remove('active');
-
-        document.getElementById('section-' + methodName).classList.remove('hidden');
-        document.getElementById('tab-' + methodName).classList.add('active');
-    }
-
-    // --- LOAD COURSE DETAILS (fixed courseData issue) ---
-    window.onload = function () {
-        const selectedId = localStorage.getItem('selectedCourse');
-        const currentUser = localStorage.getItem('currentUserName') || "Guest User";
-
-        document.getElementById('disp-user').innerText = currentUser;
-
-        // FIX: courseData exists in script.js
-        if (typeof courseData !== "undefined" && selectedId && courseData[selectedId]) {
-            const course = courseData[selectedId];
-
-            document.getElementById('disp-price').innerText = course.price;
-            document.getElementById('disp-title').innerText = course.title;
-
-            const btnText = "Pay " + course.price;
-            document.getElementById('pay-btn-card').innerText = btnText;
-            document.getElementById('pay-btn-netbank').innerText = btnText;
-            document.getElementById('pay-btn-upi').innerText = btnText;
-        }
-    };
-
-    // --- REAL PAYMENT LOGIC (FULLY FIXED) ---
-    async function confirmPayment(e) {
-        e.preventDefault();
-
-        const priceText = document.getElementById('disp-price').innerText;
-        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
-
-        if (!amount) {
-            alert("Invalid Course Price");
-            return;
+            document.getElementById('section-' + methodName).classList.remove('hidden');
+            document.getElementById('tab-' + methodName).classList.add('active');
         }
 
-        // FIXED BACKEND URL
-        const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
+        // Load selected course & user
+        window.onload = function () {
+            const selectedId  = localStorage.getItem('selectedCourse');
+            const currentUser = localStorage.getItem('currentUserName') || "Guest User";
 
-        let orderResponse = await fetch(`${API_URL}/create-order`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount })
-        });
+            document.getElementById('disp-user').innerText = currentUser;
 
-        let orderData = await orderResponse.json();
+            if (typeof courseData !== "undefined" && selectedId && courseData[selectedId]) {
+                const course = courseData[selectedId];
+                document.getElementById('disp-price').innerText = course.price;
+                document.getElementById('disp-title').innerText = course.title;
 
-        if (!orderData.id) {
-            alert("Order creation failed. Check backend deployment.");
-            return;
-        }
-
-        // --- OPEN RAZORPAY WINDOW ---
-        const options = {
-            key: "rzp_test_RnqzlJgS6MFe2M",
-            amount: orderData.amount,
-            currency: "INR",
-            name: "EduSphere",
-            description: "Course Purchase",
-            order_id: orderData.id,
-
-            handler: function (response) {
-                alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
-                window.location.href = "Course.html";
-            },
-
-            theme: { color: "#38bdf8" }
+                const btnText = "Pay " + course.price;
+                document.getElementById('pay-btn-card').innerText    = btnText;
+                document.getElementById('pay-btn-netbank').innerText = btnText;
+                document.getElementById('pay-btn-upi').innerText     = btnText;
+            }
         };
 
-        const rzp = new Razorpay(options);
+        // Razorpay payment (used by ALL forms)
+        async function confirmPayment(e) {
+            e.preventDefault();
 
-        rzp.on("payment.failed", function (res) {
-            alert("Payment Failed: " + res.error.description);
-        });
+            const priceText = document.getElementById('disp-price').innerText;
+            const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
 
-        rzp.open();
-    }
-</script>
+            if (!amount || amount <= 0) {
+                alert("Invalid Course Price");
+                return;
+            }
 
+            try {
+                // API_URL comes from script.js (do NOT redeclare)
+                const response = await fetch(`${API_URL}/create-order`, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount })
+                });
 
+                const orderData = await response.json();
+                if (!response.ok || !orderData.id) {
+                    alert("Order creation failed. Please try again.");
+                    return;
+                }
+
+                const options = {
+                    key: "rzp_test_RnqzlJgS6MFe2M",
+                    amount: orderData.amount,
+                    currency: "INR",
+                    name: "EduSphere",
+                    description: "Course Purchase",
+                    order_id: orderData.id,
+                    handler: function (res) {
+                        alert("Payment Successful! Payment ID: " + res.razorpay_payment_id);
+                        window.location.href = "Course.html";
+                    },
+                    theme: { color: "#38bdf8" }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on("payment.failed", function (res) {
+                    alert("Payment Failed: " + res.error.description);
+                });
+                rzp.open();
+            } catch (err) {
+                console.error(err);
+                alert("Server error. Please check backend deployment.");
+            }
+        }
+    </script>
 </body>
 </html>

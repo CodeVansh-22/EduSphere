@@ -25,7 +25,6 @@ async function handleRegister(event) {
     const pass = document.getElementById('reg-pass').value;
     const confirmPass = document.getElementById('reg-confirm').value;
 
-    // ✅ Password matching fix (required for mobile)
     if (pass !== confirmPass) {
         alert("Passwords do not match!");
         return;
@@ -72,7 +71,7 @@ async function handleLogin(event) {
         if (response.ok) {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('currentUserName', data.name);
-            
+
             alert("Login Successful! Welcome " + data.name);
             window.location.href = "index.html";
         } else {
