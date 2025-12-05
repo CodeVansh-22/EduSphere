@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment | EduSphere</title>
+    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    
     <style>
+        /* --- CSS VARIABLES (MATCHING YOUR THEME) --- */
         :root {
-            --bg-body: #0a192f;
-            --bg-card: #112240;
-            --primary: #38bdf8;
-            --text-main: #e6f1ff;
-            --text-muted: #8892b0;
+            --bg-body: #0a192f;      /* Deep Navy */
+            --bg-card: #112240;      /* Lighter Navy */
+            --primary: #38bdf8;      /* Electric Blue */
+            --text-main: #e6f1ff;    /* White-ish */
+            --text-muted: #8892b0;   /* Grey-ish */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -28,6 +30,7 @@
             padding: 20px;
         }
 
+        /* --- MAIN CONTAINER (SPLIT VIEW) --- */
         .payment-container {
             display: flex;
             width: 900px;
@@ -38,7 +41,8 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border: 1px solid #233554;
         }
-
+        
+        /* --- LEFT SIDEBAR (PRICE SUMMARY) --- */
         .summary-sidebar {
             width: 35%;
             background: linear-gradient(135deg, #112240 0%, #0d1b33 100%);
@@ -74,7 +78,7 @@
 
         .price-label { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px; }
         .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--primary); }
-        .course-name { margin-top: 10px; font-size: 1rem; color: var(--text-main); }
+        .course-name { margin-top: 10px; font-size: 1rem; color: var(--text-main); line-height: 1.4; }
 
         .user-info {
             margin-top: auto;
@@ -83,8 +87,10 @@
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+        
         .user-info i { margin-right: 8px; color: var(--primary); }
 
+        /* --- RIGHT SIDE (PAYMENT FORM) --- */
         .payment-content {
             width: 65%;
             padding: 40px;
@@ -96,7 +102,10 @@
             align-items: center;
             margin-bottom: 30px;
         }
+        .header-row h2 { font-size: 1.5rem; }
+        .header-row i { font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
 
+        /* Payment Methods Tabs */
         .methods-grid {
             display: flex;
             gap: 20px;
@@ -118,13 +127,23 @@
             color: var(--text-muted);
         }
 
-        .method-item.active {
+        .method-item:hover, .method-item.active {
             border-color: var(--primary);
             background: rgba(56, 189, 248, 0.1);
             color: var(--primary);
         }
 
-        .hidden { display: none; }
+        .method-item i { font-size: 1.5rem; }
+
+        /* Form Inputs */
+        .form-group { margin-bottom: 20px; }
+        
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-size: 0.9rem; 
+            color: var(--text-muted); 
+        }
 
         input, select {
             width: 100%;
@@ -133,9 +152,28 @@
             border: 1px solid #233554;
             border-radius: 8px;
             color: white;
+            font-size: 1rem;
             outline: none;
+            transition: 0.3s;
         }
 
+        select { cursor: pointer; }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.1);
+        }
+
+        .input-row { display: flex; gap: 20px; }
+        .input-row .form-group { flex: 1; }
+
+        .card-icons {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        .card-icons i { font-size: 1.5rem; margin-left: 10px; color: var(--text-muted); }
+
+        /* Pay Button */
         .pay-btn {
             width: 100%;
             padding: 15px;
@@ -146,18 +184,45 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
+            transition: 0.3s;
             margin-top: 10px;
+        }
+
+        .pay-btn:hover {
+            background-color: #0284c7;
+            color: white;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .checkbox-group input { width: auto; }
+
+        /* Helpers */
+        .hidden { display: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .payment-container { flex-direction: column; }
+            .summary-sidebar, .payment-content { width: 100%; }
+            .summary-sidebar { padding: 30px; }
         }
     </style>
 </head>
-
 <body>
 
     <div class="payment-container">
-
+        
+        <!-- LEFT SIDE: Summary -->
         <div class="summary-sidebar">
             <div class="app-brand">EduSphere</div>
-
+            
             <div class="price-box">
                 <div class="price-label">Total Payable</div>
                 <div class="price-amount" id="disp-price">₹0</div>
@@ -165,73 +230,217 @@
             </div>
 
             <div class="user-info">
-                <p><i class="fa fa-user-circle"></i>
-                    <span id="disp-user">Guest User</span>
-                </p>
+                <p><i class="fa fa-user-circle"></i> <span id="disp-user">Guest User</span></p>
+                <p style="margin-top:5px; font-size:0.75rem;">Transaction ID: #EDU-88392</p>
             </div>
         </div>
 
+        <!-- RIGHT SIDE: Payment Form -->
         <div class="payment-content">
-
             <div class="header-row">
                 <h2>Payment Options</h2>
                 <i class="fa fa-times" onclick="window.location.href='Course.html'"></i>
             </div>
 
+            <!-- INTERACTIVE Methods Tabs -->
+            <!-- Note: added onclick events to switch tabs -->
             <div class="methods-grid">
-                <div class="method-item active" onclick="switchTab('card')" id="tab-card">
-                    <i class="fa fa-credit-card"></i> Card
+                <div class="method-item active" id="tab-card" onclick="switchTab('card')">
+                    <i class="fa fa-credit-card"></i>
+                    <span>Card</span>
                 </div>
-                <div class="method-item" onclick="switchTab('netbank')" id="tab-netbank">
-                    <i class="fa fa-university"></i> NetBank
+                <div class="method-item" id="tab-netbank" onclick="switchTab('netbank')">
+                    <i class="fa fa-university"></i>
+                    <span>NetBank</span>
                 </div>
-                <div class="method-item" onclick="switchTab('upi')" id="tab-upi">
-                    <i class="fa fa-google-wallet"></i> UPI
+                <div class="method-item" id="tab-upi" onclick="switchTab('upi')">
+                    <i class="fa fa-google-wallet"></i>
+                    <span>UPI</span>
                 </div>
             </div>
 
-            <!-- CARD SECTION -->
+            <!-- === 1. CARD FORM SECTION === -->
             <div id="section-card">
+                <div class="card-icons">
+                    <i class="fa fa-cc-visa" style="color:white;"></i>
+                    <i class="fa fa-cc-mastercard" style="color:white;"></i>
+                </div>
+
                 <form onsubmit="confirmPayment(event)">
-                    <button class="pay-btn" id="pay-btn-card">Pay Now</button>
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label>Expiry (MM/YY)</label>
+                            <input type="text" placeholder="MM / YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Card Holder Name</label>
+                        <input type="text" placeholder="Name on card" required>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="saveCard">
+                        <label for="saveCard" style="margin:0;">Securely save this card for future</label>
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-card">Pay Now</button>
                 </form>
             </div>
 
-            <!-- NETBANKING SECTION -->
+            <!-- === 2. NETBANKING FORM SECTION (Initially Hidden) === -->
             <div id="section-netbank" class="hidden">
                 <form onsubmit="confirmPayment(event)">
-                    <button class="pay-btn" id="pay-btn-netbank">Pay Now</button>
+                    <div class="form-group">
+                        <label>Select Bank</label>
+                        <select required>
+                            <option value="" disabled selected>Choose your bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra</option>
+                        </select>
+                    </div>
+                    
+                    <div class="info-msg" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
+                        <i class="fa fa-info-circle"></i> You will be redirected to your bank's secure login page.
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-netbank">Pay Now</button>
                 </form>
             </div>
 
-            <!-- UPI SECTION -->
+            <!-- === 3. UPI FORM SECTION (Initially Hidden) === -->
             <div id="section-upi" class="hidden">
                 <form onsubmit="confirmPayment(event)">
-                    <button class="pay-btn" id="pay-btn-upi">Pay Now</button>
+                    <div class="form-group">
+                        <label>UPI ID / VPA</label>
+                        <input type="text" placeholder="username@upi" required>
+                    </div>
+                    
+                    <div style="text-align:center; margin: 20px 0;">
+                        <p style="margin-bottom: 10px; color: var(--text-muted);">OR Scan QR Code</p>
+                        <!-- QR Code Placeholder -->
+                        <div style="background: white; padding: 10px; display: inline-block; border-radius: 8px;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EduSpherePayment" alt="QR Code" style="width: 150px; height: 150px;">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-btn" id="pay-btn-upi">Pay Now</button>
                 </form>
             </div>
+
         </div>
     </div>
+    
 
-    <!-- Razorpay SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- Load script.js FIRST -->
+<script src="script.js"></script>
 
-    <!-- Your GLOBAL script (contains API_URL + courseData) -->
-    <script src="script.js"></script>
+<!-- Load Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        // TAB SWITCHING
-        function switchTab(method) {
-            ["card", "netbank", "upi"].forEach(m => {
-                document.getElementById(`section-${m}`).classList.add("hidden");
-                document.getElementById(`tab-${m}`).classList.remove("active");
-            });
+<script>
+    // --- TAB SWITCHING (unchanged) ---
+    function switchTab(methodName) {
+        document.getElementById('section-card').classList.add('hidden');
+        document.getElementById('section-netbank').classList.add('hidden');
+        document.getElementById('section-upi').classList.add('hidden');
 
-            document.getElementById(`section-${method}`).classList.remove("hidden");
-            document.getElementById(`tab-${method}`).classList.add("active");
+        document.getElementById('tab-card').classList.remove('active');
+        document.getElementById('tab-netbank').classList.remove('active');
+        document.getElementById('tab-upi').classList.remove('active');
+
+        document.getElementById('section-' + methodName).classList.remove('hidden');
+        document.getElementById('tab-' + methodName).classList.add('active');
+    }
+
+    // --- LOAD COURSE DETAILS (fixed courseData issue) ---
+    window.onload = function () {
+        const selectedId = localStorage.getItem('selectedCourse');
+        const currentUser = localStorage.getItem('currentUserName') || "Guest User";
+
+        document.getElementById('disp-user').innerText = currentUser;
+
+        // FIX: courseData exists in script.js
+        if (typeof courseData !== "undefined" && selectedId && courseData[selectedId]) {
+            const course = courseData[selectedId];
+
+            document.getElementById('disp-price').innerText = course.price;
+            document.getElementById('disp-title').innerText = course.title;
+
+            const btnText = "Pay " + course.price;
+            document.getElementById('pay-btn-card').innerText = btnText;
+            document.getElementById('pay-btn-netbank').innerText = btnText;
+            document.getElementById('pay-btn-upi').innerText = btnText;
+        }
+    };
+
+    // --- REAL PAYMENT LOGIC (FULLY FIXED) ---
+    async function confirmPayment(e) {
+        e.preventDefault();
+
+        const priceText = document.getElementById('disp-price').innerText;
+        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+        if (!amount) {
+            alert("Invalid Course Price");
+            return;
         }
 
-        // LOAD USER + COURSE
-        window.onload = () => {
-            const id = localStorage.getItem("selectedCourse");
-}
+        // FIXED BACKEND URL
+        const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
+
+        let orderResponse = await fetch(`${API_URL}/create-order`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount })
+        });
+
+        let orderData = await orderResponse.json();
+
+        if (!orderData.id) {
+            alert("Order creation failed. Check backend deployment.");
+            return;
+        }
+
+        // --- OPEN RAZORPAY WINDOW ---
+        const options = {
+            key: "rzp_test_RnqzlJgS6MFe2M",
+            amount: orderData.amount,
+            currency: "INR",
+            name: "EduSphere",
+            description: "Course Purchase",
+            order_id: orderData.id,
+
+            handler: function (response) {
+                alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+                window.location.href = "Course.html";
+            },
+
+            theme: { color: "#38bdf8" }
+        };
+
+        const rzp = new Razorpay(options);
+
+        rzp.on("payment.failed", function (res) {
+            alert("Payment Failed: " + res.error.description);
+        });
+
+        rzp.open();
+    }
+</script>
+
+
+</body>
+</html>
