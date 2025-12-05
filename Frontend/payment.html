@@ -342,99 +342,87 @@
 
         </div>
     </div>
-
+    
     <!-- LINK TO SCRIPT (Required to fetch data) -->
-    <script src="script.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        // --- 1. TAB SWITCHING LOGIC ---
-        function switchTab(methodName) {
-            // A. Hide all Sections
-            document.getElementById('section-card').classList.add('hidden');
-            document.getElementById('section-netbank').classList.add('hidden');
-            document.getElementById('section-upi').classList.add('hidden');
+<script>
+    // 1. TAB SWITCHING LOGIC (unchanged)
+    function switchTab(methodName) {
+        document.getElementById('section-card').classList.add('hidden');
+        document.getElementById('section-netbank').classList.add('hidden');
+        document.getElementById('section-upi').classList.add('hidden');
 
-            // B. Remove 'active' style from all Tabs
-            document.getElementById('tab-card').classList.remove('active');
-            document.getElementById('tab-netbank').classList.remove('active');
-            document.getElementById('tab-upi').classList.remove('active');
+        document.getElementById('tab-card').classList.remove('active');
+        document.getElementById('tab-netbank').classList.remove('active');
+        document.getElementById('tab-upi').classList.remove('active');
 
-            // C. Show Selected Section & Activate Tab
-            document.getElementById('section-' + methodName).classList.remove('hidden');
-            document.getElementById('tab-' + methodName).classList.add('active');
-        }
-
-        // --- 2. DATA FILL LOGIC ---
-        window.onload = function() {
-            // Get IDs and Data
-            const selectedId = localStorage.getItem('selectedCourse');
-            const currentUser = localStorage.getItem('currentUserName') || "Guest User";
-            
-            // Fill User Name
-            document.getElementById('disp-user').innerText = currentUser;
-
-            // Fill Course Details from script.js data
-            if(selectedId && courseData[selectedId]) {
-                const course = courseData[selectedId];
-                document.getElementById('disp-price').innerText = course.price;
-                document.getElementById('disp-title').innerText = course.title;
-                
-                // Update all Pay Buttons with the price
-                const btnText = "Pay " + course.price;
-                document.getElementById('pay-btn-card').innerText = btnText;
-                document.getElementById('pay-btn-netbank').innerText = btnText;
-                document.getElementById('pay-btn-upi').innerText = btnText;
-            }
-        }
-
-        // --- 3. PAYMENT CONFIRMATION ---
-        async function confirmPayment(e) {
-    e.preventDefault();
-
-    // STEP 1 — Get amount from screen
-    const priceText = document.getElementById('disp-price').innerText;
-    const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
-
-    if (!amount) {
-        alert("Invalid Course Price");
-        return;
+        document.getElementById('section-' + methodName).classList.remove('hidden');
+        document.getElementById('tab-' + methodName).classList.add('active');
     }
 
-    // STEP 2 — Create order from backend
-    const API_URL = "https://edusphere-backend.onrender.com/api";
+    // 2. LOAD COURSE DETAILS
+    window.onload = function () {
+        const selectedId = localStorage.getItem('selectedCourse');
+        const currentUser = localStorage.getItem('currentUserName') || "Guest User";
 
-    const response = await fetch(`${API_URL}/create-order`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount })
-    });
+        document.getElementById('disp-user').innerText = currentUser;
 
-    const orderData = await response.json();
+        if (selectedId && courseData[selectedId]) {
+            const course = courseData[selectedId];
+            document.getElementById('disp-price').innerText = course.price;
+            document.getElementById('disp-title').innerText = course.title;
 
-    // STEP 3 — Open Razorpay Checkout
-    const options = {
-        key: "YOUR_RAZORPAY_KEY_ID",
-        amount: orderData.amount,
-        currency: "INR",
-        name: "EduSphere",
-        description: "Course Enrollment Fee",
-        order_id: orderData.id,
-        handler: function (response) {
-            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-
-            // Redirect user to course
-            window.location.href = "Course.html";
-        },
-        theme: {
-            color: "#38bdf8"
+            const btnText = "Pay " + course.price;
+            document.getElementById('pay-btn-card').innerText = btnText;
+            document.getElementById('pay-btn-netbank').innerText = btnText;
+            document.getElementById('pay-btn-upi').innerText = btnText;
         }
-    };
+    }
 
-    const rzp = new Razorpay(options);
-    rzp.open();
-}
-    
-    </script>
+    // 3. REAL PAYMENT LOGIC — FIXED
+    async function confirmPayment(e) {
+        e.preventDefault();
+
+        const priceText = document.getElementById('disp-price').innerText;
+        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+        if (!amount) {
+            alert("Invalid Course Price");
+            return;
+        }
+
+        const API_URL = "https://edusphere-backend.onrender.com/api";
+
+        const response = await fetch(`${API_URL}/create-order`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount })
+        });
+
+        const orderData = await response.json();
+
+        const options = {
+            key: "rzp_test_RnqzlJgS6MFe2M",   // ✅ FIXED KEY ID
+            amount: orderData.amount,
+            currency: "INR",
+            name: "EduSphere",
+            description: "Course Purchase",
+            order_id: orderData.id,
+            handler: function (response) {
+                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                window.location.href = "Course.html";
+            },
+            theme: {
+                color: "#38bdf8"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+    }
+</script>
+
 
 </body>
 </html>
