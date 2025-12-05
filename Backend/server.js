@@ -5,22 +5,20 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;   // ✅ Render Fix
 
 // Middleware
-app.use(cors()); // Allow frontend to access backend
-app.use(bodyParser.json()); // Parse JSON data from frontend
+app.use(cors());
+app.use(bodyParser.json());
 
-// --- DATABASE CONNECTION (Will add URL later) ---
-// Replace '<password>' with your real password later
+// --- DATABASE CONNECTION ---
 const MONGO_URI = "mongodb+srv://vanshchauhan_db_user:vansh2206@cluster0.amelidd.mongodb.net/?appName=Cluster0";
 
 mongoose.connect(MONGO_URI)
 .then(() => console.log("MongoDB Connected Successfully"))
 .catch(err => console.log(err));
 
-// --- DEFINE DATA MODELS (Schemas) ---
-// 1. User Schema
+// ---------- MODELS ----------
 const UserSchema = new mongoose.Schema({
     name: String,
     email: { type: String, required: true, unique: true },
@@ -28,9 +26,14 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', UserSchema);
 
-// --- API ROUTES ---
+// ---------- ROUTES ----------
 
-// 1. Register Route
+// 🟢 FIX: Root Route for Render
+app.get('/', (req, res) => {
+    res.send("EduSphere Backend is Running ✔");
+});
+
+// Register
 app.post('/api/register', async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -38,11 +41,11 @@ app.post('/api/register', async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: "User Registered Successfully!" });
     } catch (err) {
-        res.status(400).json({ error: "Email already exists or error occured." });
+        res.status(400).json({ error: "Email already exists or error occurred." });
     }
 });
 
-// 2. Login Route
+// Login
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -57,7 +60,7 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// Start Server
+// ---------- START SERVER ----------
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
