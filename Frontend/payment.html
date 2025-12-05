@@ -388,21 +388,52 @@
         }
 
         // --- 3. PAYMENT CONFIRMATION ---
-        function confirmPayment(e) {
-            e.preventDefault();
-            
-            // Simulate Processing (Find the visible button)
-            const visibleBtn = document.querySelector('.pay-btn:not(.hidden)');
-            if(visibleBtn) {
-                visibleBtn.innerText = "Processing...";
-                visibleBtn.style.backgroundColor = "#233554";
-            }
+        async function confirmPayment(e) {
+    e.preventDefault();
 
-            setTimeout(() => {
-                alert("Payment Successful! You are now enrolled in " + document.getElementById('disp-title').innerText);
-                window.location.href = 'Course.html';
-            }, 2000);
+    // STEP 1 — Get amount from screen
+    const priceText = document.getElementById('disp-price').innerText;
+    const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+    if (!amount) {
+        alert("Invalid Course Price");
+        return;
+    }
+
+    // STEP 2 — Create order from backend
+    const API_URL = "https://edusphere-backend.onrender.com/api";
+
+    const response = await fetch(`${API_URL}/create-order`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount })
+    });
+
+    const orderData = await response.json();
+
+    // STEP 3 — Open Razorpay Checkout
+    const options = {
+        key: "YOUR_RAZORPAY_KEY_ID",
+        amount: orderData.amount,
+        currency: "INR",
+        name: "EduSphere",
+        description: "Course Enrollment Fee",
+        order_id: orderData.id,
+        handler: function (response) {
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+
+            // Redirect user to course
+            window.location.href = "Course.html";
+        },
+        theme: {
+            color: "#38bdf8"
         }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+}
+    
     </script>
 
 </body>
