@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ------------------------------------------
-// ✅ FIXED CORS (Important for GitHub Pages)
+// FIXED CORS (Important for GitHub Pages)
 // ------------------------------------------
 app.use(cors({
     origin: "https://codevansh-22.github.io",
@@ -17,10 +17,11 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-app.options("*", cors());  // Handle preflight requests
+// EXPRESS v5 SAFE OPTIONS HANDLER
+app.options("/api/*", (req, res) => {
+    res.sendStatus(200);
+});
 
-// ------------------------------------------
-// Body Parser
 // ------------------------------------------
 app.use(bodyParser.json());
 
@@ -68,7 +69,6 @@ app.post('/api/register', async (req, res) => {
     try {
         const newUser = new User({ name, email, password });
         await newUser.save();
-
         res.status(201).json({ message: "User Registered Successfully!" });
 
     } catch (err) {
@@ -94,14 +94,14 @@ app.post('/api/login', async (req, res) => {
 });
 
 // ------------------------------------------
-// Razorpay Order API (Frontend Uses This)
+// Razorpay Order API
 // ------------------------------------------
 app.post('/api/create-order', async (req, res) => {
     try {
         const { amount } = req.body;
 
         const options = {
-            amount: amount * 100, // convert to paise
+            amount: amount * 100,
             currency: "INR",
             receipt: "receipt_" + Date.now()
         };
