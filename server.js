@@ -1,3 +1,11 @@
+// DEBUG HANDLERS → Add these at the very TOP of server.js
+process.on("uncaughtException", (err) => {
+    console.error("UNCAUGHT ERROR:", err);
+});
+
+process.on("unhandledRejection", (reason) => {
+    console.error("UNHANDLED REJECTION:", reason);
+});
 // backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
