@@ -13,7 +13,8 @@ const courseData = {
 };
 
 // Add this line at the top of your script.js if it's not already there
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
+
 
 /* =========================================
    2. USER REGISTRATION LOGIC (Backend Integrated)
