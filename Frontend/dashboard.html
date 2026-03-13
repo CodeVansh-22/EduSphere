@@ -113,10 +113,10 @@
 
                         const row = `
                             <tr>
-                                <td class="course-name-cell">${enroll.courseTitle}</td>
-                                <td>${date}</td>
-                                <td><span class="status-badge-dash">Active</span></td>
-                                <td><a href="#" class="btn-action-dash">Start Learning</a></td>
+                                <td data-label="Course Title" class="course-name-cell">${enroll.courseTitle}</td>
+                                <td data-label="Enrolled Date">${date}</td>
+                                <td data-label="Status"><span class="status-badge-dash">Active</span></td>
+                                <td data-label="Action"><a href="#" class="btn-action-dash">Start Learning</a></td>
                             </tr>
                         `;
                         tbody.innerHTML += row;

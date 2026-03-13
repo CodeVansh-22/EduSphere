@@ -601,3 +601,70 @@ summary.faq-title:hover { color: var(--primary); }
 
 .empty-state i { font-size: 3rem; margin-bottom: 20px; color: #233554; }
 .empty-state p { margin-bottom: 20px; }
+
+/* Dashboard Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 30px auto;
+    }
+
+    .welcome-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .table-container {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    #enrollment-table thead {
+        display: none; /* Hide headers on mobile */
+    }
+
+    #enrollment-table, 
+    #enrollment-table tbody, 
+    #enrollment-table tr, 
+    #enrollment-table td {
+        display: block;
+        width: 100%;
+    }
+
+    #enrollment-table tr {
+        margin-bottom: 20px;
+        border: 1px solid #233554;
+        border-radius: 12px;
+        padding: 15px;
+        background: rgba(17, 34, 64, 0.5);
+    }
+
+    #enrollment-table td {
+        text-align: right;
+        padding: 10px 5px;
+        border-bottom: 1px solid rgba(35, 53, 84, 0.5);
+        position: relative;
+    }
+
+    #enrollment-table td:last-child {
+        border-bottom: none;
+        text-align: center;
+        padding-top: 15px;
+    }
+
+    /* Add labels for mobile view */
+    #enrollment-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 5px;
+        width: 45%;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 0.75rem;
+    }
+
+    .btn-action-dash {
+        width: 100%;
+        text-align: center;
+    }
+}
