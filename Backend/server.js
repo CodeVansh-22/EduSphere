@@ -58,6 +58,15 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
+const EnrollmentSchema = new mongoose.Schema({
+    userEmail: String,
+    courseId: String,
+    courseTitle: String,
+    enrolledAt: { type: Date, default: Date.now },
+});
+
+const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
+
 // -------------------------------------------
 // Razorpay Config
 //--------------------------------------------
@@ -97,7 +106,38 @@ app.post("/api/login", async (req, res) => {
         return res.status(401).json({ error: "Invalid Credentials" });
     }
 
-    res.json({ message: "Login Success", name: user.name });
+    res.json({ message: "Login Success", name: user.name, email: user.email });
+});
+
+// -------------------------------------------
+// Enrollment Routes
+//--------------------------------------------
+app.post("/api/enroll", async (req, res) => {
+    try {
+        const { userEmail, courseId, courseTitle } = req.body;
+        
+        // Check if already enrolled
+        const existing = await Enrollment.findOne({ userEmail, courseId });
+        if (existing) {
+            return res.status(400).json({ error: "Already enrolled in this course" });
+        }
+
+        const enrollment = new Enrollment({ userEmail, courseId, courseTitle });
+        await enrollment.save();
+        res.json({ message: "Enrolled Successfully!" });
+    } catch (err) {
+        res.status(500).json({ error: "Enrollment failed" });
+    }
+});
+
+app.get("/api/user-enrollments", async (req, res) => {
+    try {
+        const { email } = req.query;
+        const enrollments = await Enrollment.find({ userEmail: email });
+        res.json(enrollments);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch enrollments" });
+    }
 });
 
 // -------------------------------------------

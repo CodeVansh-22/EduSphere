@@ -73,6 +73,7 @@ async function handleLogin(event) {
         if (response.ok) {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('currentUserName', data.name);
+            localStorage.setItem('currentUserEmail', data.email);
 
             alert("Login Successful! Welcome " + data.name);
             window.location.href = "index.html";
@@ -126,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('currentUserName');
+                localStorage.removeItem('currentUserEmail');
                 alert("Logged Out Successfully");
                 window.location.reload();
             });

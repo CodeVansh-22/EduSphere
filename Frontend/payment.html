@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout | EduSphere</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
         /* --- THEME VARIABLES --- */
         :root {
-            --bg-body: #0a192f;      
-            --bg-card: #112240;      
-            --primary: #38bdf8;      
-            --primary-hover: #0284c7; 
-            --text-main: #e6f1ff;    
-            --text-muted: #8892b0;   
+            --bg-body: #0a192f;
+            --bg-card: #112240;
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --text-main: #e6f1ff;
+            --text-muted: #8892b0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
         body {
             background-color: var(--bg-body);
@@ -57,7 +64,12 @@
             justify-content: space-between;
         }
 
-        .app-brand { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 20px; }
+        .app-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
 
         .price-box {
             background: rgba(255, 255, 255, 0.03);
@@ -66,12 +78,33 @@
             border: 1px solid rgba(56, 189, 248, 0.1);
             margin-bottom: 20px;
         }
-        
-        .price-label { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
-        .price-amount { font-size: 2.5rem; font-weight: 700; color: var(--primary); text-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
-        .course-name { margin-top: 15px; font-size: 1.1rem; border-top: 1px solid #233554; padding-top: 15px;}
 
-        .user-info { font-size: 0.9rem; color: var(--text-muted); margin-top: auto; }
+        .price-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .course-name {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            border-top: 1px solid #233554;
+            padding-top: 15px;
+        }
+
+        .user-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
 
         /* --- CONTENT (Right) --- */
         .payment-content {
@@ -84,9 +117,19 @@
             text-align: center;
         }
 
-        .checkout-header { margin-bottom: 20px; }
-        .checkout-header h2 { font-size: 2rem; margin-bottom: 10px; }
-        .checkout-header p { color: var(--text-muted); font-size: 0.95rem; }
+        .checkout-header {
+            margin-bottom: 20px;
+        }
+
+        .checkout-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .checkout-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
 
         .secure-badge {
             margin: 30px 0;
@@ -97,9 +140,23 @@
             width: 100%;
         }
 
-        .icons-row { font-size: 2rem; color: var(--text-muted); display: flex; gap: 20px; justify-content: center; margin-top: 10px; }
-        .icons-row i { transition: 0.3s; }
-        .icons-row i:hover { color: var(--primary); transform: translateY(-3px); }
+        .icons-row {
+            font-size: 2rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .icons-row i {
+            transition: 0.3s;
+        }
+
+        .icons-row i:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
 
         .pay-btn {
             width: 100%;
@@ -124,8 +181,16 @@
 
         /* Mobile */
         @media (max-width: 768px) {
-            .payment-container { flex-direction: column; width: 100%; }
-            .summary-sidebar, .payment-content { width: 100%; padding: 30px; }
+            .payment-container {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .summary-sidebar,
+            .payment-content {
+                width: 100%;
+                padding: 30px;
+            }
         }
     </style>
 </head>
@@ -133,7 +198,7 @@
 <body>
 
     <div class="payment-container">
-        
+
         <div class="summary-sidebar">
             <div>
                 <div class="app-brand">EduSphere</div>
@@ -146,7 +211,8 @@
 
             <div class="user-info">
                 <p><i class="fa fa-user-circle"></i> <span id="disp-user">Guest User</span></p>
-                <p style="margin-top:10px; font-size:0.75rem; color: #64ffda;"><i class="fa fa-lock"></i> 256-bit SSL Secure</p>
+                <p style="margin-top:10px; font-size:0.75rem; color: #64ffda;"><i class="fa fa-lock"></i> 256-bit SSL
+                    Secure</p>
             </div>
         </div>
 
@@ -158,7 +224,8 @@
             </div>
 
             <div class="secure-badge">
-                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Accepted Methods</p>
+                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">
+                    Accepted Methods</p>
                 <div class="icons-row">
                     <i class="fa fa-credit-card" title="Cards"></i>
                     <i class="fa fa-google-wallet" title="UPI / GPay"></i>
@@ -172,7 +239,8 @@
             </button>
 
             <div style="margin-top: 20px;">
-                <a href="Course.html" style="color: var(--text-muted); font-size: 0.9rem; text-decoration: none;">Cancel and Go Back</a>
+                <a href="Course.html" style="color: var(--text-muted); font-size: 0.9rem; text-decoration: none;">Cancel
+                    and Go Back</a>
             </div>
 
         </div>
@@ -189,7 +257,7 @@
             document.getElementById("disp-user").innerText = user;
 
             if (!id || typeof courseData === 'undefined' || !courseData[id]) {
-                if(typeof courseData === 'undefined') {
+                if (typeof courseData === 'undefined') {
                     console.log("Waiting for script.js...");
                 } else {
                     alert("Please select a course first.");
@@ -207,7 +275,7 @@
 
         // 2. PAYMENT LOGIC (Direct to Razorpay)
         async function initiatePayment() {
-            
+
             const btn = document.getElementById("pay-btn-main");
             const originalText = btn.innerText;
             const priceText = document.getElementById("disp-price").innerText;
@@ -218,9 +286,7 @@
             btn.style.opacity = "0.7";
             btn.disabled = true;
 
-            const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-                ? "http://localhost:5000/api" 
-                : "https://edusphere-backend-3jac.onrender.com/api"; 
+            const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
 
             try {
                 // Step 1: Create Order on Backend
@@ -238,7 +304,7 @@
 
                 // Step 2: Open Razorpay Options
                 const options = {
-                    key: "rzp_test_RnqzlJgS6MFe2M", 
+                    key: "rzp_test_RnqzlJgS6MFe2M",
                     amount: data.amount,
                     currency: "INR",
                     order_id: data.id,
@@ -247,13 +313,38 @@
                     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // Generic education icon or your logo
                     theme: { color: "#38bdf8" },
 
-                    handler: function (response) {
+                    handler: async function (response) {
                         // Success Handler
-                        alert("Payment Successful! Ref: " + response.razorpay_payment_id);
-                        window.location.href = "Course.html"; // Redirect after success
+                        console.log("Payment Successful! Ref: " + response.razorpay_payment_id);
+                        
+                        const selectedCourse = localStorage.getItem("selectedCourse");
+                        const userEmail = localStorage.getItem("currentUserEmail");
+                        const courseTitle = document.getElementById("disp-title").innerText;
+
+                        try {
+                            const enrollRes = await fetch(`${API_URL}/enroll`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ 
+                                    userEmail, 
+                                    courseId: selectedCourse,
+                                    courseTitle
+                                })
+                            });
+
+                            if (enrollRes.ok) {
+                                alert("Success! Enrolled in course.");
+                                window.location.href = "dashboard.html"; 
+                            } else {
+                                alert("Payment successful, but enrollment failed. Please contact support.");
+                                window.location.href = "Course.html";
+                            }
+                        } catch (err) {
+                            console.error("Enrollment error:", err);
+                        }
                     },
                     modal: {
-                        ondismiss: function() {
+                        ondismiss: function () {
                             // If user closes modal without paying
                             btn.innerText = originalText;
                             btn.style.opacity = "1";
@@ -263,8 +354,8 @@
                 };
 
                 const rp = new Razorpay(options);
-                
-                rp.on('payment.failed', function (response){
+
+                rp.on('payment.failed', function (response) {
                     alert("Payment Failed: " + response.error.description);
                     btn.innerText = originalText;
                     btn.style.opacity = "1";
@@ -272,7 +363,7 @@
                 });
 
                 rp.open();
-                
+
             } catch (err) {
                 console.error(err);
                 alert("Connection failed. Please try again.");
@@ -283,4 +374,5 @@
         }
     </script>
 </body>
+
 </html>
