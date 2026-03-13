@@ -257,9 +257,14 @@
 
             document.getElementById("disp-user").innerText = user;
 
-            if (!id || typeof courseData === 'undefined' || !courseData[id]) {
+            const token = localStorage.getItem('authToken');
+
+            if (!id || !token || typeof courseData === 'undefined' || !courseData[id]) {
                 if (typeof courseData === 'undefined') {
                     console.log("Waiting for script.js...");
+                } else if (!token) {
+                    alert("Session expired. Please login again.");
+                    window.location.href = "login.html";
                 } else {
                     alert("Please select a course first.");
                     window.location.href = "Course.html";
