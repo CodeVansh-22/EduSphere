@@ -39,45 +39,16 @@ razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 # Frontend Routes (Serving HTML)
 # -------------------------------------------
 @app.route("/")
+def health_check_root():
+    return "EduSphere Backend is Online", 200
+
+@app.route("/api/health")
+def health_check_api():
+    return jsonify({"status": "running", "message": "EduSphere Backend (Flask) is Operating ✔"}), 200
+
+@app.route("/home")
 def home():
     return send_from_directory(app.static_folder, 'index.html')
-
-@app.route("/about")
-def about():
-    return send_from_directory(app.static_folder, 'About.html')
-
-@app.route("/courses")
-def courses():
-    return send_from_directory(app.static_folder, 'Course.html')
-
-@app.route("/contact")
-def contact():
-    return send_from_directory(app.static_folder, 'Contact.html')
-
-@app.route("/payment")
-def payment():
-    return send_from_directory(app.static_folder, 'payment.html')
-
-@app.route("/dashboard")
-def dashboard():
-    return send_from_directory(app.static_folder, 'dashboard.html')
-
-@app.route("/login")
-def login_page():
-    return send_from_directory(app.static_folder, 'login.html')
-
-@app.route("/register")
-def register_page():
-    return send_from_directory(app.static_folder, 'register.html')
-
-# Catch-all for other static files (CSS, JS, Images) handled by Flask automatically via static_folder
-
-# -------------------------------------------
-# API Routes
-# -------------------------------------------
-@app.route("/api/health")
-def health_check():
-    return jsonify({"status": "running", "message": "EduSphere Backend (Flask) is Operating ✔"}), 200
 
 @app.route("/api/register", methods=["POST"])
 def api_register():
@@ -90,6 +61,33 @@ def api_register():
         return jsonify({"message": "User Registered Successfully!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+@app.route("/about")
+def about():
+    return send_from_directory(app.static_folder, 'About.html')
+
+@app.route("/courses_page")
+def courses_page():
+    return send_from_directory(app.static_folder, 'Course.html')
+
+@app.route("/contact")
+def contact():
+    return send_from_directory(app.static_folder, 'Contact.html')
+
+@app.route("/payment_page")
+def payment_page():
+    return send_from_directory(app.static_folder, 'payment.html')
+
+@app.route("/dashboard_page")
+def dashboard_page():
+    return send_from_directory(app.static_folder, 'dashboard.html')
+
+@app.route("/login_page")
+def login_page():
+    return send_from_directory(app.static_folder, 'login.html')
+
+@app.route("/register_page")
+def register_page():
+    return send_from_directory(app.static_folder, 'register.html')
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
