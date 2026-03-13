@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pymongo import MongoClient
 import razorpay
@@ -6,9 +6,10 @@ import datetime
 import os
 from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='../Frontend')
 CORS(app, resources={r"/api/*": {"origins": [
     "https://codevansh-22.github.io",
     "http://localhost:5500",
@@ -16,8 +17,13 @@ CORS(app, resources={r"/api/*": {"origins": [
     "http://localhost:5000"
 ]}})
 
+# Configuration from Environment Variables
+MONGO_URI = os.getenv("MONGO_URI")
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+PORT = int(os.getenv("PORT", 5000))
+
 # MongoDB Connection
-MONGO_URI = "mongodb+srv://vanshchauhan_db_user:vansh2206@cluster0.amelidd.mongodb.net/edusphere"
 client = MongoClient(MONGO_URI)
 db = client.get_database("edusphere")
 
@@ -27,19 +33,54 @@ payments_col = db.payments
 courses_col = db.courses
 
 # Razorpay Config
-RAZORPAY_KEY_ID = "rzp_test_RnqzlJgS6MFe2M"
-RAZORPAY_KEY_SECRET = "12nYyjrzt1QQ4nYtXUUPE8UY"
 razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 
+# -------------------------------------------
+# Frontend Routes (Serving HTML)
+# -------------------------------------------
 @app.route("/")
-def health_check():
-    return "EduSphere Backend (Flask) is Running ✔", 200
+def home():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route("/about")
+def about():
+    return send_from_directory(app.static_folder, 'About.html')
+
+@app.route("/courses")
+def courses():
+    return send_from_directory(app.static_folder, 'Course.html')
+
+@app.route("/contact")
+def contact():
+    return send_from_directory(app.static_folder, 'Contact.html')
+
+@app.route("/payment")
+def payment():
+    return send_from_directory(app.static_folder, 'payment.html')
+
+@app.route("/dashboard")
+def dashboard():
+    return send_from_directory(app.static_folder, 'dashboard.html')
+
+@app.route("/login")
+def login_page():
+    return send_from_directory(app.static_folder, 'login.html')
+
+@app.route("/register")
+def register_page():
+    return send_from_directory(app.static_folder, 'register.html')
+
+# Catch-all for other static files (CSS, JS, Images) handled by Flask automatically via static_folder
 
 # -------------------------------------------
-# Register Route
+# API Routes
 # -------------------------------------------
+@app.route("/api/health")
+def health_check():
+    return jsonify({"status": "running", "message": "EduSphere Backend (Flask) is Operating ✔"}), 200
+
 @app.route("/api/register", methods=["POST"])
-def register():
+def api_register():
     try:
         data = request.json
         if users_col.find_one({"email": data["email"]}):
@@ -50,11 +91,8 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-# -------------------------------------------
-# Login Route
-# -------------------------------------------
 @app.route("/api/login", methods=["POST"])
-def login():
+def api_login():
     data = request.json
     user = users_col.find_one({"email": data["email"], "password": data["password"]})
     
@@ -67,11 +105,8 @@ def login():
         "email": user.get("email")
     }), 200
 
-# -------------------------------------------
-# Enrollment Routes
-# -------------------------------------------
 @app.route("/api/enroll", methods=["POST"])
-def enroll():
+def api_enroll():
     try:
         data = request.json
         user_email = data["userEmail"]
@@ -88,7 +123,7 @@ def enroll():
         return jsonify({"error": "Enrollment failed"}), 500
 
 @app.route("/api/user-enrollments", methods=["GET"])
-def get_user_enrollments():
+def api_get_user_enrollments():
     try:
         email = request.args.get("email")
         enrollments = list(enrollments_col.find({"userEmail": email}, {"_id": 0}))
@@ -96,11 +131,8 @@ def get_user_enrollments():
     except Exception as e:
         return jsonify({"error": "Failed to fetch enrollments"}), 500
 
-# -------------------------------------------
-# Payment Routes
-# -------------------------------------------
 @app.route("/api/save-payment", methods=["POST"])
-def save_payment():
+def api_save_payment():
     try:
         data = request.json
         data["createdAt"] = datetime.datetime.utcnow()
@@ -112,22 +144,16 @@ def save_payment():
     except Exception as e:
         return jsonify({"error": "Failed to record payment"}), 500
 
-# -------------------------------------------
-# Course Routes
-# -------------------------------------------
 @app.route("/api/courses", methods=["GET"])
-def get_courses():
+def api_get_courses():
     try:
         courses = list(courses_col.find({}, {"_id": 0}))
         return jsonify(courses), 200
     except Exception as e:
         return jsonify({"error": "Failed to fetch courses"}), 500
 
-# -------------------------------------------
-# Razorpay Order API
-# -------------------------------------------
 @app.route("/api/create-order", methods=["POST"])
-def create_order():
+def api_create_order():
     try:
         amount = int(request.json["amount"]) * 100
         
@@ -144,4 +170,4 @@ def create_order():
         return jsonify({"error": "Order creation failed"}), 500
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=PORT, debug=True)
