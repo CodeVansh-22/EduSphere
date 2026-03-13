@@ -10,12 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, static_url_path='', static_folder='../Frontend')
-CORS(app, resources={r"/api/*": {"origins": [
-    "https://codevansh-22.github.io",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-    "http://localhost:5000"
-]}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Configuration from Environment Variables
 MONGO_URI = os.getenv("MONGO_URI")
@@ -29,8 +24,8 @@ db = client.get_database("edusphere")
 
 users_col = db.users
 enrollments_col = db.enrollments
-payments_col = db.payments
-courses_col = db.courses
+payments_col = db.paymentdetails
+courses_col = db.coursedetails
 
 # Razorpay Config
 razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
