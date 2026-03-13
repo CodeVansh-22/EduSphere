@@ -161,9 +161,11 @@ def api_get_user_enrollments(current_user):
         return jsonify({"error": "Failed to fetch enrollments"}), 500
 
 @app.route("/api/save-payment", methods=["POST"])
-def api_save_payment():
+@token_required
+def api_save_payment(current_user):
     try:
         data = request.json
+        data["userEmail"] = current_user["email"] # Ensure correct email from token
         data["createdAt"] = datetime.datetime.utcnow()
         if "status" not in data:
             data["status"] = "captured"
@@ -182,7 +184,8 @@ def api_get_courses():
         return jsonify({"error": "Failed to fetch courses"}), 500
 
 @app.route("/api/create-order", methods=["POST"])
-def api_create_order():
+@token_required
+def api_create_order(current_user):
     try:
         amount = int(request.json["amount"]) * 100
         

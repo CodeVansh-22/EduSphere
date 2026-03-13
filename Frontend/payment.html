@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout | EduSphere</title>
+    <link rel="icon" type="image/png" href="images/icon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -288,10 +289,14 @@
 
 
             try {
+                const token = localStorage.getItem('authToken');
                 // Step 1: Create Order on Backend
                 let res = await fetch(`${API_URL}/create-order`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
                     body: JSON.stringify({ amount: amount })
                 });
 
@@ -315,7 +320,7 @@
                     handler: async function (response) {
                         // Success Handler
                         console.log("Payment Successful! Ref: " + response.razorpay_payment_id);
-                        
+
                         const selectedCourse = localStorage.getItem("selectedCourse");
                         const userEmail = localStorage.getItem("currentUserEmail");
                         const courseTitle = document.getElementById("disp-title").innerText;
@@ -326,12 +331,15 @@
                             // 1. Record Detailed Payment
                             await fetch(`${API_URL}/save-payment`, {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ 
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${token}`
+                                },
+                                body: JSON.stringify({
                                     paymentId: response.razorpay_payment_id,
                                     orderId: response.razorpay_order_id,
                                     signature: response.razorpay_signature,
-                                    userEmail, 
+                                    userEmail,
                                     amount,
                                     courseId: selectedCourse,
                                     courseTitle
@@ -341,9 +349,12 @@
                             // 2. Enroll User
                             const enrollRes = await fetch(`${API_URL}/enroll`, {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ 
-                                    userEmail, 
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${token}`
+                                },
+                                body: JSON.stringify({
+                                    userEmail,
                                     courseId: selectedCourse,
                                     courseTitle
                                 })
@@ -351,7 +362,7 @@
 
                             if (enrollRes.ok) {
                                 alert("Success! Enrolled in course.");
-                                window.location.href = "dashboard.html"; 
+                                window.location.href = "dashboard.html";
                             } else {
                                 alert("Payment successful, but enrollment failed. Please contact support.");
                                 window.location.href = "Course.html";

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enroll Form</title>
-    <link rel="stylesheet" href="css_files/style.css"> 
+    <link rel="icon" type="image/png" href="images/icon.ico">
+    <link rel="stylesheet" href="css_files/style.css">
 </head>
+
 <body>
 
     <div id="navbar">
@@ -42,7 +45,8 @@
 
             <div class="form-group">
                 <label for="contact">Contact No. <span class="required">*</span></label>
-                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" placeholder="Enter your phone number" required>
+                <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" placeholder="Enter your phone number"
+                    required>
             </div>
 
             <button type="submit" class="submit-btn">Submit Now</button>
@@ -62,12 +66,13 @@
         const form = document.getElementById('enrollForm');
         const successMessage = document.getElementById('successMessage');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
             form.style.display = 'none'; // Hide form
             successMessage.classList.remove('hidden'); // Show success
         });
     </script>
-    
+
 </body>
+
 </html>

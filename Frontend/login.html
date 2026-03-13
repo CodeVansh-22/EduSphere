@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | EduSphere</title>
+    <link rel="icon" type="image/png" href="images/icon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         /* INTERNAL CSS SPECIFIC FOR LOGIN PAGE */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #0a192f; /* Deep Navy Background */
+            background-color: #0a192f;
+            /* Deep Navy Background */
             color: #e6f1ff;
         }
 
         .login-box {
-            background: #112240; /* Card Background */
+            background: #112240;
+            /* Card Background */
             padding: 40px;
             width: 350px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid #233554;
         }
 
@@ -38,7 +47,8 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #38bdf8; /* Electric Blue Text */
+            color: #38bdf8;
+            /* Electric Blue Text */
             font-size: 0.9rem;
         }
 
@@ -46,7 +56,8 @@
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
-            background: #0a192f; /* Dark Input Background */
+            background: #0a192f;
+            /* Dark Input Background */
             border: 1px solid #233554;
             border-radius: 6px;
             color: white;
@@ -80,8 +91,10 @@
             width: 100%;
             padding: 12px;
             border: none;
-            background: #38bdf8; /* Electric Blue Button */
-            color: #0a192f; /* Dark Text on Button */
+            background: #38bdf8;
+            /* Electric Blue Button */
+            color: #0a192f;
+            /* Dark Text on Button */
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -110,7 +123,7 @@
         .register-link a:hover {
             text-decoration: underline;
         }
-        
+
         .back-home {
             display: block;
             text-align: center;
@@ -119,17 +132,21 @@
             text-decoration: none;
             font-size: 0.85rem;
         }
-        .back-home:hover { color: #e6f1ff; }
+
+        .back-home:hover {
+            color: #e6f1ff;
+        }
     </style>
 </head>
+
 <body>
 
     <div class="login-box">
         <h2>Login</h2>
-        
+
         <!-- UPDATED FORM: Triggers JS Logic -->
-        <form onsubmit="handleLogin(event)"> 
-            
+        <form onsubmit="handleLogin(event)">
+
             <label>Email</label>
             <!-- Added ID for Script -->
             <input type="email" id="login-email" placeholder="Enter your email" required>
@@ -137,7 +154,8 @@
             <label>Password</label>
             <div class="password-container">
                 <input type="password" id="login-pass" placeholder="Enter your password" required>
-                <i class="fa fa-eye" id="toggleLoginPass" onclick="togglePasswordVisibility('login-pass', 'toggleLoginPass')"></i>
+                <i class="fa fa-eye" id="toggleLoginPass"
+                    onclick="togglePasswordVisibility('login-pass', 'toggleLoginPass')"></i>
             </div>
 
             <button type="submit">Login</button>
@@ -153,4 +171,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
