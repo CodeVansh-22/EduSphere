@@ -12,22 +12,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, static_url_path='', static_folder='../Frontend')
-CORS(app, resources={r"/api/*": {
-    "origins": [
-        "http://localhost:5500", 
-        "http://127.0.0.1:5500", 
-        "https://codevansh-22.github.io"
-    ],
-    "methods": ["GET", "POST", "OPTIONS"],
-    "allow_headers": ["Content-Type", "Authorization"]
-}})
+
+# Broadened CORS to prevent GitHub Pages / Localhost blocking issues
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 # Configuration from Environment Variables
 MONGO_URI = os.getenv("MONGO_URI")
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
 PORT = int(os.getenv("PORT", 5000))
-SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key_here") # Fallback for local dev
 SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key_here") # Fallback for local dev
 
 # MongoDB Connection
@@ -52,7 +45,6 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
         try:
-            # Token usually comes as "Bearer <token>"
             if token.startswith("Bearer "):
                 token = token.split(" ")[1]
             data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
@@ -79,17 +71,6 @@ def health_check_api():
 def home():
     return send_from_directory(app.static_folder, 'index.html')
 
-@app.route("/api/register", methods=["POST"])
-def api_register():
-    try:
-        data = request.json
-        if users_col.find_one({"email": data["email"]}):
-            return jsonify({"error": "Email already exists"}), 400
-        
-        users_col.insert_one(data)
-        return jsonify({"message": "User Registered Successfully!"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
 @app.route("/about")
 def about():
     return send_from_directory(app.static_folder, 'About.html')
@@ -118,9 +99,29 @@ def login_page():
 def register_page():
     return send_from_directory(app.static_folder, 'register.html')
 
+# -------------------------------------------
+# API Routes (Backend Logic)
+# -------------------------------------------
+@app.route("/api/register", methods=["POST"])
+def api_register():
+    try:
+        data = request.json
+        if users_col.find_one({"email": data["email"]}):
+            return jsonify({"error": "Email already exists"}), 400
+        
+        users_col.insert_one(data)
+        return jsonify({"message": "User Registered Successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
 @app.route("/api/login", methods=["POST"])
 def api_login():
     data = request.json
+    
+    # Check if data exists
+    if not data or "email" not in data or "password" not in data:
+        return jsonify({"error": "Missing email or password"}), 400
+
     user = users_col.find_one({"email": data["email"], "password": data["password"]})
     
     if not user:
@@ -135,7 +136,7 @@ def api_login():
     return jsonify({
         "message": "Login Success", 
         "token": token,
-        "name": user.get("name"), 
+        "name": user.get("name", "User"), 
         "email": user.get("email")
     }), 200
 
@@ -151,7 +152,7 @@ def api_enroll(current_user):
         if enrollments_col.find_one({"userEmail": user_email, "courseId": course_id}):
             return jsonify({"error": "Already enrolled in this course"}), 400
         
-        data["userEmail"] = user_email # Ensure correct email from token
+        data["userEmail"] = user_email
         data["enrolledAt"] = datetime.datetime.utcnow()
         enrollments_col.insert_one(data)
         return jsonify({"message": "Enrolled Successfully!"}), 200
@@ -173,7 +174,7 @@ def api_get_user_enrollments(current_user):
 def api_save_payment(current_user):
     try:
         data = request.json
-        data["userEmail"] = current_user["email"] # Ensure correct email from token
+        data["userEmail"] = current_user["email"]
         data["createdAt"] = datetime.datetime.utcnow()
         if "status" not in data:
             data["status"] = "captured"
