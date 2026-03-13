@@ -85,6 +85,9 @@ async function handleLogin(event) {
             localStorage.setItem("currentUserName", data.name || "User");
             localStorage.setItem("currentUserEmail", data.email);
 
+            // --- CRITICAL FIX ADDED HERE ---
+            localStorage.setItem("isLoggedIn", "true");
+
             alert("Login Successful!");
             // Redirect to home or dashboard
             window.location.href = "index.html";
@@ -100,6 +103,7 @@ async function handleLogin(event) {
         btn.disabled = false;
     }
 }
+
 /* =========================================
    4. ENROLL LOGIC
    ========================================= */
@@ -166,12 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.reload();
             });
         }
-    } else {
-        // If not logged in, show Login/Register but they will be hidden in mobile hamburger by CSS
-        // unless we want them to show. User said: 
-        // "keep hamburger menu for logout and dashboard only"
-        // This implies when NOT logged in, the hamburger might be empty or show nothing.
-        // I will keep it consistent with the user's request.
     }
 });
 
