@@ -1,0 +1,12 @@
+{
+  "name": "edusphere-root",
+  "version": "1.0.0",
+  "description": "Root package to manage EduSphere deployment",
+  "scripts": {
+    "build": "cd Backend && npm install",
+    "start": "cd Backend && npm start"
+  },
+  "keywords": [],
+  "author": "Vansh",
+  "license": "ISC"
+}
