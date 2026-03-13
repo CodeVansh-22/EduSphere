@@ -12,7 +12,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, static_url_path='', static_folder='../Frontend')
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {
+    "origins": [
+        "http://localhost:5500", 
+        "http://127.0.0.1:5500", 
+        "https://codevansh-22.github.io"
+    ],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
 
 # Configuration from Environment Variables
 MONGO_URI = os.getenv("MONGO_URI")
