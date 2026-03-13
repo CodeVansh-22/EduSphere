@@ -12,15 +12,15 @@ const courseData = {
     "ms-office": { title: "MS-Office", price: "₹999", duration: "1 Month", desc: "Excel, Word, PowerPoint." }
 };
 
-const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-    ? "http://localhost:5000/api" 
-    : "https://edusphere-backend-sz92.onrender.com/api";
+const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000/api"
+    : "https://edusphere-backend-w1w5.onrender.com";
 
 /* =========================================
    2. USER REGISTRATION LOGIC
    ========================================= */
 async function handleRegister(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const name = document.getElementById('reg-name').value;
     const email = document.getElementById('reg-email').value;
@@ -102,7 +102,7 @@ function handleEnroll(courseId) {
 /* =========================================
    5. NAVBAR UPDATE LOGIC
    ========================================= */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const userName = localStorage.getItem('currentUserName');
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dashboardLink.href = 'dashboard.html';
             dashboardLink.innerText = 'Dashboard';
             dashboardLink.style.color = "#64ffda";
-            
+
             // Insert before login/logout
             if (loginLink) {
                 navRight.insertBefore(dashboardLink, loginLink);
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             registerLink.href = "#";
             registerLink.style.color = "#ff6b6b";
 
-            registerLink.addEventListener('click', function(e) {
+            registerLink.addEventListener('click', function (e) {
                 e.preventDefault();
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('currentUserName');
