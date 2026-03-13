@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="stylesheet" href="css_files/style.css">
 </head>
+
 <body>
 
     <header id="navbar">
@@ -59,7 +61,7 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <div id="empty-state" class="empty-state" style="display: none;">
                 <i class="fa fa-book"></i>
                 <p>You haven't enrolled in any courses yet.</p>
@@ -69,13 +71,12 @@
     </div>
 
     <footer id="footer">
-        <p>&copy; 2025 EduSphere | Follow us: <i class="fa fa-instagram"></i> <i class="fa fa-twitter"></i></p>
-        <p><span class="material-symbols-outlined">location_on</span> Mumbai – 400064, Maharashtra, India</p>
+        <p>&copy; 2025 EduSphere</p>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
             const userName = localStorage.getItem('currentUserName');
             const userEmail = localStorage.getItem('currentUserEmail');
             const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -131,4 +132,5 @@
         });
     </script>
 </body>
+
 </html>
