@@ -4,164 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard | EduSphere</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Adamina&family=Oswald:wght@400;600&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        :root {
-            --bg-body: #0a192f;
-            --bg-card: #112240;
-            --primary: #38bdf8;
-            --primary-hover: #0284c7;
-            --text-main: #e6f1ff;
-            --text-muted: #8892b0;
-            --accent: #64ffda;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            background-image: radial-gradient(#1e2f4d 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-
-        /* --- NAVBAR --- */
-        nav {
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 25, 47, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #233554;
-        }
-
-        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 1rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* --- DASHBOARD LAYOUT --- */
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-
-        .welcome-header { margin-bottom: 40px; }
-        .welcome-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .welcome-header p { color: var(--text-muted); }
-        .welcome-header span { color: var(--primary); }
-
-        /* --- ENROLLMENT TABLE --- */
-        .table-container {
-            background-color: var(--bg-card);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid #233554;
-            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
-            overflow-x: auto;
-        }
-
-        h2 { margin-bottom: 25px; font-size: 1.5rem; border-left: 4px solid var(--primary); padding-left: 15px; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            color: var(--text-main);
-        }
-
-        th, td {
-            text-align: left;
-            padding: 20px;
-            border-bottom: 1px solid #233554;
-        }
-
-        th {
-            color: var(--text-muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        tr:last-child td { border-bottom: none; }
-
-        .course-name-cell { font-weight: 600; color: var(--primary); }
-        
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .btn-action {
-            padding: 8px 16px;
-            background: var(--primary);
-            color: #0a192f;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-action:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 0;
-            color: var(--text-muted);
-        }
-
-        .empty-state i { font-size: 3rem; margin-bottom: 20px; color: #233554; }
-        .empty-state p { margin-bottom: 20px; }
-
-        /* --- FOOTER --- */
-        footer {
-            margin-top: 100px;
-            padding: 50px;
-            text-align: center;
-            border-top: 1px solid #233554;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 768px) {
-            nav { padding: 20px; }
-            .nav-links { display: none; }
-            .welcome-header h1 { font-size: 1.8rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="css_files/style.css">
 </head>
 <body>
 
-    <nav>
-        <a href="index.html" class="logo">EduSphere</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Course.html">Courses</a></li>
-            <li><a href="About.html">About</a></li>
-            <li><a href="Contact.html">Contact</a></li>
-        </ul>
-        <div id="nav-user">
-             <!-- User profile / Logout will be here -->
+    <header id="navbar">
+        <div class="nav-left">
+            <h1>EduSphere</h1>
+            <p>Learn New Skills Anywhere</p>
         </div>
-    </nav>
+        <input type="checkbox" id="nav-toggle" />
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span></span><span></span><span></span>
+        </label>
+        <nav class="nav-right">
+            <a class="opt" href="index.html">Home</a>
+            <a class="opt" href="Course.html">Courses</a>
+            <a class="opt" href="About.html">About Us</a>
+            <a class="opt" href="Contact.html">Contact Us</a>
+            <a class="opt" href="login.html">Login</a>
+            <a class="opt" href="register.html">Register</a>
+        </nav>
+    </header>
 
     <div class="dashboard-container">
         <div class="welcome-header">
@@ -194,13 +63,14 @@
             <div id="empty-state" class="empty-state" style="display: none;">
                 <i class="fa fa-book"></i>
                 <p>You haven't enrolled in any courses yet.</p>
-                <a href="Course.html" class="btn-action">Browse Courses</a>
+                <a href="Course.html" class="btn-action-dash">Browse Courses</a>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 EduSphere Learning Labs. All rights reserved.</p>
+    <footer id="footer">
+        <p>&copy; 2025 EduSphere | Follow us: <i class="fa fa-instagram"></i> <i class="fa fa-twitter"></i></p>
+        <p><span class="material-symbols-outlined">location_on</span> Mumbai – 400064, Maharashtra, India</p>
     </footer>
 
     <script src="script.js"></script>
@@ -216,7 +86,9 @@
                 return;
             }
 
-            document.getElementById('user-name-display').innerText = userName.split(" ")[0];
+            if (userName) {
+                document.getElementById('user-name-display').innerText = userName.split(" ")[0];
+            }
 
             const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
                 ? "http://localhost:5000/api" 
@@ -245,8 +117,8 @@
                             <tr>
                                 <td class="course-name-cell">${enroll.courseTitle}</td>
                                 <td>${date}</td>
-                                <td><span class="status-badge">Active</span></td>
-                                <td><a href="#" class="btn-action">Start Learning</a></td>
+                                <td><span class="status-badge-dash">Active</span></td>
+                                <td><a href="#" class="btn-action-dash">Start Learning</a></td>
                             </tr>
                         `;
                         tbody.innerHTML += row;
@@ -255,7 +127,9 @@
             } catch (error) {
                 console.error("Error fetching enrollments:", error);
                 const tbody = document.getElementById('enrollment-body');
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ff6b6b;">Failed to load data. Please try refreshing.</td></tr>`;
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ff6b6b;">Failed to load data. Please try refreshing.</td></tr>`;
+                }
             }
         });
     </script>

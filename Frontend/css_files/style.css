@@ -508,3 +508,96 @@ summary.faq-title:hover { color: var(--primary); }
     #hero { padding-top: 40px; }
     .msg { font-size: 1.8rem; }
 }
+
+/* =========================================
+   11. USER DASHBOARD
+   ========================================= */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.welcome-header { margin-bottom: 40px; }
+.welcome-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.welcome-header p { color: var(--text-muted); }
+.welcome-header span { color: var(--primary); }
+
+.table-container {
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #233554;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    overflow-x: auto;
+}
+
+.table-container h2 { 
+    margin-bottom: 25px; 
+    font-size: 1.5rem; 
+    border-left: 4px solid var(--primary); 
+    padding-left: 15px; 
+    color: var(--text-main);
+}
+
+#enrollment-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-main);
+}
+
+#enrollment-table th, #enrollment-table td {
+    text-align: left;
+    padding: 20px;
+    border-bottom: 1px solid #233554;
+}
+
+#enrollment-table th {
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+#enrollment-table tr:last-child td { border-bottom: none; }
+
+.course-name-cell { font-weight: 600; color: var(--primary); }
+
+.status-badge-dash {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--text-highlight);
+    border: 1px solid var(--text-highlight);
+}
+
+.btn-action-dash {
+    padding: 8px 16px;
+    background: var(--primary);
+    color: #0a192f;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-action-dash:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px 0;
+    color: var(--text-muted);
+}
+
+.empty-state i { font-size: 3rem; margin-bottom: 20px; color: #233554; }
+.empty-state p { margin-bottom: 20px; }
