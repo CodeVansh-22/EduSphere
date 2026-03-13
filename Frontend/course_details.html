@@ -36,30 +36,28 @@
     <div class="enroll-card">
 
         <!-- Course Title -->
-        <h2 id="c-title" style="font-family: 'Oswald', sans-serif; font-size: 2rem; color: #e6f1ff;">Loading Course...
-        </h2>
+        <h2 id="c-title" class="course-details-title">Loading Course...</h2>
 
         <!-- Course Description -->
-        <p class="subtitle" id="c-desc" style="color: #8892b0; margin-bottom: 20px;">
+        <p class="subtitle" id="c-desc" class="course-details-desc">
             Please wait while we fetch details...
         </p>
 
         <!-- Fee and Duration Box -->
-        <div
-            style="background: #112240; padding: 20px; border: 1px solid #233554; border-radius: 8px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="text-align: left;">
-                <p style="color: #8892b0; font-size: 0.9rem;">Course Fee</p>
-                <h1 id="c-price" style="color: #38bdf8; margin: 0;">--</h1>
+        <div class="fee-duration-box">
+            <div class="fee-box">
+                <p>Course Fee</p>
+                <h1 id="c-price">--</h1>
             </div>
-            <div style="text-align: right;">
-                <p style="color: #8892b0; font-size: 0.9rem;">Duration</p>
-                <h3 id="c-duration" style="color: #e6f1ff; margin: 0;">--</h3>
+            <div class="duration-box">
+                <p>Duration</p>
+                <h3 id="c-duration">--</h3>
             </div>
         </div>
 
         <!-- 3. User Details Form -->
         <form id="detailsForm" onsubmit="goToPayment(event)">
-            <p style="color: #64ffda; margin-bottom: 15px; font-size: 0.9rem; text-align: left;">
+            <p class="secure-enroll-text">
                 <i class="fa fa-lock"></i> Secure Enrollment
             </p>
 

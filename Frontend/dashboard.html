@@ -55,9 +55,9 @@
                 <tbody id="enrollment-body">
                     <!-- Data will be loaded via JS -->
                     <tr id="loading-row">
-                        <td colspan="4" style="text-align: center; padding: 50px;">
-                            <i class="fa fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                            <p style="margin-top: 15px;">Fetching your courses...</p>
+                        <td colspan="4" class="loading-cell">
+                            <i class="fa fa-spinner fa-spin loading-spinner"></i>
+                            <p class="loading-text">Fetching your courses...</p>
                         </td>
                     </tr>
                 </tbody>
@@ -150,7 +150,7 @@
                 console.error("Error fetching enrollments:", error);
                 const tbody = document.getElementById('enrollment-body');
                 if (tbody) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ff6b6b;">Failed to load data. Please try refreshing.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="4" class="failed-load-text">Failed to load data. Please try refreshing.</td></tr>`;
                 }
             }
         });
