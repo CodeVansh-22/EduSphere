@@ -127,7 +127,15 @@
                 let data = await res.json();
 
                 if (!res.ok) {
-                    throw new Error("Order creation failed");
+                    const errorText = await res.text();
+                    console.error("Order creation failed status:", res.status, "Error:", errorText);
+                    if (res.status === 401) {
+                        alert("Session expired or invalid. Please login again.");
+                        window.location.href = "login.html";
+                    } else {
+                        throw new Error(`Order creation failed (Status ${res.status}): ${errorText}`);
+                    }
+                    return;
                 }
 
                 // Step 2: Open Razorpay Options
@@ -217,8 +225,8 @@
                 rp.open();
 
             } catch (err) {
-                console.error(err);
-                alert("Connection failed. Please try again.");
+                console.error("Payment Initiation Error:", err);
+                alert("Payment initiation failed: " + err.message + "\n\nPlease check the browser console (F12) for details.");
                 btn.innerText = originalText;
                 btn.style.opacity = "1";
                 btn.disabled = false;
