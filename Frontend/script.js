@@ -72,6 +72,7 @@ async function handleLogin(event) {
 
         if (response.ok) {
             localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('authToken', data.token); // Store JWT
             localStorage.setItem('currentUserName', data.name);
             localStorage.setItem('currentUserEmail', data.email);
 
@@ -139,15 +140,41 @@ document.addEventListener('DOMContentLoaded', function () {
             registerLink.innerText = "Logout";
             registerLink.href = "#";
             registerLink.style.color = "#ff6b6b";
+            registerLink.classList.add('logout-link'); // Added class for CSS
 
             registerLink.addEventListener('click', function (e) {
                 e.preventDefault();
                 localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('authToken'); // Remove JWT
                 localStorage.removeItem('currentUserName');
                 localStorage.removeItem('currentUserEmail');
                 alert("Logged Out Successfully");
                 window.location.reload();
             });
         }
+    } else {
+        // If not logged in, show Login/Register but they will be hidden in mobile hamburger by CSS
+        // unless we want them to show. User said: 
+        // "keep hamburger menu for logout and dashboard only"
+        // This implies when NOT logged in, the hamburger might be empty or show nothing.
+        // I will keep it consistent with the user's request.
     }
 });
+
+/* =========================================
+   6. PASSWORD TOGGLE LOGIC
+   ========================================= */
+function togglePasswordVisibility(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(iconId);
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}

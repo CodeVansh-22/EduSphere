@@ -4,6 +4,8 @@ from pymongo import MongoClient
 import razorpay
 import datetime
 import os
+import jwt
+from functools import wraps
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -17,6 +19,8 @@ MONGO_URI = os.getenv("MONGO_URI")
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
 PORT = int(os.getenv("PORT", 5000))
+SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key_here") # Fallback for local dev
+SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key_here") # Fallback for local dev
 
 # MongoDB Connection
 client = MongoClient(MONGO_URI)
@@ -29,6 +33,28 @@ courses_col = db.coursedetails
 
 # Razorpay Config
 razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
+
+# -------------------------------------------
+# JWT Decorator
+# -------------------------------------------
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+        try:
+            # Token usually comes as "Bearer <token>"
+            if token.startswith("Bearer "):
+                token = token.split(" ")[1]
+            data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            current_user = users_col.find_one({"email": data['email']})
+            if not current_user:
+                return jsonify({'message': 'User not found!'}), 401
+        except Exception as e:
+            return jsonify({'message': 'Token is invalid!', 'error': str(e)}), 401
+        return f(current_user, *args, **kwargs)
+    return decorated
 
 # -------------------------------------------
 # Frontend Routes (Serving HTML)
@@ -92,23 +118,32 @@ def api_login():
     if not user:
         return jsonify({"error": "Invalid Credentials"}), 401
     
+    # Generate JWT Token
+    token = jwt.encode({
+        'email': user['email'],
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+    }, SECRET_KEY, algorithm="HS256")
+    
     return jsonify({
         "message": "Login Success", 
+        "token": token,
         "name": user.get("name"), 
         "email": user.get("email")
     }), 200
 
 @app.route("/api/enroll", methods=["POST"])
-def api_enroll():
+@token_required
+def api_enroll(current_user):
     try:
         data = request.json
-        user_email = data["userEmail"]
+        user_email = current_user["email"]
         course_id = data["courseId"]
         
         # Check if already enrolled
         if enrollments_col.find_one({"userEmail": user_email, "courseId": course_id}):
             return jsonify({"error": "Already enrolled in this course"}), 400
         
+        data["userEmail"] = user_email # Ensure correct email from token
         data["enrolledAt"] = datetime.datetime.utcnow()
         enrollments_col.insert_one(data)
         return jsonify({"message": "Enrolled Successfully!"}), 200
@@ -116,9 +151,10 @@ def api_enroll():
         return jsonify({"error": "Enrollment failed"}), 500
 
 @app.route("/api/user-enrollments", methods=["GET"])
-def api_get_user_enrollments():
+@token_required
+def api_get_user_enrollments(current_user):
     try:
-        email = request.args.get("email")
+        email = current_user["email"]
         enrollments = list(enrollments_col.find({"userEmail": email}, {"_id": 0}))
         return jsonify(enrollments), 200
     except Exception as e:

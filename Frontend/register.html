@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | EduSphere</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         /* INTERNAL CSS FOR REGISTER PAGE */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -55,6 +56,23 @@
         input:focus {
             border-color: #38bdf8;
             box-shadow: 0 0 0 1px #38bdf8;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-container i {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            color: #8892b0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .password-container i:hover {
+            color: #38bdf8;
         }
 
         button {
@@ -121,11 +139,16 @@
             <input type="email" id="reg-email" placeholder="Enter your email" required>
 
             <label>Password</label>
-            <!-- Added ID for Script -->
-            <input type="password" id="reg-pass" placeholder="Create a password" required>
+            <div class="password-container">
+                <input type="password" id="reg-pass" placeholder="Create a password" required>
+                <i class="fa fa-eye" id="toggleRegPass" onclick="togglePasswordVisibility('reg-pass', 'toggleRegPass')"></i>
+            </div>
 
             <label>Confirm Password</label>
-            <input type="password" id="reg-confirm" placeholder="Confirm your password" required>
+            <div class="password-container">
+                <input type="password" id="reg-confirm" placeholder="Confirm your password" required>
+                <i class="fa fa-eye" id="toggleConfirmPass" onclick="togglePasswordVisibility('reg-confirm', 'toggleConfirmPass')"></i>
+            </div>
 
             <button type="submit">Register</button>
         </form>
