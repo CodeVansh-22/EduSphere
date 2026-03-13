@@ -110,6 +110,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const loginLink = document.querySelector('a[href="login.html"]');
         const registerLink = document.querySelector('a[href="register.html"]');
 
+        // Inject Dashboard Link
+        const navRight = document.querySelector('.nav-right');
+        if (navRight && !document.querySelector('a[href="dashboard.html"]')) {
+            const dashboardLink = document.createElement('a');
+            dashboardLink.className = 'opt';
+            dashboardLink.href = 'dashboard.html';
+            dashboardLink.innerText = 'Dashboard';
+            dashboardLink.style.color = "#64ffda";
+            
+            // Insert before login/logout
+            if (loginLink) {
+                navRight.insertBefore(dashboardLink, loginLink);
+            } else {
+                navRight.appendChild(dashboardLink);
+            }
+        }
+
         if (loginLink) {
             loginLink.innerText = "Welcome, " + userName.split(" ")[0];
             loginLink.href = "#";

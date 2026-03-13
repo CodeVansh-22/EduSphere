@@ -67,6 +67,30 @@ const EnrollmentSchema = new mongoose.Schema({
 
 const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
 
+const PaymentSchema = new mongoose.Schema({
+    paymentId: String,
+    orderId: String,
+    signature: String,
+    userEmail: String,
+    amount: Number,
+    courseId: String,
+    courseTitle: String,
+    status: { type: String, default: "captured" },
+    createdAt: { type: Date, default: Date.now },
+});
+
+const PaymentDetail = mongoose.model("PaymentDetail", PaymentSchema);
+
+const CourseSchema = new mongoose.Schema({
+    courseId: { type: String, unique: true },
+    title: String,
+    description: String,
+    price: Number,
+    duration: String,
+});
+
+const CourseDetail = mongoose.model("CourseDetail", CourseSchema);
+
 // -------------------------------------------
 // Razorpay Config
 //--------------------------------------------
@@ -137,6 +161,32 @@ app.get("/api/user-enrollments", async (req, res) => {
         res.json(enrollments);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch enrollments" });
+    }
+});
+
+// -------------------------------------------
+// Payment Routes
+//--------------------------------------------
+app.post("/api/save-payment", async (req, res) => {
+    try {
+        const payment = new PaymentDetail(req.body);
+        await payment.save();
+        res.json({ message: "Payment Recorded Successfully!" });
+    } catch (err) {
+        console.error("Payment Record Error:", err);
+        res.status(500).json({ error: "Failed to record payment" });
+    }
+});
+
+// -------------------------------------------
+// Course Routes
+//--------------------------------------------
+app.get("/api/courses", async (req, res) => {
+    try {
+        const courses = await CourseDetail.find();
+        res.json(courses);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch courses" });
     }
 });
 

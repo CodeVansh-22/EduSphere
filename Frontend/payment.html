@@ -320,8 +320,26 @@
                         const selectedCourse = localStorage.getItem("selectedCourse");
                         const userEmail = localStorage.getItem("currentUserEmail");
                         const courseTitle = document.getElementById("disp-title").innerText;
+                        const priceText = document.getElementById("disp-price").innerText;
+                        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
 
                         try {
+                            // 1. Record Detailed Payment
+                            await fetch(`${API_URL}/save-payment`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ 
+                                    paymentId: response.razorpay_payment_id,
+                                    orderId: response.razorpay_order_id,
+                                    signature: response.razorpay_signature,
+                                    userEmail, 
+                                    amount,
+                                    courseId: selectedCourse,
+                                    courseTitle
+                                })
+                            });
+
+                            // 2. Enroll User
                             const enrollRes = await fetch(`${API_URL}/enroll`, {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
