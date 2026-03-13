@@ -25,92 +25,101 @@ EduSphere is a full-stack online learning platform where users can explore cours
 ---
 
 ## 🛠 Tech Stack
-
+ 
 ### Frontend
 - **HTML5 & CSS3**: Modern UI structure and styling.
 - **Vanilla JavaScript**: Dynamic interactions and API consumption.
-
+ 
 ### Backend
-- **Node.js & Express.js**: Server-side framework.
-- **MongoDB & Mongoose**: Database management.
+- **Python & Flask**: Robust server-side framework.
+- **PyMongo**: MongoDB driver for Python.
 - **Razorpay API**: Payment gateway integration.
-
+ 
 ### Tools
-- **Git & GitHub** | **VS Code**
-
+- **Git & GitHub** | **VS Code** | **Python Venv**
+ 
 ---
-
+ 
 ## 📂 Project Structure
-
+ 
 ```text
 EduSphere
 │
-├── Backend/          # Node.js server, API logic, and Database configs
-│   └── server.js     # Entry point
+├── Backend/           # Python Flask backend
+│   ├── app.py         # Main API & Routing logic
+│   ├── requirements.txt # Python dependencies
+│   ├── .env           # Sensitive keys (not pushed to Git)
+│   └── venv/          # Virtual environment (local only)
 │
 ├── Frontend/         # Client-side application
-│   ├── index.html    # Home Page
-│   ├── courses.html  # Courses Page
-│   ├── payment.html  # Payment Page
-│   ├── css/          # Stylesheets (style.css, responsive.css)
-│   ├── js/           # Scripts (script.js, payment.js)
-│   └── assets/       # Images and Icons
+│   ├── index.html     # Landing Page
+│   ├── dashboard.html # User Dashboard (Responsive)
+│   ├── css_files/     # Styles (style.css)
+│   ├── script.js      # Frontend Logic & API calls
+│   └── images/       # Assets
 │
+├── render.yaml       # Deployment configuration for Render
 └── README.md
 ```
-
+ 
 ---
-
+ 
 ## ⚙️ Installation & Setup
-
+ 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/codevansh-22/EduSphere.git
 cd EduSphere
 ```
-
+ 
 ### 2. Backend Setup
-The backend handles authentication and payments.
-1. Navigate to the Backend directory:
+1. **Navigate to Backend**:
    ```bash
    cd Backend
    ```
-2. Install dependencies:
+2. **Create Virtual Environment**:
    ```bash
-   npm install
+   python -m venv venv
+   .\venv\Scripts\activate  # Windows
+   source venv/bin/activate # Linux/Mac
    ```
-3. **Configuration**: Set your MongoDB URI and Razorpay credentials in `server.js` or via `.env`.
-4. Start the server:
+3. **Install Dependencies**:
    ```bash
-   npm start
+   pip install -r requirements.txt
    ```
-   *Runs on `http://localhost:5000` by default.*
-
+4. **Environment Variables**: Create a `.env` file in the `Backend/` folder:
+   ```text
+   MONGO_URI=your_mongodb_uri
+   RAZORPAY_KEY_ID=your_key_id
+   RAZORPAY_KEY_SECRET=your_key_secret
+   PORT=5000
+   ```
+5. **Start the Server**:
+   ```bash
+   python app.py
+   ```
+ 
 ### 3. Frontend Setup
-The frontend is a static web application.
-1. Navigate to the Frontend directory:
-   ```bash
-   cd Frontend
-   ```
-2. Open `index.html` in your browser (or use Live Server).
-   *Update `API_URL` in `Frontend/js/script.js` to `http://localhost:5000/api` for local testing.*
-
+The frontend can be served via Flask or opened as a static site.
+1. Open `Frontend/index.html` in your browser.
+2. Ensure the `API_URL` in `Frontend/script.js` points to `http://localhost:5000/api` for local tests.
+ 
 ---
-
+ 
 ## 💳 Payment Workflow
-
+ 
 1️⃣ **User selects a course**  
 2️⃣ **Payment gateway opens** (Razorpay)  
 3️⃣ **User completes secure payment**  
-4️⃣ **Payment confirmation is returned**
-
+4️⃣ **User is enrolled and redirected to Dashboard**
+ 
 ---
-
-## 🎯 Future Improvements
-
-• Student Dashboard & Course Progress Tracking  
-• Instructor Panel & Video Streaming Integration  
-• Advanced Database for Course Management  
+ 
+## 🎯 Core Accomplishments
+ 
+• **Responsive Dashboard**: Mobile-friendly user portal for tracking courses.  
+• **Secure Keys**: Centralized environment variable management.  
+• **Auto Deployment**: Integrated with Render via `render.yaml`.
 
 ---
 
