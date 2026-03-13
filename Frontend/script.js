@@ -12,7 +12,9 @@ const courseData = {
     "ms-office": { title: "MS-Office", price: "₹999", duration: "1 Month", desc: "Excel, Word, PowerPoint." }
 };
 
-const API_URL = "https://edusphere-backend-3jac.onrender.com/api";
+const API_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+    ? "http://localhost:5000/api" 
+    : "https://edusphere-backend-3jac.onrender.com/api";
 
 /* =========================================
    2. USER REGISTRATION LOGIC
