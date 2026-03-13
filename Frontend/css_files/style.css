@@ -1,36 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-    /* --- COLOR PALETTE: EDUSPHERE BRAND (LIGHT THEME) --- */
-    --bg-body: #f4f7f9;
-    /* Soft airy background */
-    --bg-card: #ffffff;
-    /* Pure white for cards */
-    --bg-nav: rgba(255, 255, 255, 0.95);
+    /* --- COLOR PALETTE: EDUSPHERE BRAND (DARK THEME) --- */
+    --bg-body: #020617;
+    /* Deep Space Navy */
+    --bg-card: rgba(30, 41, 59, 0.7);
+    /* Translucent Slate for Glassmorphism */
+    --bg-nav: rgba(2, 6, 23, 0.8);
 
     /* Text Colors */
-    --text-main: #1e293b;
-    /* Dark Slate for readability */
-    --text-muted: #64748b;
-    /* Slate Gray matching logo subtext */
+    --text-main: #f8fafc;
+    /* Crisp almost-white */
+    --text-muted: #94a3b8;
+    /* Muted Slate */
     --text-highlight: #00b4d8;
     /* Vibrant Teal */
 
     /* Brand Colors (From Logo) */
     --primary: #00b4d8;
     /* Teal/Cyan from "Sphere" */
-    --primary-glow: rgba(0, 180, 216, 0.2);
-    --secondary: #0e4a8c;
-    /* Deep Blue from "Edu" */
+    --primary-glow: rgba(0, 180, 216, 0.3);
+    --secondary: #e6f1ff;
+    /* Icy white for primary headers */
     --accent: #48cae4;
     /* Lighter cyan transition */
 
     /* Borders, Shadows & Effects */
-    --border-light: #e2e8f0;
-    /* Soft gray for borders */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    --border-light: rgba(255, 255, 255, 0.1);
+    /* Glass border */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================================
@@ -46,8 +46,8 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
     background-image:
-        radial-gradient(circle at 0% 0%, rgba(0, 180, 216, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(14, 74, 140, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 0% 0%, rgba(0, 180, 216, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(72, 202, 228, 0.04) 0%, transparent 50%);
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
@@ -62,7 +62,7 @@ h4,
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.02em;
     color: var(--secondary);
-    /* Brand deep blue for headers */
+    /* Icy white for headers */
 }
 
 a {
@@ -105,7 +105,7 @@ img {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+    filter: drop-shadow(0 0 10px var(--primary-glow));
 }
 
 .nav-left p {
@@ -123,7 +123,7 @@ img {
 }
 
 .nav-right .opt {
-    color: var(--text-main);
+    color: var(--text-muted);
     font-weight: 500;
     padding: 10px 20px;
     border-radius: 12px;
@@ -132,7 +132,7 @@ img {
 
 .nav-right .opt:hover {
     color: var(--primary);
-    background: rgba(0, 180, 216, 0.08);
+    background: rgba(0, 180, 216, 0.1);
 }
 
 /* CRITICAL FIX: Hide the checkbox square globally */
@@ -168,8 +168,7 @@ img {
 .HeroImage {
     margin: 0 auto 40px;
     width: 220px;
-    /* Slightly larger to showcase the new logo */
-    filter: drop-shadow(0 10px 25px var(--primary-glow));
+    filter: drop-shadow(0 0 35px var(--primary-glow));
     animation: float 6s ease-in-out infinite;
 }
 
@@ -200,18 +199,19 @@ img {
     padding: 18px 48px;
     font-size: 1.125rem;
     background: var(--primary);
-    color: #ffffff;
+    color: #020617;
+    /* Dark text on bright button */
     border-radius: 50px;
     cursor: pointer;
     font-weight: 700;
-    box-shadow: 0 8px 20px var(--primary-glow);
+    box-shadow: 0 0 20px var(--primary-glow);
     border: none;
 }
 
 .hero-btn:hover {
     transform: translateY(-4px);
     background: var(--secondary);
-    box-shadow: 0 12px 25px rgba(14, 74, 140, 0.3);
+    box-shadow: 0 0 30px var(--primary-glow);
 }
 
 .icons {
@@ -241,7 +241,7 @@ img {
     gap: 60px;
     padding: 100px 10%;
     border-bottom: 1px solid var(--border-light);
-    background: #ffffff;
+    background: transparent;
 }
 
 .about-left {
@@ -296,7 +296,9 @@ img {
 #about-preview {
     text-align: center;
     padding: 100px 10%;
-    background: rgba(0, 180, 216, 0.03);
+    background: rgba(15, 23, 42, 0.4);
+    /* Translucent dark box */
+    backdrop-filter: blur(8px);
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
 }
@@ -334,10 +336,12 @@ img {
 
 .course-card {
     background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 24px;
     overflow: hidden;
     border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     display: flex;
@@ -347,7 +351,7 @@ img {
 .course-card:hover {
     transform: translateY(-12px) scale(1.02);
     border-color: var(--primary);
-    box-shadow: 0 20px 40px -15px rgba(0, 180, 216, 0.2);
+    box-shadow: 0 20px 40px -15px rgba(0, 180, 216, 0.4);
 }
 
 .course-card img {
@@ -381,10 +385,10 @@ img {
 .course-card button {
     width: 100%;
     padding: 15px;
-    background: #f8fafc;
+    background: transparent;
     border: none;
     border-top: 1px solid var(--border-light);
-    color: var(--secondary);
+    color: var(--primary);
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -392,8 +396,8 @@ img {
 }
 
 .course-card button:hover {
-    background-color: var(--primary);
-    color: #fff;
+    background-color: rgba(0, 180, 216, 0.1);
+    color: var(--secondary);
 }
 
 /* --- COMPLETED STATUS BADGE --- */
@@ -401,7 +405,7 @@ img {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-color: #ffffff;
+    background-color: var(--bg-body);
     color: var(--primary);
     border: 1px solid var(--primary);
     padding: 5px 12px;
@@ -409,7 +413,7 @@ img {
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.2);
 }
 
 /* =========================================
@@ -429,6 +433,7 @@ img {
 
 form {
     background: var(--bg-card);
+    backdrop-filter: blur(12px);
     padding: 48px;
     border-radius: 24px;
     border: 1px solid var(--border-light);
@@ -449,10 +454,10 @@ textarea {
     width: 100%;
     padding: 14px 20px;
     margin-bottom: 24px;
-    background: #f8fafc;
+    background: rgba(15, 23, 42, 0.6);
     border: 1px solid var(--border-light);
     border-radius: 12px;
-    color: var(--text-main);
+    color: #ffffff;
     font-family: inherit;
     transition: 0.3s;
 }
@@ -462,13 +467,14 @@ select:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary);
-    background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.15);
 }
 
 button[type="submit"] {
     background: var(--primary);
-    color: #ffffff;
+    color: #020617;
+    /* Dark text for contrast */
     padding: 16px;
     border: none;
     border-radius: 12px;
@@ -499,7 +505,7 @@ button[type="submit"]:hover {
 /* FAQ Section */
 .faq-section {
     padding: 100px 10%;
-    background: #ffffff;
+    background: transparent;
 }
 
 .faq-section h2 {
@@ -511,6 +517,7 @@ button[type="submit"]:hover {
 
 details.faq {
     background: var(--bg-card);
+    backdrop-filter: blur(12px);
     margin-bottom: 16px;
     border-radius: 16px;
     border: 1px solid var(--border-light);
@@ -519,7 +526,7 @@ details.faq {
 
 details.faq[open] {
     border-color: var(--primary);
-    background: #f0f9ff;
+    background: rgba(15, 23, 42, 0.5);
 }
 
 summary.faq-title {
@@ -560,6 +567,7 @@ details[open] summary.faq-title::after {
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-light);
     text-align: center;
+    backdrop-filter: blur(12px);
 }
 
 .enroll-card h2 {
@@ -573,8 +581,8 @@ details[open] summary.faq-title::after {
 }
 
 .required {
-    color: #e11d48;
-    /* Red for required */
+    color: #ff4757;
+    /* Bright red for dark mode */
 }
 
 .info-message {
@@ -624,7 +632,7 @@ details[open] summary.faq-title::after {
    9. FOOTER
    ========================================= */
 #footer {
-    background-color: var(--bg-card);
+    background-color: rgba(2, 6, 23, 0.9);
     padding: 40px 20px;
     text-align: center;
     border-top: 1px solid var(--border-light);
@@ -714,6 +722,7 @@ details[open] summary.faq-title::after {
         flex-direction: column;
         width: 100%;
         background-color: var(--bg-card);
+        backdrop-filter: blur(16px);
         border-radius: 8px;
         margin-top: 15px;
         border: 1px solid var(--border-light);
@@ -737,7 +746,7 @@ details[open] summary.faq-title::after {
     }
 
     .nav-right .opt:hover {
-        background-color: var(--bg-body);
+        background-color: rgba(0, 180, 216, 0.1);
         color: var(--primary);
     }
 
@@ -794,6 +803,7 @@ details[open] summary.faq-title::after {
 
 .table-container {
     background: var(--bg-card);
+    backdrop-filter: blur(12px);
     border-radius: 32px;
     padding: 40px;
     border: 1px solid var(--border-light);
@@ -835,7 +845,7 @@ details[open] summary.faq-title::after {
 }
 
 #enrollment-table td {
-    background: #f8fafc;
+    background: rgba(15, 23, 42, 0.4);
     padding: 24px;
     border-top: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
@@ -872,8 +882,8 @@ details[open] summary.faq-title::after {
 
 .btn-action-dash {
     padding: 10px 24px;
-    background: #ffffff;
-    color: var(--secondary);
+    background: transparent;
+    color: var(--primary);
     border: 1px solid var(--border-light);
     border-radius: 12px;
     font-weight: 600;
@@ -883,7 +893,8 @@ details[open] summary.faq-title::after {
 
 .btn-action-dash:hover {
     background: var(--primary);
-    color: #ffffff;
+    color: #020617;
+    /* Dark text on hover */
     border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px var(--primary-glow);
@@ -910,7 +921,7 @@ details[open] summary.faq-title::after {
 
     #enrollment-table tr {
         margin-bottom: 24px;
-        background: #f8fafc;
+        background: rgba(15, 23, 42, 0.4);
         border-radius: 20px;
         padding: 20px;
         border: 1px solid var(--border-light);
@@ -940,6 +951,7 @@ details[open] summary.faq-title::after {
 .login-box,
 .register-box {
     background: var(--bg-card);
+    backdrop-filter: blur(16px);
     padding: 48px;
     border-radius: 32px;
     box-shadow: var(--shadow-lg);
@@ -992,6 +1004,7 @@ details[open] summary.faq-title::after {
     width: 1000px;
     max-width: 95%;
     background: var(--bg-card);
+    backdrop-filter: blur(20px);
     border-radius: 32px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
@@ -1001,9 +1014,10 @@ details[open] summary.faq-title::after {
 
 .summary-sidebar {
     width: 38%;
-    /* Brand gradient using deep blue to establish trust on the payment page */
-    background: linear-gradient(160deg, var(--secondary) 0%, #062b55 100%);
+    /* Dark subtle gradient for the sidebar */
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%);
     padding: 60px 48px;
+    border-right: 1px solid var(--border-light);
     color: #ffffff;
 }
 
@@ -1013,10 +1027,10 @@ details[open] summary.faq-title::after {
 }
 
 .price-box {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 180, 216, 0.05);
     padding: 32px;
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 180, 216, 0.15);
     margin: 32px 0;
 }
 
@@ -1033,12 +1047,13 @@ details[open] summary.faq-title::after {
 }
 
 .secure-badge {
-    background: #f0fdfa;
+    background: rgba(100, 255, 218, 0.05);
     padding: 32px;
     border-radius: 20px;
-    border: 1px dashed #2dd4bf;
+    border: 1px dashed rgba(100, 255, 218, 0.2);
     margin: 40px 0;
-    color: #0f766e;
+    color: #64ffda;
+    /* Mint trust color */
 }
 
 .pay-btn {
@@ -1046,7 +1061,8 @@ details[open] summary.faq-title::after {
     font-size: 1.25rem;
     background: var(--primary);
     box-shadow: 0 12px 24px var(--primary-glow);
-    color: #ffffff;
+    color: #020617;
+    /* Dark text */
 }
 
 /* =========================================
@@ -1066,7 +1082,7 @@ details[open] summary.faq-title::after {
 }
 
 .fee-duration-box {
-    background: #f8fafc;
+    background: rgba(15, 23, 42, 0.6);
     padding: 24px;
     border: 1px solid var(--border-light);
     border-radius: 12px;
@@ -1111,8 +1127,8 @@ details[open] summary.faq-title::after {
 }
 
 .secure-enroll-text {
-    color: #059669;
-    /* Green for trust */
+    color: #64ffda;
+    /* Mint for trust */
     margin-bottom: 15px;
     font-size: 0.95rem;
     text-align: left;
@@ -1139,5 +1155,6 @@ details[open] summary.faq-title::after {
 
 .failed-load-text {
     text-align: center;
-    color: #e11d48;
+    color: #ff6b6b;
+    /* Bright red for dark mode */
 }
