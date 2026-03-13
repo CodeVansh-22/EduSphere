@@ -1,12 +1,16 @@
 {
-  "name": "edusphere-root",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Root package to manage EduSphere deployment",
+  "main": "server.js",
   "scripts": {
-    "build": "cd Backend && npm install",
-    "start": "cd Backend && npm start"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "Vansh",
-  "license": "ISC"
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.0",
+    "razorpay": "^2.9.6"
+  }
 }
