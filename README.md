@@ -106,14 +106,6 @@ The frontend is a static web application.
 
 ---
 
-## 📸 Screenshots
-
-![Home Page](screenshots/home.png)
-![Courses](screenshots/courses.png)
-![Payment](screenshots/payment.png)
-
----
-
 ## 🎯 Future Improvements
 
 • Student Dashboard & Course Progress Tracking  
