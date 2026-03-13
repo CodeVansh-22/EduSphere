@@ -1,27 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-    /* --- COLOR PALETTE: PREMIUM ELECTRIC BLUE & DARK NAVY --- */
-    --bg-body: #020617;       /* Deepest Space Navy */
-    --bg-card: rgba(30, 41, 59, 0.7); /* Translucent Slate for Glassmorphism */
-    --bg-nav: rgba(2, 6, 23, 0.8);
-    
-    /* Text Colors */
-    --text-main: #f8fafc;     /* Almost white */
-    --text-muted: #94a3b8;    /* Muted Slate */
-    --text-highlight: #38bdf8; /* Electric Sky Blue */
+    /* --- COLOR PALETTE: EDUSPHERE BRAND (LIGHT THEME) --- */
+    --bg-body: #f4f7f9;
+    /* Soft airy background */
+    --bg-card: #ffffff;
+    /* Pure white for cards */
+    --bg-nav: rgba(255, 255, 255, 0.95);
 
-    /* Brand Colors */
-    --primary: #38bdf8;       
-    --primary-glow: rgba(56, 189, 248, 0.4);
-    --secondary: #64ffda;     /* Mint Highlight */
-    --accent: #0ea5e9;
-    
-    /* Shadows & Effects */
+    /* Text Colors */
+    --text-main: #1e293b;
+    /* Dark Slate for readability */
+    --text-muted: #64748b;
+    /* Slate Gray matching logo subtext */
+    --text-highlight: #00b4d8;
+    /* Vibrant Teal */
+
+    /* Brand Colors (From Logo) */
+    --primary: #00b4d8;
+    /* Teal/Cyan from "Sphere" */
+    --primary-glow: rgba(0, 180, 216, 0.2);
+    --secondary: #0e4a8c;
+    /* Deep Blue from "Edu" */
+    --accent: #48cae4;
+    /* Lighter cyan transition */
+
+    /* Borders, Shadows & Effects */
+    --border-light: #e2e8f0;
+    /* Soft gray for borders */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
 }
 
 /* =========================================
@@ -36,18 +45,24 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
-    background-image: 
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(0, 180, 216, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(14, 74, 140, 0.03) 0%, transparent 50%);
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .app-brand {
+h1,
+h2,
+h3,
+h4,
+.app-brand {
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.02em;
+    color: var(--secondary);
+    /* Brand deep blue for headers */
 }
 
 a {
@@ -79,22 +94,23 @@ img {
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
 }
 
 .nav-left h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 8px var(--primary-glow));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
 }
 
 .nav-left p {
     font-size: 0.75rem;
-    color: var(--secondary);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 600;
@@ -107,7 +123,7 @@ img {
 }
 
 .nav-right .opt {
-    color: var(--text-muted);
+    color: var(--text-main);
     font-weight: 500;
     padding: 10px 20px;
     border-radius: 12px;
@@ -116,7 +132,7 @@ img {
 
 .nav-right .opt:hover {
     color: var(--primary);
-    background: rgba(56, 189, 248, 0.08);
+    background: rgba(0, 180, 216, 0.08);
 }
 
 /* CRITICAL FIX: Hide the checkbox square globally */
@@ -151,14 +167,22 @@ img {
 
 .HeroImage {
     margin: 0 auto 40px;
-    width: 180px;
-    filter: drop-shadow(0 0 30px var(--primary-glow));
+    width: 220px;
+    /* Slightly larger to showcase the new logo */
+    filter: drop-shadow(0 10px 25px var(--primary-glow));
     animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 .msg {
@@ -166,8 +190,7 @@ img {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 24px;
-    color: #fff;
-    background: linear-gradient(to bottom, #fff 50%, #94a3b8);
+    background: linear-gradient(to right, var(--secondary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -177,18 +200,18 @@ img {
     padding: 18px 48px;
     font-size: 1.125rem;
     background: var(--primary);
-    color: #020617;
+    color: #ffffff;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 700;
-    box-shadow: 0 0 20px var(--primary-glow);
+    box-shadow: 0 8px 20px var(--primary-glow);
     border: none;
 }
 
 .hero-btn:hover {
     transform: translateY(-4px);
-    background: #fff;
-    box-shadow: 0 0 40px var(--primary-glow);
+    background: var(--secondary);
+    box-shadow: 0 12px 25px rgba(14, 74, 140, 0.3);
 }
 
 .icons {
@@ -217,7 +240,8 @@ img {
     align-items: center;
     gap: 60px;
     padding: 100px 10%;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--border-light);
+    background: #ffffff;
 }
 
 .about-left {
@@ -228,7 +252,7 @@ img {
 .about-left img {
     border-radius: 24px;
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-light);
     transition: 0.5s;
 }
 
@@ -247,7 +271,7 @@ img {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 24px;
-    color: #fff;
+    color: var(--secondary);
     position: relative;
 }
 
@@ -272,14 +296,15 @@ img {
 #about-preview {
     text-align: center;
     padding: 100px 10%;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 180, 216, 0.03);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
 
 #about-preview h1 {
     font-size: 3.5rem;
     margin-bottom: 24px;
-    color: #fff;
+    color: var(--secondary);
 }
 
 .read-more-btn {
@@ -293,8 +318,8 @@ img {
 }
 
 .read-more-btn:hover {
-    color: #fff;
-    border-color: var(--primary);
+    color: var(--secondary);
+    border-color: var(--secondary);
 }
 
 /* =========================================
@@ -309,11 +334,10 @@ img {
 
 .course-card {
     background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-radius: 24px;
     overflow: hidden;
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     display: flex;
@@ -323,7 +347,7 @@ img {
 .course-card:hover {
     transform: translateY(-12px) scale(1.02);
     border-color: var(--primary);
-    box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.3);
+    box-shadow: 0 20px 40px -15px rgba(0, 180, 216, 0.2);
 }
 
 .course-card img {
@@ -339,7 +363,7 @@ img {
 
 .course-card h3 {
     padding: 20px 20px 10px;
-    color: var(--text-main);
+    color: var(--secondary);
     transition: 0.3s;
 }
 
@@ -350,17 +374,17 @@ img {
 .course-card p {
     padding: 0 20px 20px;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     flex-grow: 1;
 }
 
 .course-card button {
     width: 100%;
     padding: 15px;
-    background: transparent;
+    background: #f8fafc;
     border: none;
-    border-top: 1px solid #233554;
-    color: var(--primary);
+    border-top: 1px solid var(--border-light);
+    color: var(--secondary);
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -368,7 +392,7 @@ img {
 }
 
 .course-card button:hover {
-    background-color: rgba(56, 189, 248, 0.1);
+    background-color: var(--primary);
     color: #fff;
 }
 
@@ -377,15 +401,15 @@ img {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-color: var(--bg-body);
+    background-color: #ffffff;
     color: var(--primary);
     border: 1px solid var(--primary);
     padding: 5px 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.75rem;
     font-weight: bold;
     text-transform: uppercase;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================================
@@ -405,18 +429,17 @@ img {
 
 form {
     background: var(--bg-card);
-    backdrop-filter: blur(12px);
     padding: 48px;
     border-radius: 24px;
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-light);
     box-shadow: var(--shadow-lg);
 }
 
 label {
     display: block;
     margin-bottom: 10px;
-    color: #fff;
-    font-weight: 500;
+    color: var(--secondary);
+    font-weight: 600;
     font-size: 0.875rem;
 }
 
@@ -426,10 +449,10 @@ textarea {
     width: 100%;
     padding: 14px 20px;
     margin-bottom: 24px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--glass-border);
+    background: #f8fafc;
+    border: 1px solid var(--border-light);
     border-radius: 12px;
-    color: #fff;
+    color: var(--text-main);
     font-family: inherit;
     transition: 0.3s;
 }
@@ -439,13 +462,13 @@ select:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(15, 23, 42, 0.8);
-    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
 }
 
 button[type="submit"] {
     background: var(--primary);
-    color: #020617;
+    color: #ffffff;
     padding: 16px;
     border: none;
     border-radius: 12px;
@@ -459,7 +482,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px var(--primary-glow);
-    filter: brightness(1.1);
+    background: var(--secondary);
 }
 
 .contact-info p {
@@ -476,32 +499,34 @@ button[type="submit"]:hover {
 /* FAQ Section */
 .faq-section {
     padding: 100px 10%;
+    background: #ffffff;
 }
 
 .faq-section h2 {
     text-align: center;
     margin-bottom: 48px;
     font-size: 2.5rem;
+    color: var(--secondary);
 }
 
 details.faq {
     background: var(--bg-card);
     margin-bottom: 16px;
     border-radius: 16px;
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-light);
     transition: 0.3s;
 }
 
 details.faq[open] {
     border-color: var(--primary);
-    background: rgba(15, 23, 42, 0.5);
+    background: #f0f9ff;
 }
 
 summary.faq-title {
     padding: 24px;
     cursor: pointer;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-main);
     list-style: none;
     display: flex;
     justify-content: space-between;
@@ -532,13 +557,13 @@ details[open] summary.faq-title::after {
     background: var(--bg-card);
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid #233554;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
     text-align: center;
 }
 
 .enroll-card h2 {
-    color: var(--text-main);
+    color: var(--secondary);
     margin-bottom: 10px;
 }
 
@@ -548,7 +573,8 @@ details[open] summary.faq-title::after {
 }
 
 .required {
-    color: var(--primary);
+    color: #e11d48;
+    /* Red for required */
 }
 
 .info-message {
@@ -575,7 +601,7 @@ details[open] summary.faq-title::after {
 }
 
 .loader {
-    border: 4px solid rgba(56, 189, 248, 0.1);
+    border: 4px solid rgba(0, 180, 216, 0.1);
     border-top: 4px solid var(--primary);
     border-radius: 50%;
     width: 40px;
@@ -598,14 +624,13 @@ details[open] summary.faq-title::after {
    9. FOOTER
    ========================================= */
 #footer {
-    background-color: #020c1b;
+    background-color: var(--bg-card);
     padding: 40px 20px;
     text-align: center;
-    border-top: 1px solid #233554;
+    border-top: 1px solid var(--border-light);
     margin-top: 60px;
     color: var(--text-muted);
     padding-bottom: 80px;
-    /* Space for bottom nav on mobile */
 }
 
 /* =========================================
@@ -619,7 +644,7 @@ details[open] summary.faq-title::after {
     width: 100%;
     background-color: var(--bg-nav);
     backdrop-filter: blur(10px);
-    border-top: 1px solid #233554;
+    border-top: 1px solid var(--border-light);
     z-index: 1001;
     justify-content: space-around;
     padding: 10px 0;
@@ -646,35 +671,27 @@ details[open] summary.faq-title::after {
 }
 
 /* =========================================
-   10. MOBILE & RESPONSIVE DESIGN (FIXED)
+   10. MOBILE & RESPONSIVE DESIGN
    ========================================= */
 @media (max-width: 768px) {
-
-    /* 1. Navbar Container Layout */
     #navbar {
         flex-direction: column;
-        /* Stack elements */
         align-items: flex-start;
-        /* Align left */
         position: relative;
-        /* For absolute positioning of toggle */
         padding: 15px 20px;
     }
 
-    /* 2. Logo Area */
     .nav-left {
         width: 100%;
         margin-bottom: 5px;
     }
 
     .nav-left h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
-    /* 3. The Hamburger Button (Three Lines) */
     .nav-toggle-label {
         display: block;
-        /* Visible on mobile */
         position: absolute;
         top: 25px;
         right: 20px;
@@ -686,37 +703,33 @@ details[open] summary.faq-title::after {
         display: block;
         height: 3px;
         width: 28px;
-        background-color: var(--primary);
+        background-color: var(--secondary);
         margin-bottom: 6px;
         border-radius: 3px;
         transition: all 0.3s ease;
     }
 
-    /* 4. The Menu Links (Hidden by default) */
     .nav-right {
         display: none;
-        /* HIDE initially */
         flex-direction: column;
         width: 100%;
         background-color: var(--bg-card);
         border-radius: 8px;
         margin-top: 15px;
-        border: 1px solid #233554;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
     }
 
-    /* 5. SHOW Menu when Checkbox is Checked */
     #nav-toggle:checked~.nav-right {
         display: flex;
     }
 
-    /* 6. Style the Links */
     .nav-right .opt {
         text-align: center;
         padding: 15px;
         display: block;
         width: 100%;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid var(--border-light);
     }
 
     .nav-right .opt:last-child {
@@ -736,21 +749,16 @@ details[open] summary.faq-title::after {
         font-size: 1.8rem;
     }
 
-    /* 8. Show Bottom Nav */
     .bottom-nav {
         display: flex;
     }
 
-    /* 9. Logout & Dashboard only in Hamburger */
     .nav-right .opt {
         display: none;
-        /* Hide all by default in mobile hamburger */
     }
 
-    /* Reveal only Dashboard and Logout when logged in */
     .nav-right a[href="dashboard.html"],
     .nav-right .logout-link {
-        /* I will add this class in JS */
         display: block !important;
     }
 }
@@ -772,6 +780,7 @@ details[open] summary.faq-title::after {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 8px;
+    color: var(--secondary);
 }
 
 .welcome-header p {
@@ -785,10 +794,9 @@ details[open] summary.faq-title::after {
 
 .table-container {
     background: var(--bg-card);
-    backdrop-filter: blur(12px);
     border-radius: 32px;
     padding: 40px;
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-light);
     box-shadow: var(--shadow-lg);
 }
 
@@ -799,6 +807,7 @@ details[open] summary.faq-title::after {
     display: flex;
     align-items: center;
     gap: 12px;
+    color: var(--secondary);
 }
 
 .table-container h2::before {
@@ -826,27 +835,27 @@ details[open] summary.faq-title::after {
 }
 
 #enrollment-table td {
-    background: rgba(15, 23, 42, 0.4);
+    background: #f8fafc;
     padding: 24px;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
 
 #enrollment-table td:first-child {
-    border-left: 1px solid var(--glass-border);
+    border-left: 1px solid var(--border-light);
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
 }
 
 #enrollment-table td:last-child {
-    border-right: 1px solid var(--glass-border);
+    border-right: 1px solid var(--border-light);
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
 }
 
 .course-name-cell {
     font-weight: 700;
-    color: #fff;
+    color: var(--secondary);
     font-size: 1.125rem;
 }
 
@@ -856,16 +865,16 @@ details[open] summary.faq-title::after {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: rgba(56, 189, 248, 0.1);
+    background: rgba(0, 180, 216, 0.1);
     color: var(--primary);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(0, 180, 216, 0.2);
 }
 
 .btn-action-dash {
     padding: 10px 24px;
-    background: rgba(56, 189, 248, 0.1);
-    color: var(--primary);
-    border: 1px solid var(--primary);
+    background: #ffffff;
+    color: var(--secondary);
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -874,7 +883,8 @@ details[open] summary.faq-title::after {
 
 .btn-action-dash:hover {
     background: var(--primary);
-    color: #020617;
+    color: #ffffff;
+    border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px var(--primary-glow);
 }
@@ -886,17 +896,26 @@ details[open] summary.faq-title::after {
         margin: 40px auto;
     }
 
-    #enrollment-table thead { display: none; }
-    #enrollment-table, tbody, tr, td { display: block; width: 100%; }
-    
+    #enrollment-table thead {
+        display: none;
+    }
+
+    #enrollment-table,
+    tbody,
+    tr,
+    td {
+        display: block;
+        width: 100%;
+    }
+
     #enrollment-table tr {
         margin-bottom: 24px;
-        background: rgba(15, 23, 42, 0.4);
+        background: #f8fafc;
         border-radius: 20px;
         padding: 20px;
-        border: 1px solid var(--glass-border);
+        border: 1px solid var(--border-light);
     }
-    
+
     #enrollment-table td {
         background: transparent;
         border: none;
@@ -921,11 +940,10 @@ details[open] summary.faq-title::after {
 .login-box,
 .register-box {
     background: var(--bg-card);
-    backdrop-filter: blur(16px);
     padding: 48px;
     border-radius: 32px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
     margin: 60px auto;
     max-width: 420px;
     width: 90%;
@@ -937,6 +955,11 @@ details[open] summary.faq-title::after {
     font-weight: 700;
     margin-bottom: 32px;
     text-align: center;
+    color: var(--secondary);
+}
+
+.password-container {
+    position: relative;
 }
 
 .password-container i {
@@ -969,33 +992,38 @@ details[open] summary.faq-title::after {
     width: 1000px;
     max-width: 95%;
     background: var(--bg-card);
-    backdrop-filter: blur(20px);
     border-radius: 32px;
     overflow: hidden;
-    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
     margin: 60px auto;
 }
 
 .summary-sidebar {
     width: 38%;
-    background: linear-gradient(160deg, #1e293b 0%, #020617 100%);
+    /* Brand gradient using deep blue to establish trust on the payment page */
+    background: linear-gradient(160deg, var(--secondary) 0%, #062b55 100%);
     padding: 60px 48px;
-    border-right: 1px solid var(--glass-border);
+    color: #ffffff;
+}
+
+.summary-sidebar h2,
+.summary-sidebar p {
+    color: #ffffff;
 }
 
 .price-box {
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(255, 255, 255, 0.1);
     padding: 32px;
     border-radius: 24px;
-    border: 1px solid rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     margin: 32px 0;
 }
 
 .price-amount {
     font-size: 3.5rem;
     font-weight: 800;
-    color: #fff;
+    color: #ffffff;
     line-height: 1;
 }
 
@@ -1005,11 +1033,12 @@ details[open] summary.faq-title::after {
 }
 
 .secure-badge {
-    background: rgba(100, 255, 218, 0.05);
+    background: #f0fdfa;
     padding: 32px;
     border-radius: 20px;
-    border: 1px dashed rgba(100, 255, 218, 0.2);
+    border: 1px dashed #2dd4bf;
     margin: 40px 0;
+    color: #0f766e;
 }
 
 .pay-btn {
@@ -1017,27 +1046,30 @@ details[open] summary.faq-title::after {
     font-size: 1.25rem;
     background: var(--primary);
     box-shadow: 0 12px 24px var(--primary-glow);
+    color: #ffffff;
 }
 
 /* =========================================
    14. COURSE DETAILS PAGE
    ========================================= */
 .course-details-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
-    color: #e6f1ff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.5rem;
+    color: var(--secondary);
+    margin-bottom: 10px;
 }
 
 .course-details-desc {
-    color: #8892b0;
+    color: var(--text-muted);
     margin-bottom: 20px;
+    font-size: 1.1rem;
 }
 
 .fee-duration-box {
-    background: #112240;
-    padding: 20px;
-    border: 1px solid #233554;
-    border-radius: 8px;
+    background: #f8fafc;
+    padding: 24px;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
@@ -1049,13 +1081,16 @@ details[open] summary.faq-title::after {
 }
 
 .fee-box p {
-    color: #8892b0;
+    color: var(--text-muted);
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .fee-box h1 {
-    color: #38bdf8;
+    color: var(--primary);
     margin: 0;
+    font-size: 2rem;
 }
 
 .duration-box {
@@ -1063,20 +1098,25 @@ details[open] summary.faq-title::after {
 }
 
 .duration-box p {
-    color: #8892b0;
+    color: var(--text-muted);
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .duration-box h3 {
-    color: #e6f1ff;
+    color: var(--secondary);
     margin: 0;
+    font-size: 1.5rem;
 }
 
 .secure-enroll-text {
-    color: #64ffda;
+    color: #059669;
+    /* Green for trust */
     margin-bottom: 15px;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     text-align: left;
+    font-weight: 600;
 }
 
 /* =========================================
@@ -1094,9 +1134,10 @@ details[open] summary.faq-title::after {
 
 .loading-text {
     margin-top: 15px;
+    color: var(--text-muted);
 }
 
 .failed-load-text {
     text-align: center;
-    color: #ff6b6b;
+    color: #e11d48;
 }
