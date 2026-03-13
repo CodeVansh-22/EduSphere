@@ -1,0 +1,10 @@
+{
+  "name": "edusphere-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd Backend && node server.js",
+    "build": "cd Backend && npm install",
+    "install": "cd Backend && npm install"
+  },
+  "dependencies": {}
+}
