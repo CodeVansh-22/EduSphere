@@ -6,63 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout | EduSphere</title>
     <link rel="icon" type="image/png" href="images/icon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
     <link rel="stylesheet" href="css_files/style.css">
 </head>
 
 <body>
 
-    <div class="payment-container">
+    <div class="payment-wrapper">
+        <div class="payment-container">
 
-        <div class="summary-sidebar">
-            <div>
-                <div class="app-brand">EduSphere</div>
-                <div class="price-box">
-                    <div class="price-label">Total Payable</div>
-                    <div class="price-amount" id="disp-price">₹0</div>
-                    <div class="course-name" id="disp-title">Select a Course</div>
+            <div class="summary-sidebar">
+                <div class="sidebar-top">
+                    <div class="app-brand-small">EduSphere</div>
+                    <div class="checkout-title">Order Summary</div>
+
+                    <div class="price-box">
+                        <div class="course-name" id="disp-title">Select a Course</div>
+                        <div class="price-label">Total Payable</div>
+                        <div class="price-amount" id="disp-price">₹0</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-bottom user-info">
+                    <p class="user-name"><i class="fa fa-user-circle"></i> <span id="disp-user">Guest User</span></p>
+                    <p class="ssl-secure"><i class="fa fa-lock"></i> 256-bit SSL Secure</p>
                 </div>
             </div>
 
-            <div class="user-info">
-                <p><i class="fa fa-user-circle"></i> <span id="disp-user">Guest User</span></p>
-                <p style="margin-top:10px; font-size:0.75rem; color: #64ffda;"><i class="fa fa-lock"></i> 256-bit SSL
-                    Secure</p>
-            </div>
-        </div>
+            <div class="payment-content">
 
-        <div class="payment-content">
-
-            <div class="checkout-header">
-                <h2>Checkout</h2>
-                <p>Complete your purchase securely via Razorpay.</p>
-            </div>
-
-            <div class="secure-badge">
-                <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">
-                    Accepted Methods</p>
-                <div class="icons-row">
-                    <i class="fa fa-credit-card" title="Cards"></i>
-                    <i class="fa fa-google-wallet" title="UPI / GPay"></i>
-                    <i class="fa fa-university" title="NetBanking"></i>
-                    <i class="fa fa-qrcode" title="QR Scan"></i>
+                <div class="checkout-header">
+                    <h2>Checkout</h2>
+                    <p>Complete your purchase securely via Razorpay.</p>
                 </div>
+
+                <div class="secure-badge">
+                    <div class="badge-text">Accepted Methods</div>
+                    <div class="icons-row">
+                        <i class="fa fa-credit-card" title="Cards"></i>
+                        <i class="fa fa-google-wallet" title="UPI / GPay"></i>
+                        <i class="fa fa-university" title="NetBanking"></i>
+                        <i class="fa fa-qrcode" title="QR Scan"></i>
+                    </div>
+                </div>
+
+                <button class="pay-btn" id="pay-btn-main" onclick="initiatePayment()">
+                    Pay Now
+                </button>
+
+                <div class="cancel-link">
+                    <a href="Course.html"><i class="fa fa-arrow-left"></i> Cancel and Go Back</a>
+                </div>
+
             </div>
-
-            <button class="pay-btn" id="pay-btn-main" onclick="initiatePayment()">
-                Pay Now
-            </button>
-
-            <div style="margin-top: 20px;">
-                <a href="Course.html" style="color: var(--text-muted); font-size: 0.9rem; text-decoration: none;">Cancel
-                    and Go Back</a>
-            </div>
-
         </div>
     </div>
 
@@ -92,9 +93,9 @@
             }
 
             const c = courseData[id];
-            document.getElementById("disp-price").innerText = "₹" + c.price;
+            document.getElementById("disp-price").innerText = "" + c.price;
             document.getElementById("disp-title").innerText = c.title;
-            document.getElementById("pay-btn-main").innerText = "Pay ₹" + c.price;
+            document.getElementById("pay-btn-main").innerText = "Pay " + c.price;
         };
 
 
@@ -149,7 +150,7 @@
                     order_id: data.id,
                     name: "EduSphere",
                     description: document.getElementById("disp-title").innerText,
-                    image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", // Generic education icon or your logo
+                    image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
                     theme: { color: "#38bdf8" },
 
                     handler: async function (response) {

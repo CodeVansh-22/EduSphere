@@ -999,70 +999,234 @@ details[open] summary.faq-title::after {
 /* =========================================
    13. PAYMENT PAGE
    ========================================= */
+.payment-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
 .payment-container {
     display: flex;
     width: 1000px;
-    max-width: 95%;
+    max-width: 100%;
     background: var(--bg-card);
     backdrop-filter: blur(20px);
-    border-radius: 32px;
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border-light);
-    margin: 60px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-light);
 }
 
 .summary-sidebar {
-    width: 38%;
-    /* Dark subtle gradient for the sidebar */
-    background: linear-gradient(160deg, rgba(30, 41, 59, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%);
-    padding: 60px 48px;
+    width: 40%;
+    background: linear-gradient(160deg, rgba(14, 74, 140, 0.2) 0%, rgba(2, 6, 23, 0.95) 100%);
+    padding: 50px 40px;
     border-right: 1px solid var(--border-light);
-    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.summary-sidebar h2,
-.summary-sidebar p {
-    color: #ffffff;
+.app-brand-small {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.checkout-title {
+    color: var(--text-muted);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
 }
 
 .price-box {
-    background: rgba(0, 180, 216, 0.05);
-    padding: 32px;
-    border-radius: 24px;
-    border: 1px solid rgba(0, 180, 216, 0.15);
-    margin: 32px 0;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 180, 216, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 180, 216, 0.05);
+}
+
+.course-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.price-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
 }
 
 .price-amount {
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 800;
     color: #ffffff;
     line-height: 1;
+    font-family: 'Outfit', sans-serif;
+}
+
+.user-info {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.user-name {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name i {
+    color: var(--primary);
+}
+
+.ssl-secure {
+    font-size: 0.85rem;
+    color: #64ffda;
+    /* Mint trust color */
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .payment-content {
-    width: 62%;
-    padding: 60px;
+    width: 60%;
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.checkout-header {
+    margin-bottom: 40px;
+}
+
+.checkout-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.checkout-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
 .secure-badge {
     background: rgba(100, 255, 218, 0.05);
-    padding: 32px;
-    border-radius: 20px;
-    border: 1px dashed rgba(100, 255, 218, 0.2);
-    margin: 40px 0;
+    padding: 25px 30px;
+    border-radius: 16px;
+    border: 1px dashed rgba(100, 255, 218, 0.3);
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-text {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.icons-row {
+    display: flex;
+    gap: 15px;
+}
+
+.icons-row i {
+    font-size: 1.8rem;
     color: #64ffda;
-    /* Mint trust color */
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.icons-row i:hover {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .pay-btn {
-    height: 72px;
+    width: 100%;
+    padding: 20px;
     font-size: 1.25rem;
     background: var(--primary);
-    box-shadow: 0 12px 24px var(--primary-glow);
+    box-shadow: 0 8px 25px var(--primary-glow);
     color: #020617;
     /* Dark text */
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.pay-btn:hover {
+    transform: translateY(-3px);
+    background: var(--secondary);
+    box-shadow: 0 12px 30px var(--primary-glow);
+}
+
+.cancel-link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cancel-link a {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.cancel-link a:hover {
+    color: var(--primary);
+}
+
+/* Responsive Payment Page */
+@media (max-width: 900px) {
+    .payment-container {
+        flex-direction: column;
+    }
+
+    .summary-sidebar,
+    .payment-content {
+        width: 100%;
+        border-right: none;
+    }
+
+    .summary-sidebar {
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .secure-badge {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
 }
 
 /* =========================================
