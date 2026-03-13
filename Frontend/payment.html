@@ -101,7 +101,6 @@
 
         // 2. PAYMENT LOGIC (Direct to Razorpay)
         async function initiatePayment() {
-
             const btn = document.getElementById("pay-btn-main");
             const originalText = btn.innerText;
             const priceText = document.getElementById("disp-price").innerText;
@@ -118,6 +117,7 @@
                 if (!wakeCheck) console.warn("Backend might be waking up...");
 
                 const token = localStorage.getItem('authToken');
+
                 // Step 1: Create Order on Backend
                 let res = await fetch(`${API_URL}/create-order`, {
                     method: "POST",
@@ -128,16 +128,19 @@
                     body: JSON.stringify({ amount: amount })
                 });
 
+                // Read the response stream exactly ONCE here
                 let data = await res.json();
 
                 if (!res.ok) {
-                    const errorText = await res.text();
-                    console.error("Order creation failed status:", res.status, "Error:", errorText);
+                    // DO NOT call res.text() here. Use the data object we just parsed.
+                    console.error("Order creation failed status:", res.status, "Error:", data);
+
                     if (res.status === 401) {
                         alert("Session expired or invalid. Please login again.");
                         window.location.href = "login.html";
                     } else {
-                        throw new Error(`Order creation failed (Status ${res.status}): ${errorText}`);
+                        // Safely extract the error message from the JSON
+                        throw new Error(`Order creation failed: ${data.error || 'Server Error'}`);
                     }
                     return;
                 }
@@ -160,8 +163,8 @@
                         const selectedCourse = localStorage.getItem("selectedCourse");
                         const userEmail = localStorage.getItem("currentUserEmail");
                         const courseTitle = document.getElementById("disp-title").innerText;
-                        const priceText = document.getElementById("disp-price").innerText;
-                        const amount = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+                        // We already have the 'amount' variable from the top of the function
 
                         try {
                             // 1. Record Detailed Payment
@@ -230,7 +233,7 @@
 
             } catch (err) {
                 console.error("Payment Initiation Error:", err);
-                alert("Payment initiation failed: " + err.message + "\n\nPlease check the browser console (F12) for details.");
+                alert(err.message + "\n\nPlease check the console for details.");
                 btn.innerText = originalText;
                 btn.style.opacity = "1";
                 btn.disabled = false;
