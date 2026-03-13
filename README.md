@@ -36,7 +36,7 @@ EduSphere is a full-stack online learning platform where users can explore cours
 - **Razorpay API**: Payment gateway integration.
  
 ### Tools
-- **Git & GitHub** | **VS Code** | **Python Venv**
+- **Git & GitHub** | **Antigravity / VS Code** | **Python Venv**
  
 ---
  
