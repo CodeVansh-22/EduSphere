@@ -2,11 +2,8 @@ theme: jekyll-theme-primer
 
 exclude:
   - Backend/
-  - Backend/node_modules/
-  - node_modules/
-  - vendor/
-  - package-lock.json
-  - package.json
-  - yarn.lock
+  - Backend/venv/
+  - Backend/__pycache__/
   - README.md
   - .gitignore
+  - render.yaml
