@@ -324,7 +324,16 @@ def save_payment(current_user):
 @token_required
 def create_order(current_user):
     try:
-        amount = int(request.json["amount"]) * 100 # Razorpay expects paisa
+        data = request.json
+        if not data or "amount" not in data:
+            return jsonify({"error": "Amount is required"}), 400
+            
+        try:
+            amount = int(float(data["amount"])) * 100 # Ensure it's a number and convert to paisa
+        except ValueError:
+            return jsonify({"error": "Invalid amount format"}), 400
+            
+        print(f"DEBUG: Creating order for {current_user['email']} - Amount: {amount}")
         
         order_data = {
             "amount": amount,
@@ -333,10 +342,13 @@ def create_order(current_user):
         }
         
         order = razorpay_client.order.create(data=order_data)
+        print(f"DEBUG: Razorpay Order Created: {order['id']}")
         return jsonify(order), 200
     except Exception as e:
-        print(f"Razorpay Error: {e}")
-        return jsonify({"error": "Order creation failed"}), 500
+        import traceback
+        print(f"RAZORPAY ERROR: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({"error": f"Order creation failed: {str(e)}"}), 500
 
 # ---------------------------------------
 # ENROLL

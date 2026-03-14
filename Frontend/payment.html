@@ -170,18 +170,22 @@
                     body: JSON.stringify({ amount: amount })
                 });
 
-                // Read the response stream exactly ONCE here
-                let data = await res.json();
+                // Read the response text first to handle non-JSON errors
+                const responseText = await res.text();
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    console.error("Non-JSON response:", responseText);
+                    throw new Error(`Server returned HTML instead of JSON. This usually happens if the URL is wrong or the server crashed. (Status: ${res.status})`);
+                }
 
                 if (!res.ok) {
-                    // DO NOT call res.text() here. Use the data object we just parsed.
                     console.error("Order creation failed status:", res.status, "Error:", data);
-
                     if (res.status === 401) {
                         alert("Session expired or invalid. Please login again.");
                         window.location.href = "login.html";
                     } else {
-                        // Safely extract the error message from the JSON
                         throw new Error(`Order creation failed: ${data.error || 'Server Error'}`);
                     }
                     return;
