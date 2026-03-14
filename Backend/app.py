@@ -241,6 +241,7 @@ def api_upload_course(current_user):
                 image_url = f"images/courses/{filename}"
 
         course_data = {
+            "courseId": str(uuid.uuid4()),
             "id": course_id,
             "title": title,
             "price": price,
