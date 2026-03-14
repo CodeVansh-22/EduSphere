@@ -1,17 +1,24 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory 
 from flask_cors import CORS
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import jwt
 import razorpay
 import datetime
 import os
-import jwt
 from functools import wraps
-from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__, static_url_path='', static_folder='../Frontend')
+
+# Configure upload folder for course images
+UPLOAD_FOLDER = os.path.join(app.static_folder, 'images', 'courses')
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Broadened CORS to prevent GitHub Pages / Localhost blocking issues
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
@@ -53,6 +60,14 @@ def token_required(f):
                 return jsonify({'message': 'User not found!'}), 401
         except Exception as e:
             return jsonify({'message': 'Token is invalid!', 'error': str(e)}), 401
+        return f(current_user, *args, **kwargs)
+    return decorated
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(current_user, *args, **kwargs):
+        if current_user.get('role') != 'admin':
+            return jsonify({'message': 'Admin privilege required!'}), 403
         return f(current_user, *args, **kwargs)
     return decorated
 
@@ -109,6 +124,10 @@ def api_register():
         if users_col.find_one({"email": data["email"]}):
             return jsonify({"error": "Email already exists"}), 400
         
+        # Default role is student
+        if 'role' not in data:
+            data['role'] = 'student'
+            
         users_col.insert_one(data)
         return jsonify({"message": "User Registered Successfully!"}), 200
     except Exception as e:
@@ -130,6 +149,7 @@ def api_login():
     # Generate JWT Token
     token = jwt.encode({
         'email': user['email'],
+        'role': user.get('role', 'student'),
         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
     }, SECRET_KEY, algorithm="HS256")
     
@@ -137,7 +157,8 @@ def api_login():
         "message": "Login Success", 
         "token": token,
         "name": user.get("name", "User"), 
-        "email": user.get("email")
+        "email": user.get("email"),
+        "role": user.get("role", "student")
     }), 200
 
 @app.route("/api/enroll", methods=["POST"])
@@ -191,6 +212,47 @@ def api_get_courses():
         return jsonify(courses), 200
     except Exception as e:
         return jsonify({"error": "Failed to fetch courses"}), 500
+
+@app.route("/api/admin/upload-course", methods=["POST"])
+@token_required
+@admin_required
+def api_upload_course(current_user):
+    try:
+        # Check if form data is present
+        title = request.form.get('title')
+        price = request.form.get('price')
+        duration = request.form.get('duration')
+        description = request.form.get('description')
+        course_id = request.form.get('id')
+
+        if not all([title, price, duration, description, course_id]):
+            return jsonify({"error": "Missing required fields"}), 400
+
+        # Handle image upload
+        image_url = "images/Course Card1.jpg" # Default image
+        if 'image' in request.files:
+            file = request.files['image']
+            if file.filename != '':
+                filename = f"{course_id}_{file.filename}"
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                image_url = f"images/courses/{filename}"
+
+        course_data = {
+            "id": course_id,
+            "title": title,
+            "price": price,
+            "duration": duration,
+            "desc": description,
+            "image": image_url,
+            "createdAt": datetime.datetime.utcnow()
+        }
+
+        # Insert or update course
+        courses_col.update_one({"id": course_id}, {"$set": course_data}, upsert=True)
+        return jsonify({"message": "Course uploaded successfully!"}), 200
+    except Exception as e:
+        print(f"Upload Error: {e}")
+        return jsonify({"error": "Course upload failed"}), 500
 
 @app.route("/api/create-order", methods=["POST"])
 @token_required

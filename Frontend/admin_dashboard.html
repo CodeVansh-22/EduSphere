@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EduSphere</title>
+    <link rel="icon" type="image/x-icon" href="images/icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css_files/style.css">
+    <style>
+        .admin-form-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-form-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-upload {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar">
+        <div class="nav-left">
+            <h1>EduSphere</h1>
+            <p>Admin Control Panel</p>
+        </div>
+        <div class="nav-right">
+            <a class="opt" href="index.html">Home</a>
+            <a class="opt" href="Course.html">Courses</a>
+            <a class="opt active" href="admin_dashboard.html">Admin Dashboard</a>
+            <a href="#" class="opt logout-link" onclick="handleLogout(event)" style="color: #ff4757;">Logout</a>
+        </div>
+    </header>
+
+    <div class="admin-form-container">
+        <h2>Upload New Course</h2>
+        <form id="course-upload-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="course-id">Course ID (e.g., machine-learning)</label>
+                <input type="text" id="course-id" name="id" placeholder="Enter unique ID" required>
+            </div>
+            <div class="form-group">
+                <label for="course-title">Course Title</label>
+                <input type="text" id="course-title" name="title" placeholder="Enter course title" required>
+            </div>
+            <div class="form-group">
+                <label for="course-price">Price (e.g., ₹4,999)</label>
+                <input type="text" id="course-price" name="price" placeholder="Enter price" required>
+            </div>
+            <div class="form-group">
+                <label for="course-duration">Duration (e.g., 3 Months)</label>
+                <input type="text" id="course-duration" name="duration" placeholder="Enter duration" required>
+            </div>
+            <div class="form-group">
+                <label for="course-desc">Description</label>
+                <textarea id="course-desc" name="description" rows="4" placeholder="Enter course description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="course-image">Course Image</label>
+                <div class="image-preview" id="image-preview">
+                    <span id="preview-text">No image selected</span>
+                    <img src="" alt="Preview" id="preview-img">
+                </div>
+                <input type="file" id="course-image" name="image" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <button type="submit" class="btn-upload">Upload Course</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Check admin role on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const role = localStorage.getItem('userRole');
+            if (role !== 'admin') {
+                alert("Unauthorized! Admins only.");
+                window.location.href = "index.html";
+            }
+        });
+
+        function previewImage(event) {
+            const input = event.target;
+            const previewImg = document.getElementById('preview-img');
+            const previewText = document.getElementById('preview-text');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    previewText.style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('course-upload-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const token = localStorage.getItem('authToken');
+
+            try {
+                const response = await fetch(`${API_URL}/admin/upload-course`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert("Course uploaded successfully!");
+                    e.target.reset();
+                    document.getElementById('preview-img').style.display = 'none';
+                    document.getElementById('preview-text').style.display = 'block';
+                } else {
+                    alert(data.error || "Upload failed");
+                }
+            } catch (error) {
+                console.error("Upload Error:", error);
+                alert("Server error");
+            }
+        });
+    </script>
+</body>
+
+</html>

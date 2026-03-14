@@ -86,13 +86,18 @@ async function handleLogin(event) {
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("currentUserName", data.name || "User");
             localStorage.setItem("currentUserEmail", data.email);
+            localStorage.setItem("userRole", data.role || "student");
 
             // --- CRITICAL FIX ADDED HERE ---
             localStorage.setItem("isLoggedIn", "true");
 
             alert("Login Successful!");
-            // Redirect to home or dashboard
-            window.location.href = "index.html";
+            // Redirect based on role
+            if (data.role === 'admin') {
+                window.location.href = "admin_dashboard.html";
+            } else {
+                window.location.href = "index.html";
+            }
         } else {
             console.error("Login Error Data:", data);
             alert(data.error || "Invalid Credentials. Please try again.");
@@ -137,6 +142,7 @@ function updateUI() {
     const bottomNav = document.querySelector('.bottom-nav');
 
     if (navRight) {
+        const role = localStorage.getItem('userRole');
         // Desktop Top Navbar
         let navHTML = `
             <a class="opt ${isPageActive('index.html') || window.location.pathname === '/' ? 'active' : ''}" href="index.html">Home</a>
@@ -146,8 +152,16 @@ function updateUI() {
         `;
 
         if (isLoggedIn) {
+            if (role === 'admin') {
+                navHTML += `
+                    <a class="opt ${isPageActive('admin_dashboard.html') ? 'active' : ''}" href="admin_dashboard.html" style="color: var(--primary);">Admin Dashboard</a>
+                `;
+            } else {
+                navHTML += `
+                    <a class="opt ${isPageActive('dashboard.html') ? 'active' : ''}" href="dashboard.html" style="color: var(--primary);">Dashboard</a>
+                `;
+            }
             navHTML += `
-                <a class="opt ${isPageActive('dashboard.html') ? 'active' : ''}" href="dashboard.html" style="color: var(--primary);">Dashboard</a>
                 <a href="#" class="opt logout-link" onclick="handleLogout(event)" style="color: #ff4757;">Logout</a>
             `;
         } else {
@@ -161,6 +175,7 @@ function updateUI() {
 
     // 2. Update Bottom Nav (Mobile Only)
     if (bottomNav) {
+        const role = localStorage.getItem('userRole');
         let bottomHTML = `
             <a href="index.html" class="bottom-nav-item ${isPageActive('index.html') || window.location.pathname === '/' ? 'active' : ''}">
                 <i class="fa fa-home"></i><span>Home</span>
@@ -171,10 +186,20 @@ function updateUI() {
         `;
 
         if (isLoggedIn) {
+            if (role === 'admin') {
+                bottomHTML += `
+                    <a href="admin_dashboard.html" class="bottom-nav-item ${isPageActive('admin_dashboard.html') ? 'active' : ''}">
+                        <i class="fa fa-cog"></i><span>Admin</span>
+                    </a>
+                `;
+            } else {
+                bottomHTML += `
+                    <a href="dashboard.html" class="bottom-nav-item ${isPageActive('dashboard.html') ? 'active' : ''}">
+                        <i class="fa fa-th-large"></i><span>Dashboard</span>
+                    </a>
+                `;
+            }
             bottomHTML += `
-                <a href="dashboard.html" class="bottom-nav-item ${isPageActive('dashboard.html') ? 'active' : ''}">
-                    <i class="fa fa-th-large"></i><span>Dashboard</span>
-                </a>
                 <a href="#" class="bottom-nav-item logout-link" onclick="handleLogout(event)">
                     <i class="fa fa-sign-out"></i><span>Logout</span>
                 </a>
@@ -215,8 +240,44 @@ function handleLogout(event) {
     localStorage.removeItem('authToken');
     localStorage.removeItem('currentUserName');
     localStorage.removeItem('currentUserEmail');
+    localStorage.removeItem('userRole');
     alert("Logged Out Successfully");
     window.location.href = "index.html";
+}
+
+/* =========================================
+   7. LOAD DYNAMIC COURSES
+   ========================================= */
+async function loadCourses() {
+    const container = document.getElementById('course-list');
+    if (!container) return;
+
+    try {
+        const response = await fetch(`${API_URL}/courses`);
+        const courses = await response.json();
+
+        if (courses.length === 0) {
+            container.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>No courses available at the moment.</p>";
+            return;
+        }
+
+        container.innerHTML = courses.map(course => `
+            <div class="course-card">
+                <img src="${course.image}" alt="${course.title}" onerror="this.src='images/Course Card1.jpg'">
+                <h3>${course.title}</h3>
+                <p>${course.desc}</p>
+                <button onclick="handleEnroll('${course.id}')">Enroll Now</button>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error("Error loading courses:", error);
+        container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #ff4757;'>Failed to load courses. Please try again later.</p>";
+    }
+}
+
+// Ensure courses load on Course.html
+if (isPageActive('Course.html')) {
+    document.addEventListener('DOMContentLoaded', loadCourses);
 }
 
 /* =========================================
