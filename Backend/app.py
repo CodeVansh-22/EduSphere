@@ -21,8 +21,12 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# CORS
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+# Robust CORS strategy
+CORS(app, resources={r"/api/*": {
+    "origins": "*",
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}}, supports_credentials=True)
 
 # Environment variables
 MONGO_URI = os.getenv("MONGO_URI")
@@ -236,9 +240,29 @@ def upload_course(current_user):
         return jsonify({"message": "Course uploaded"}), 200
 
     except Exception as e:
+        import traceback
+        print("UPLOAD ERROR:", str(e))
+        print(traceback.format_exc())
+        return jsonify({"error": f"Course saving failed: {str(e)}"}), 500
 
-        print("UPLOAD ERROR:", e)
+@app.route("/api/admin/all-users", methods=["GET"])
+@token_required
+@admin_required
+def get_all_users(current_user):
+    try:
+        users = list(users_col.find({}, {"_id": 0, "password": 0}))
+        return jsonify(users), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
+@app.route("/api/admin/all-enrollments", methods=["GET"])
+@token_required
+@admin_required
+def get_all_enrollments(current_user):
+    try:
+        enrollments = list(enrollments_col.find({}, {"_id": 0}))
+        return jsonify(enrollments), 200
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 

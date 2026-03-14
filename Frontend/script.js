@@ -155,6 +155,8 @@ function updateUI() {
             if (role === 'admin') {
                 navHTML += `
                     <a class="opt ${isPageActive('admin_dashboard.html') ? 'active' : ''}" href="admin_dashboard.html" style="color: var(--primary);">Admin Dashboard</a>
+                    <a class="opt" href="admin_dashboard.html#enrollments">See Enrolls</a>
+                    <a class="opt" href="admin_dashboard.html#users">All Users</a>
                 `;
             } else {
                 navHTML += `
@@ -190,6 +192,9 @@ function updateUI() {
                 bottomHTML += `
                     <a href="admin_dashboard.html" class="bottom-nav-item ${isPageActive('admin_dashboard.html') ? 'active' : ''}">
                         <i class="fa fa-cog"></i><span>Admin</span>
+                    </a>
+                    <a href="admin_dashboard.html#enrollments" class="bottom-nav-item">
+                        <i class="fa fa-list"></i><span>Enrolls</span>
                     </a>
                 `;
             } else {
