@@ -194,6 +194,14 @@
             document.getElementById('payments-view').style.display = tab === 'payments' ? 'block' : 'none';
         }
 
+        function formatDate(d) {
+            if (!d) return 'N/A';
+            const date = new Date(d);
+            return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString('en-IN', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            });
+        }
+
         function renderUsers() {
             document.getElementById('user-rows').innerHTML = allData.users.map(u => `
                 <tr>
@@ -210,7 +218,7 @@
                     <td>${e.userEmail}</td>
                     <td>${e.courseId}</td>
                     <td>${e.courseTitle || 'N/A'}</td>
-                    <td>${new Date(e.createdAt).toLocaleDateString()}</td>
+                    <td>${formatDate(e.enrolledAt || e.createdAt)}</td>
                 </tr>
             `).join('');
         }
@@ -222,7 +230,7 @@
                     <td>₹${p.amount}</td>
                     <td>${p.razorpayOrderId}</td>
                     <td><span class="badge badge-success">${p.status || 'Captured'}</span></td>
-                    <td>${new Date(p.createdAt).toLocaleDateString()}</td>
+                    <td>${formatDate(p.createdAt)}</td>
                 </tr>
             `).join('');
         }
