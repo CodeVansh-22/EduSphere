@@ -299,10 +299,11 @@ def delete_course(current_user, course_id):
 def get_user_enrollments(current_user):
     try:
         email = current_user["email"]
-        enrollments = list(enrollments_col.find({"userEmail": email}, {"_id": 0}))
+        # Find enrollments and sort by date descending
+        enrollments = list(enrollments_col.find({"userEmail": email}, {"_id": 0}).sort("enrolledAt", -1))
         return jsonify(enrollments), 200
     except Exception as e:
-        return jsonify({"error": "Failed to fetch enrollments"}), 500
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api/save-payment", methods=["POST"])
 @token_required
