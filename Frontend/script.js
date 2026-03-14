@@ -122,59 +122,102 @@ function handleEnroll(courseId) {
 }
 
 /* =========================================
-   5. NAVBAR UPDATE LOGIC
+   5. DYNAMIC UI UPDATES
    ========================================= */
 document.addEventListener('DOMContentLoaded', function () {
+    updateUI();
+});
+
+function updateUI() {
     const userName = localStorage.getItem('currentUserName');
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === "true";
 
-    if (isLoggedIn === "true" && userName) {
-        const loginLink = document.querySelector('a[href="login.html"]');
-        const registerLink = document.querySelector('a[href="register.html"]');
+    // 1. Update Navigation Bar
+    const navRight = document.querySelector('.nav-right');
+    const bottomNav = document.querySelector('.bottom-nav');
 
-        // Inject Dashboard Link
-        const navRight = document.querySelector('.nav-right');
-        if (navRight && !document.querySelector('a[href="dashboard.html"]')) {
-            const dashboardLink = document.createElement('a');
-            dashboardLink.className = 'opt';
-            dashboardLink.href = 'dashboard.html';
-            dashboardLink.innerText = 'Dashboard';
-            dashboardLink.style.color = "#64ffda";
+    if (navRight) {
+        // Desktop Top Navbar
+        let navHTML = `
+            <a class="opt ${isPageActive('index.html') || window.location.pathname === '/' ? 'active' : ''}" href="index.html">Home</a>
+            <a class="opt ${isPageActive('Course.html') ? 'active' : ''}" href="Course.html">Courses</a>
+            <a class="opt ${isPageActive('About.html') ? 'active' : ''}" href="About.html">About</a>
+            <a class="opt ${isPageActive('Contact.html') ? 'active' : ''}" href="Contact.html">Contact</a>
+        `;
 
-            // Insert before login/logout
-            if (loginLink) {
-                navRight.insertBefore(dashboardLink, loginLink);
-            } else {
-                navRight.appendChild(dashboardLink);
-            }
+        if (isLoggedIn) {
+            navHTML += `
+                <a class="opt ${isPageActive('dashboard.html') ? 'active' : ''}" href="dashboard.html" style="color: var(--primary);">Dashboard</a>
+                <a href="#" class="opt logout-link" onclick="handleLogout(event)" style="color: #ff4757;">Logout</a>
+            `;
+        } else {
+            navHTML += `
+                <a class="opt ${isPageActive('login.html') ? 'active' : ''}" href="login.html">Login</a>
+                <a class="opt ${isPageActive('register.html') ? 'active' : ''}" href="register.html">Register</a>
+            `;
         }
+        navRight.innerHTML = navHTML;
+    }
 
-        if (loginLink) {
-            loginLink.innerText = "Welcome, " + userName.split(" ")[0];
-            loginLink.href = "#";
-            loginLink.style.color = "#38bdf8";
-            loginLink.style.fontWeight = "600";
-            loginLink.style.cursor = "default";
+    // 2. Update Bottom Nav (Mobile Only)
+    if (bottomNav) {
+        let bottomHTML = `
+            <a href="index.html" class="bottom-nav-item ${isPageActive('index.html') || window.location.pathname === '/' ? 'active' : ''}">
+                <i class="fa fa-home"></i><span>Home</span>
+            </a>
+            <a href="Course.html" class="bottom-nav-item ${isPageActive('Course.html') ? 'active' : ''}">
+                <i class="fa fa-book"></i><span>Courses</span>
+            </a>
+        `;
+
+        if (isLoggedIn) {
+            bottomHTML += `
+                <a href="dashboard.html" class="bottom-nav-item ${isPageActive('dashboard.html') ? 'active' : ''}">
+                    <i class="fa fa-th-large"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="bottom-nav-item logout-link" onclick="handleLogout(event)">
+                    <i class="fa fa-sign-out"></i><span>Logout</span>
+                </a>
+            `;
+        } else {
+            bottomHTML += `
+                <a href="login.html" class="bottom-nav-item ${isPageActive('login.html') ? 'active' : ''}">
+                    <i class="fa fa-sign-in"></i><span>Login</span>
+                </a>
+                <a href="register.html" class="bottom-nav-item ${isPageActive('register.html') ? 'active' : ''}">
+                    <i class="fa fa-user-plus"></i><span>Join</span>
+                </a>
+            `;
         }
+        bottomNav.innerHTML = bottomHTML;
+    }
 
-        if (registerLink) {
-            registerLink.innerText = "Logout";
-            registerLink.href = "#";
-            registerLink.style.color = "#ff6b6b";
-            registerLink.classList.add('logout-link'); // Added class for CSS
-
-            registerLink.addEventListener('click', function (e) {
-                e.preventDefault();
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('authToken'); // Remove JWT
-                localStorage.removeItem('currentUserName');
-                localStorage.removeItem('currentUserEmail');
-                alert("Logged Out Successfully");
-                window.location.reload();
-            });
+    // 3. Welcome Message on Index.html
+    const welcomeContainer = document.getElementById('welcome-user');
+    if (welcomeContainer) {
+        if (isLoggedIn && userName) {
+            welcomeContainer.innerHTML = `Welcome back, <span class="highlight">${userName.split(' ')[0]}</span>! 👋`;
+            welcomeContainer.style.display = 'block';
+        } else {
+            welcomeContainer.style.display = 'none';
         }
     }
-});
+}
+
+// Helper to check if a page is currently active
+function isPageActive(filename) {
+    return window.location.pathname.toLowerCase().includes(filename.toLowerCase());
+}
+
+function handleLogout(event) {
+    if (event) event.preventDefault();
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('currentUserName');
+    localStorage.removeItem('currentUserEmail');
+    alert("Logged Out Successfully");
+    window.location.href = "index.html";
+}
 
 /* =========================================
    6. PASSWORD TOGGLE LOGIC
