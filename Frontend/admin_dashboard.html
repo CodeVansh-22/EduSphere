@@ -367,6 +367,12 @@
             const token = localStorage.getItem('authToken');
             const submitBtn = document.getElementById('submit-btn');
             
+            // Debug: Check what's being sent
+            console.log("Submitting course data...");
+            for (let pair of formData.entries()) {
+                console.log(pair[0]+ ': ' + pair[1]); 
+            }
+
             submitBtn.disabled = true;
             submitBtn.innerText = "Processing...";
 
@@ -379,14 +385,16 @@
 
                 const data = await response.json();
                 if (response.ok) {
-                    alert(data.message);
+                    alert(data.message || "Course saved successfully!");
                     resetAdminForm();
                     fetchAdminCourses();
                 } else {
-                    alert(data.error || "Save failed");
+                    console.error("Save Error Data:", data);
+                    alert("Error: " + (data.error || data.message || "Save failed"));
                 }
             } catch (err) {
-                alert("Server error");
+                console.error("Upload/Save Request Error:", err);
+                alert("Network Error: Could not reach the server. Check your connection and console.");
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Save Course";
