@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduSphere | User Dashboard</title>
-    <link rel="icon" type="image/png" href="images/icon.ico">
+    <link rel="icon" type="image/x-icon" href="images/icon.ico">
     <link
         href="https://fonts.googleapis.com/css2?family=Adamina&family=Oswald:wght@400;600&family=Poppins:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -118,6 +118,10 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const enrollments = await response.json();
 
                 const tbody = document.getElementById('enrollment-body');
@@ -126,18 +130,18 @@
 
                 if (loadingRow) loadingRow.remove();
 
-                if (enrollments.length === 0) {
+                if (!Array.isArray(enrollments) || enrollments.length === 0) {
                     emptyState.style.display = 'block';
                     document.getElementById('enrollment-table').style.display = 'none';
                 } else {
                     enrollments.forEach(enroll => {
-                        const date = new Date(enroll.enrolledAt).toLocaleDateString('en-IN', {
+                        const date = enroll.enrolledAt ? new Date(enroll.enrolledAt).toLocaleDateString('en-IN', {
                             day: 'numeric', month: 'short', year: 'numeric'
-                        });
+                        }) : 'N/A';
 
                         const row = `
                             <tr>
-                                <td data-label="Course Title" class="course-name-cell">${enroll.courseTitle}</td>
+                                <td data-label="Course Title" class="course-name-cell">${enroll.courseTitle || 'Unknown Course'}</td>
                                 <td data-label="Enrolled Date">${date}</td>
                                 <td data-label="Status"><span class="status-badge-dash">Active</span></td>
                                 <td data-label="Action"><a href="#" class="btn-action-dash">Start Learning</a></td>

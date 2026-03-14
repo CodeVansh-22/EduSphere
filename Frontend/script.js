@@ -45,9 +45,11 @@ async function handleRegister(event) {
             alert("Registration Successful! Redirecting to Login...");
             window.location.href = "login.html";
         } else {
-            alert(data.error);
+            console.error("Registration Error Data:", data);
+            alert(data.error || "Registration failed. Please try again.");
         }
     } catch (error) {
+        console.error("Registration Fetch Error:", error);
         alert("Server connection failed. Please ensure the backend server is running.");
     }
 }
@@ -92,10 +94,11 @@ async function handleLogin(event) {
             // Redirect to home or dashboard
             window.location.href = "index.html";
         } else {
+            console.error("Login Error Data:", data);
             alert(data.error || "Invalid Credentials. Please try again.");
         }
     } catch (error) {
-        console.error("Login Error:", error);
+        console.error("Login Fetch Error:", error);
         alert("Network error: Could not connect to the server. Make sure the backend is running.");
     } finally {
         // Reset button state

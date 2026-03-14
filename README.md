@@ -8,8 +8,6 @@ EduSphere is a full-stack online learning platform where users can explore cours
 ## 🌐 Live Demo
 
 🔗 **Live Website**: [https://codevansh-22.github.io/EduSphere](https://codevansh-22.github.io/EduSphere)  
-🎥 **Working Demo Video**: [https://go.screenpal.com/watch/cOeIjCnZCgi](https://go.screenpal.com/watch/cOeIjCnZCgi)
-
 ---
 
 ## 🚀 Features

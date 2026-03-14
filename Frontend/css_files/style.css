@@ -679,19 +679,21 @@ details[open] summary.faq-title::after {
 }
 
 /* =========================================
-   10. MOBILE & RESPONSIVE DESIGN
+   10. MOBILE & RESPONSIVE DESIGN (UPDATED)
    ========================================= */
 @media (max-width: 768px) {
     #navbar {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         position: relative;
         padding: 15px 20px;
     }
 
     .nav-left {
-        width: 100%;
-        margin-bottom: 5px;
+        width: auto;
+        margin-bottom: 0;
+        z-index: 1002;
     }
 
     .nav-left h1 {
@@ -700,11 +702,10 @@ details[open] summary.faq-title::after {
 
     .nav-toggle-label {
         display: block;
-        position: absolute;
-        top: 25px;
-        right: 20px;
+        position: relative;
         cursor: pointer;
         padding: 5px;
+        z-index: 1002;
     }
 
     .nav-toggle-label span {
@@ -714,40 +715,71 @@ details[open] summary.faq-title::after {
         background-color: var(--secondary);
         margin-bottom: 6px;
         border-radius: 3px;
-        transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out;
     }
 
+    /* Transform hamburger into 'X' when open */
+    #nav-toggle:checked~.nav-toggle-label span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    #nav-toggle:checked~.nav-toggle-label span:nth-child(2) {
+        opacity: 0;
+    }
+
+    #nav-toggle:checked~.nav-toggle-label span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Centered Mobile Side/Overlay Layout */
     .nav-right {
-        display: none;
-        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        /* Hidden off-screen by default */
         width: 100%;
-        background-color: var(--bg-card);
-        backdrop-filter: blur(16px);
-        border-radius: 8px;
-        margin-top: 15px;
-        border: 1px solid var(--border-light);
-        box-shadow: var(--shadow-md);
+        /* Covers the whole screen for perfect centering */
+        height: 100vh;
+        background-color: var(--bg-nav);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Vertical Center */
+        align-items: center;
+        /* Horizontal Center */
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        margin-top: 0;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
     }
 
+    /* Slide in the menu */
     #nav-toggle:checked~.nav-right {
+        right: 0;
         display: flex;
     }
 
+    /* Fix menu items */
     .nav-right .opt {
         text-align: center;
-        padding: 15px;
-        display: block;
+        padding: 20px;
+        display: block !important;
+        /* Forces options to display */
         width: 100%;
-        border-bottom: 1px solid var(--border-light);
-    }
-
-    .nav-right .opt:last-child {
         border-bottom: none;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: 0.3s ease;
     }
 
     .nav-right .opt:hover {
-        background-color: rgba(0, 180, 216, 0.1);
+        background-color: transparent;
         color: var(--primary);
+        transform: scale(1.1);
     }
 
     #hero {
@@ -760,15 +792,6 @@ details[open] summary.faq-title::after {
 
     .bottom-nav {
         display: flex;
-    }
-
-    .nav-right .opt {
-        display: none;
-    }
-
-    .nav-right a[href="dashboard.html"],
-    .nav-right .logout-link {
-        display: block !important;
     }
 }
 
