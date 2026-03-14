@@ -254,8 +254,8 @@ def api_upload_course(current_user):
         courses_col.update_one({"id": course_id}, {"$set": course_data}, upsert=True)
         return jsonify({"message": "Course saved successfully!"}), 200
     except Exception as e:
-        print(f"Upload Error: {e}")
-        return jsonify({"error": "Course saving failed"}), 500
+        print(f"Upload Error: {str(e)}")
+        return jsonify({"error": f"Course saving failed: {str(e)}"}), 500
 
 @app.route("/api/admin/delete-course/<course_id>", methods=["DELETE"])
 @token_required
