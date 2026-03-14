@@ -224,12 +224,14 @@ def api_upload_course(current_user):
         duration = request.form.get('duration')
         description = request.form.get('description')
         course_id = request.form.get('id')
+        image_url_input = request.form.get('imageUrl')
 
         if not all([title, price, duration, description, course_id]):
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Handle image upload
-        image_url = "images/Course Card1.jpg" # Default image
+        # Handle image (File upload takes precedence over URL)
+        image_url = image_url_input or "images/Course Card1.jpg"
+        
         if 'image' in request.files:
             file = request.files['image']
             if file.filename != '':
@@ -244,15 +246,28 @@ def api_upload_course(current_user):
             "duration": duration,
             "desc": description,
             "image": image_url,
-            "createdAt": datetime.datetime.utcnow()
+            "updatedAt": datetime.datetime.utcnow()
         }
 
         # Insert or update course
         courses_col.update_one({"id": course_id}, {"$set": course_data}, upsert=True)
-        return jsonify({"message": "Course uploaded successfully!"}), 200
+        return jsonify({"message": "Course saved successfully!"}), 200
     except Exception as e:
         print(f"Upload Error: {e}")
-        return jsonify({"error": "Course upload failed"}), 500
+        return jsonify({"error": "Course saving failed"}), 500
+
+@app.route("/api/admin/delete-course/<course_id>", methods=["DELETE"])
+@token_required
+@admin_required
+def api_delete_course(current_user, course_id):
+    try:
+        result = courses_col.delete_one({"id": course_id})
+        if result.deleted_count > 0:
+            return jsonify({"message": "Course deleted successfully!"}), 200
+        else:
+            return jsonify({"error": "Course not found"}), 404
+    except Exception as e:
+        return jsonify({"error": "Deletion failed"}), 500
 
 @app.route("/api/create-order", methods=["POST"])
 @token_required
