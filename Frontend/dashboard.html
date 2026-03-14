@@ -21,17 +21,11 @@
             <h1>EduSphere</h1>
             <p>Learn New Skills Anywhere</p>
         </div>
-        <input type="checkbox" id="nav-toggle" />
-        <label for="nav-toggle" class="nav-toggle-label">
-            <span></span><span></span><span></span>
-        </label>
         <nav class="nav-right">
             <a class="opt" href="index.html">Home</a>
             <a class="opt" href="Course.html">Courses</a>
-            <a class="opt" href="About.html">About Us</a>
-            <a class="opt" href="Contact.html">Contact Us</a>
-            <a class="opt" href="login.html">Login</a>
-            <a class="opt" href="register.html">Register</a>
+            <a class="opt active" href="dashboard.html">Dashboard</a>
+            <a href="#" class="opt logout-link" onclick="logout()">Logout</a>
         </nav>
     </header>
 
@@ -83,6 +77,10 @@
         <a href="Course.html" class="bottom-nav-item">
             <i class="fa fa-book"></i>
             <span>Courses</span>
+        </a>
+        <a href="dashboard.html" class="bottom-nav-item active">
+            <i class="fa fa-th-large"></i>
+            <span>Dashboard</span>
         </a>
         <a href="About.html" class="bottom-nav-item">
             <i class="fa fa-info-circle"></i>
