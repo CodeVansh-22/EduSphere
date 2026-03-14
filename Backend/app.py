@@ -294,6 +294,49 @@ def delete_course(current_user, course_id):
     return jsonify({"error": "Course not found"}), 404
 
 
+@app.route("/api/user-enrollments", methods=["GET"])
+@token_required
+def get_user_enrollments(current_user):
+    try:
+        email = current_user["email"]
+        enrollments = list(enrollments_col.find({"userEmail": email}, {"_id": 0}))
+        return jsonify(enrollments), 200
+    except Exception as e:
+        return jsonify({"error": "Failed to fetch enrollments"}), 500
+
+@app.route("/api/save-payment", methods=["POST"])
+@token_required
+def save_payment(current_user):
+    try:
+        data = request.json
+        data["userEmail"] = current_user["email"]
+        data["createdAt"] = datetime.datetime.utcnow()
+        if "status" not in data:
+            data["status"] = "captured"
+            
+        payments_col.insert_one(data)
+        return jsonify({"message": "Payment recorded"}), 200
+    except Exception as e:
+        return jsonify({"error": "Failed to record payment"}), 500
+
+@app.route("/api/create-order", methods=["POST"])
+@token_required
+def create_order(current_user):
+    try:
+        amount = int(request.json["amount"]) * 100 # Razorpay expects paisa
+        
+        order_data = {
+            "amount": amount,
+            "currency": "INR",
+            "receipt": f"edusphere_{int(datetime.datetime.now().timestamp())}"
+        }
+        
+        order = razorpay_client.order.create(data=order_data)
+        return jsonify(order), 200
+    except Exception as e:
+        print(f"Razorpay Error: {e}")
+        return jsonify({"error": "Order creation failed"}), 500
+
 # ---------------------------------------
 # ENROLL
 # ---------------------------------------
@@ -313,9 +356,7 @@ def enroll(current_user):
         return jsonify({"error": "Already enrolled"}), 400
 
     data["userEmail"] = current_user["email"]
-
-    data["createdAt"] = datetime.datetime.utcnow()
-
+    data["enrolledAt"] = datetime.datetime.utcnow()
     enrollments_col.insert_one(data)
 
     return jsonify({"message": "Enrollment success"})

@@ -103,18 +103,15 @@
 
     <script>
         // 1. LOAD DATA ON PAGE LOAD
-        window.onload = function () {
+        window.onload = async function () {
             const id = localStorage.getItem("selectedCourse");
             const user = localStorage.getItem("currentUserName") || "Guest User";
+            const token = localStorage.getItem('authToken');
 
             document.getElementById("disp-user").innerText = user;
 
-            const token = localStorage.getItem('authToken');
-
-            if (!id || !token || typeof courseData === 'undefined' || !courseData[id]) {
-                if (typeof courseData === 'undefined') {
-                    console.log("Waiting for script.js...");
-                } else if (!token) {
+            if (!id || !token) {
+                if (!token) {
                     alert("Session expired. Please login again.");
                     window.location.href = "login.html";
                 } else {
@@ -124,10 +121,23 @@
                 return;
             }
 
-            const c = courseData[id];
-            document.getElementById("disp-price").innerText = "" + c.price;
-            document.getElementById("disp-title").innerText = c.title;
-            document.getElementById("pay-btn-main").innerText = "Pay " + c.price;
+            try {
+                const response = await fetch(`${API_URL}/courses`);
+                const courses = await response.json();
+                const c = courses.find(item => item.id === id);
+
+                if (c) {
+                    document.getElementById("disp-price").innerText = "" + c.price;
+                    document.getElementById("disp-title").innerText = c.title;
+                    document.getElementById("pay-btn-main").innerText = "Pay " + c.price;
+                } else {
+                    alert("Course details not found. Redirecting...");
+                    window.location.href = "Course.html";
+                }
+            } catch (err) {
+                console.error("Payment Load Error:", err);
+                alert("Failed to load course details. Please try again.");
+            }
         };
 
 

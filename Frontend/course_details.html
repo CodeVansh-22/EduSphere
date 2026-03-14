@@ -114,21 +114,34 @@
         }
 
         // 3. Logic to fill the HTML with data
-        if (selectedId && courseData[selectedId]) {
-            // Found the course! Update the HTML elements.
-            const course = courseData[selectedId];
+        async function fetchDetails() {
+            if (!selectedId) {
+                document.getElementById('c-title').innerText = "Course Not Found";
+                document.getElementById('c-desc').innerText = "Please go back and select a course.";
+                return;
+            }
 
-            document.getElementById('c-title').innerText = course.title;
-            document.getElementById('c-desc').innerText = course.desc;
-            document.getElementById('c-price').innerText = course.price;
-            document.getElementById('c-duration').innerText = course.duration;
-        } else {
-            // Error: No course selected, or ID is wrong. Send them back.
-            // alert("No course selected. Redirecting to Course page.");
-            // window.location.href = 'Course.html';
-            document.getElementById('c-title').innerText = "Course Not Found";
-            document.getElementById('c-desc').innerText = "Please go back and select a course.";
+            try {
+                const response = await fetch(`${API_URL}/courses`);
+                const courses = await response.json();
+                const course = courses.find(c => c.id === selectedId);
+
+                if (course) {
+                    document.getElementById('c-title').innerText = course.title;
+                    document.getElementById('c-desc').innerText = course.desc;
+                    document.getElementById('c-price').innerText = course.price;
+                    document.getElementById('c-duration').innerText = course.duration;
+                } else {
+                    document.getElementById('c-title').innerText = "Course Not Found";
+                    document.getElementById('c-desc').innerText = "We couldn't find details for this course.";
+                }
+            } catch (err) {
+                console.error("Fetch Details Error:", err);
+                document.getElementById('c-title').innerText = "Error Loading Details";
+            }
         }
+
+        fetchDetails();
 
         // 4. Handle Form Submit
         function goToPayment(e) {
