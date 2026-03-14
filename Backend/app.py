@@ -21,7 +21,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 # Broadened CORS to prevent GitHub Pages / Localhost blocking issues
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+# Broadened CORS to allow all methods from any origin
+CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}}, supports_credentials=True)
 
 # Configuration from Environment Variables
 MONGO_URI = os.getenv("MONGO_URI")

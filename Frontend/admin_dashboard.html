@@ -400,17 +400,22 @@
             try {
                 const response = await fetch(`${API_URL}/admin/delete-course/${id}`, {
                     method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 });
+
                 const data = await response.json();
                 if (response.ok) {
-                    alert(data.message);
+                    alert(data.message || "Course deleted successfully!");
                     fetchAdminCourses();
                 } else {
-                    alert(data.error);
+                    alert("Error: " + (data.error || data.message || "Deletion failed"));
                 }
             } catch (err) {
-                alert("Deletion failed");
+                console.error("Delete Fetch Error:", err);
+                alert("Network Error: Could not reach the server or Deletion failed. Check console for details.");
             }
         }
     </script>
