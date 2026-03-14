@@ -270,6 +270,16 @@ def get_all_enrollments(current_user):
 # DELETE COURSE
 # ---------------------------------------
 
+@app.route("/api/admin/all-payments", methods=["GET"])
+@token_required
+@admin_required
+def get_all_payments(current_user):
+    try:
+        payments = list(payments_col.find({}, {"_id": 0}))
+        return jsonify(payments), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/admin/delete-course/<course_id>", methods=["DELETE"])
 @token_required
 @admin_required

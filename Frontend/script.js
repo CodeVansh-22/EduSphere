@@ -154,9 +154,8 @@ function updateUI() {
         if (isLoggedIn) {
             if (role === 'admin') {
                 navHTML += `
-                    <a class="opt ${isPageActive('admin_dashboard.html') ? 'active' : ''}" href="admin_dashboard.html" style="color: var(--primary);">Admin Dashboard</a>
-                    <a class="opt" href="admin_dashboard.html#enrollments">See Enrolls</a>
-                    <a class="opt" href="admin_dashboard.html#users">All Users</a>
+                    <a class="opt ${isPageActive('admin_dashboard.html') ? 'active' : ''}" href="admin_dashboard.html" style="color: var(--primary);">Course Panel</a>
+                    <a class="opt ${isPageActive('admin_records.html') ? 'active' : ''}" href="admin_records.html" style="color: var(--primary);">Student Records</a>
                 `;
             } else {
                 navHTML += `
@@ -193,8 +192,8 @@ function updateUI() {
                     <a href="admin_dashboard.html" class="bottom-nav-item ${isPageActive('admin_dashboard.html') ? 'active' : ''}">
                         <i class="fa fa-cog"></i><span>Admin</span>
                     </a>
-                    <a href="admin_dashboard.html#enrollments" class="bottom-nav-item">
-                        <i class="fa fa-list"></i><span>Enrolls</span>
+                    <a href="admin_records.html" class="bottom-nav-item ${isPageActive('admin_records.html') ? 'active' : ''}">
+                        <i class="fa fa-list"></i><span>Records</span>
                     </a>
                 `;
             } else {

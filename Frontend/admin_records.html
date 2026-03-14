@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Records | EduSphere</title>
+    <link rel="icon" type="image/x-icon" href="images/icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css_files/style.css">
+    <style>
+        .admin-records-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .records-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3);
+        }
+
+        .record-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 400px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .records-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e0e0e0;
+        }
+
+        .records-table th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .records-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .records-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: rgba(46, 213, 115, 0.2); color: #2ed573; }
+        .badge-info { background: rgba(30, 144, 255, 0.2); color: #1e90ff; }
+
+        .search-bar {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 10px;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="navbar">
+        <div class="nav-left">
+            <h1>EduSphere</h1>
+            <p>Administrative Records</p>
+        </div>
+        <div class="nav-right">
+            <!-- Filled by script.js -->
+        </div>
+    </header>
+
+    <div class="admin-records-container">
+        <div class="records-tabs">
+            <button class="tab-btn active" onclick="switchTab('users')"><i class="fa fa-users"></i> All Users</button>
+            <button class="tab-btn" onclick="switchTab('enrollments')"><i class="fa fa-graduation-cap"></i> Enrollments</button>
+            <button class="tab-btn" onclick="switchTab('payments')"><i class="fa fa-credit-card"></i> Payments</button>
+        </div>
+
+        <div class="record-card">
+            <input type="text" id="record-search" class="search-bar" placeholder="Search records..." oninput="filterTable()">
+            
+            <div id="users-view" class="table-responsive">
+                <table class="records-table">
+                    <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
+                    <tbody id="user-rows"></tbody>
+                </table>
+            </div>
+
+            <div id="enrollments-view" class="table-responsive" style="display:none;">
+                <table class="records-table">
+                    <thead><tr><th>Student Email</th><th>Course ID</th><th>Course Title</th><th>Date</th></tr></thead>
+                    <tbody id="enrollment-rows"></tbody>
+                </table>
+            </div>
+
+            <div id="payments-view" class="table-responsive" style="display:none;">
+                <table class="records-table">
+                    <thead><tr><th>Email</th><th>Amount</th><th>Order ID</th><th>Status</th><th>Date</th></tr></thead>
+                    <tbody id="payment-rows"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Nav (Mobile) -->
+    <div class="bottom-nav"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const role = localStorage.getItem('userRole');
+            if (role !== 'admin') {
+                window.location.href = 'index.html';
+                return;
+            }
+            loadAllData();
+        });
+
+        let allData = { users: [], enrollments: [], payments: [] };
+        let activeTab = 'users';
+
+        async function loadAllData() {
+            const token = localStorage.getItem('authToken');
+            const headers = { 'Authorization': `Bearer ${token}` };
+
+            try {
+                const [uRes, eRes, pRes] = await Promise.all([
+                    fetch(`${API_URL}/admin/all-users`, { headers }),
+                    fetch(`${API_URL}/admin/all-enrollments`, { headers }),
+                    fetch(`${API_URL}/admin/all-payments`, { headers })
+                ]);
+
+                allData.users = await uRes.json();
+                allData.enrollments = await eRes.json();
+                allData.payments = await pRes.json();
+
+                renderUsers();
+                renderEnrollments();
+                renderPayments();
+            } catch (err) {
+                console.error("Failed to load records:", err);
+            }
+        }
+
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.getElementById('users-view').style.display = tab === 'users' ? 'block' : 'none';
+            document.getElementById('enrollments-view').style.display = tab === 'enrollments' ? 'block' : 'none';
+            document.getElementById('payments-view').style.display = tab === 'payments' ? 'block' : 'none';
+        }
+
+        function renderUsers() {
+            document.getElementById('user-rows').innerHTML = allData.users.map(u => `
+                <tr>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td><span class="badge ${u.role === 'admin' ? 'badge-info' : 'badge-success'}">${u.role}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderEnrollments() {
+            document.getElementById('enrollment-rows').innerHTML = allData.enrollments.map(e => `
+                <tr>
+                    <td>${e.userEmail}</td>
+                    <td>${e.courseId}</td>
+                    <td>${e.courseTitle || 'N/A'}</td>
+                    <td>${new Date(e.createdAt).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPayments() {
+            document.getElementById('payment-rows').innerHTML = allData.payments.map(p => `
+                <tr>
+                    <td>${p.userEmail}</td>
+                    <td>₹${p.amount}</td>
+                    <td>${p.razorpayOrderId}</td>
+                    <td><span class="badge badge-success">${p.status || 'Captured'}</span></td>
+                    <td>${new Date(p.createdAt).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterTable() {
+            const term = document.getElementById('record-search').value.toLowerCase();
+            const rows = document.querySelectorAll(`#${activeTab}-view tbody tr`);
+            
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(term) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>
