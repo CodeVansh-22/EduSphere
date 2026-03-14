@@ -115,7 +115,8 @@
             font-size: 0.9rem;
         }
 
-        .management-table th, .management-table td {
+        .management-table th,
+        .management-table td {
             text-align: left;
             padding: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -126,12 +127,29 @@
             color: var(--primary);
         }
 
-        .action-btns { display: flex; gap: 10px; }
-        .btn-edit { color: #3498db; cursor: pointer; background: none; border: none; }
-        .btn-delete { color: #e74c3c; cursor: pointer; background: none; border: none; }
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit {
+            color: #3498db;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .btn-delete {
+            color: #e74c3c;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
 
         @media (max-width: 900px) {
-            .admin-layout { grid-template-columns: 1fr; }
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -152,8 +170,6 @@
 
     <div class="admin-tabs">
         <button class="tab-btn active" onclick="showSection('courses')">Courses</button>
-        <button class="tab-btn" onclick="showSection('enrollments')">Enrollments</button>
-        <button class="tab-btn" onclick="showSection('users')">Users</button>
     </div>
 
     <div id="section-courses" class="admin-section">
@@ -163,10 +179,14 @@
                 <form id="course-upload-form">
                     <input type="hidden" id="edit-mode" value="false">
                     <div class="form-group"><label>ID</label><input type="text" id="course-id" name="id" required></div>
-                    <div class="form-group"><label>Title</label><input type="text" id="course-title" name="title" required></div>
-                    <div class="form-group"><label>Price</label><input type="text" id="course-price" name="price" required></div>
-                    <div class="form-group"><label>Duration</label><input type="text" id="course-duration" name="duration" required></div>
-                    <div class="form-group"><label>Description</label><textarea id="course-desc" name="description" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Title</label><input type="text" id="course-title" name="title"
+                            required></div>
+                    <div class="form-group"><label>Price</label><input type="text" id="course-price" name="price"
+                            required></div>
+                    <div class="form-group"><label>Duration</label><input type="text" id="course-duration"
+                            name="duration" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="course-desc" name="description"
+                            rows="3" required></textarea></div>
                     <div class="form-group">
                         <label>Image Source</label>
                         <select onchange="toggleImgInput(this.value)" name="imgSource">
@@ -174,8 +194,10 @@
                             <option value="url">External URL</option>
                         </select>
                     </div>
-                    <div id="file-input-group" class="form-group"><input type="file" name="image" onchange="previewImage(event)"></div>
-                    <div id="url-input-group" class="form-group" style="display:none;"><input type="text" name="imageUrl" oninput="previewUrl(this.value)"></div>
+                    <div id="file-input-group" class="form-group"><input type="file" name="image"
+                            onchange="previewImage(event)"></div>
+                    <div id="url-input-group" class="form-group" style="display:none;"><input type="text"
+                            name="imageUrl" oninput="previewUrl(this.value)"></div>
                     <div class="image-preview" id="image-preview"><img id="preview-img"></div>
                     <button type="submit" class="btn-action" style="margin-top:10px;">Save Course</button>
                 </form>
@@ -183,7 +205,13 @@
             <div class="admin-card">
                 <h2>Manage Courses</h2>
                 <table class="management-table">
-                    <thead><tr><th>Title</th><th>ID</th><th>Actions</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>ID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
                     <tbody id="admin-course-list"></tbody>
                 </table>
             </div>
@@ -191,23 +219,39 @@
     </div>
 
     <div id="section-enrollments" class="admin-section" style="display:none;">
-        <div class="admin-layout full-layout"><div class="admin-card">
-            <h2>All Enrollments</h2>
-            <table class="management-table">
-                <thead><tr><th>User</th><th>Course</th><th>Date</th></tr></thead>
-                <tbody id="admin-enrollment-list"></tbody>
-            </table>
-        </div></div>
+        <div class="admin-layout full-layout">
+            <div class="admin-card">
+                <h2>All Enrollments</h2>
+                <table class="management-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Course</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-enrollment-list"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div id="section-users" class="admin-section" style="display:none;">
-        <div class="admin-layout full-layout"><div class="admin-card">
-            <h2>All Registered Users</h2>
-            <table class="management-table">
-                <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
-                <tbody id="admin-user-list"></tbody>
-            </table>
-        </div></div>
+        <div class="admin-layout full-layout">
+            <div class="admin-card">
+                <h2>All Registered Users</h2>
+                <table class="management-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-user-list"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
@@ -215,8 +259,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('userRole') !== 'admin') { window.location.href = "index.html"; return; }
             fetchAdminCourses();
-            if(window.location.hash === '#enrollments') showSection('enrollments');
-            if(window.location.hash === '#users') showSection('users');
+            if (window.location.hash === '#enrollments') showSection('enrollments');
+            if (window.location.hash === '#users') showSection('users');
         });
 
         // Sections Logic
@@ -225,8 +269,8 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('section-' + name).style.display = 'block';
             document.querySelector(`.tab-btn[onclick="showSection('${name}')"]`).classList.add('active');
-            if(name === 'users') fetchUsers();
-            if(name === 'enrollments') fetchEnrollments();
+            if (name === 'users') fetchUsers();
+            if (name === 'enrollments') fetchEnrollments();
         }
 
         // Image Handling
@@ -277,11 +321,11 @@
             document.getElementById('course-price').value = course.price;
             document.getElementById('course-duration').value = course.duration;
             document.getElementById('course-desc').value = course.desc;
-            
+
             const img = document.getElementById('preview-img');
             img.src = course.image;
             img.style.display = 'block';
-            
+
             document.getElementById('form-title').innerText = "Edit Course";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -293,13 +337,13 @@
         }
 
         async function fetchUsers() {
-            const res = await fetch(`${API_URL}/admin/all-users`, { headers: {'Authorization': `Bearer ${localStorage.getItem('authToken')}`} });
+            const res = await fetch(`${API_URL}/admin/all-users`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` } });
             const users = await res.json();
             document.getElementById('admin-user-list').innerHTML = users.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td></tr>`).join('');
         }
 
         async function fetchEnrollments() {
-            const res = await fetch(`${API_URL}/admin/all-enrollments`, { headers: {'Authorization': `Bearer ${localStorage.getItem('authToken')}`} });
+            const res = await fetch(`${API_URL}/admin/all-enrollments`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` } });
             const enrolls = await res.json();
             document.getElementById('admin-enrollment-list').innerHTML = enrolls.map(e => `<tr><td>${e.userEmail}</td><td>${e.courseTitle || e.courseId}</td><td>${new Date(e.createdAt).toLocaleDateString()}</td></tr>`).join('');
         }
@@ -316,9 +360,9 @@
                 body: new FormData(e.target)
             });
             const data = await res.json();
-            if(res.ok) { 
-                alert("Course saved successfully!"); 
-                fetchAdminCourses(); 
+            if (res.ok) {
+                alert("Course saved successfully!");
+                fetchAdminCourses();
                 resetAdminForm();
             } else {
                 alert("Error: " + (data.error || data.message || "Save failed"));
@@ -328,10 +372,11 @@
         });
 
         async function deleteCourse(id) {
-            if(!confirm("Delete?")) return;
+            if (!confirm("Delete?")) return;
             const res = await fetch(`${API_URL}/admin/delete-course/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` } });
-            if(res.ok) fetchAdminCourses(); else alert("Failed");
+            if (res.ok) fetchAdminCourses(); else alert("Failed");
         }
     </script>
 </body>
+
 </html>

@@ -228,7 +228,7 @@
                 <tr>
                     <td>${p.userEmail}</td>
                     <td>₹${p.amount}</td>
-                    <td>${p.razorpayOrderId}</td>
+                    <td>${p.razorpayOrderId || p.orderId || 'N/A'}</td>
                     <td><span class="badge badge-success">${p.status || 'Captured'}</span></td>
                     <td>${formatDate(p.createdAt)}</td>
                 </tr>
